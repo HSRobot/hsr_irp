@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<robot name="hsr_hand" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <joint name="hand_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0 0 0.37" rpy="0 0 0"/>
+    <parent link="link6"/>
+    <child link="hand_link"/>
+  </joint>
+
+  <link name="hand_link">
+	 <inertial>
+	   <mass value="0.00001" />
+	   <origin xyz="0 0 0" />
+	   <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+		  iyy="1.0" iyz="0.0"
+		  izz="1.0" />
+	  </inertial>
+
+	  <visual>
+		<origin xyz=" 0 0 -0.185 " rpy="0 0 0" />
+		<geometry>
+		  <cylinder radius="0.05" length="0.37"/>
+		</geometry>
+		<material name="Green">
+		  <color rgba="1 1 1 1" />
+		</material>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 -0.185" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.05" length="0.37"/>
+        </geometry>
+      </collision>
+
+  </link>
+
+</robot>

@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: hsr_br609
+    relative_path: urdf/hsr_br609.urdf
+  SRDF:
+    relative_path: config/hsr_br609.srdf
+  CONFIG:
+    author_name: eima
+    author_email: 1125290220@qq.com
+    generated_timestamp: 1526546273

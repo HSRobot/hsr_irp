@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include 
+	file="$(find hsr_bringup)/launch/ork_interface.launch"/>
+
+  <include 
+	file="$(find hsr_description)/launch/co602_with_gripper_upload.launch"/>
+
+  <node
+    name="pick_server"
+    pkg="hsr_pick"
+    type="pick_and_place_server.py"/>
+
+  <node
+    name="gripper_sever"
+    pkg="gripper_control"
+    type="gripper_control_srv"/>
+
+  <node
+    name="gripper_action"
+    pkg="gripper_control"
+    type="gripper_action.py"/>
+
+<!--
+  <include 
+	file="$(find co602_gripper_moveit_config)/launch/hsr_co602_moveit_planning_execution.launch">
+	<arg name="sim" default="true"/>
+  </include>
+
+  <include 
+	file="$(find co602_gripper_moveit_config)/launch/moveit_rviz.launch"/>
+-->
+
+  <include 
+	file="$(find ur5_pick_moveit_config)/launch/demo.launch"/>
+
+</launch>

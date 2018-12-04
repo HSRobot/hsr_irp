@@ -1,0 +1,9 @@
+<library path="lib/librviz_configuration_commander">
+  <class name="rviz_configuration_commander/Config"
+         type="rviz_configuration_commander::ConfigPanel"
+         base_class_type="rviz::Panel">
+    <description>
+      A panel widget allowing simple diff-drive style robot base control.
+    </description>
+  </class>
+</library>

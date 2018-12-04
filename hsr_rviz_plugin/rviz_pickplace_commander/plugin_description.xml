@@ -1,0 +1,9 @@
+<library path="lib/librviz_pickplace_commander">
+  <class name="rviz_pickplace_commander/Pick"
+         type="rviz_pickplace_commander::PickPlacePanel"
+         base_class_type="rviz::Panel">
+    <description>
+      A panel widget allowing simple diff-drive style robot base control.
+    </description>
+  </class>
+</library>

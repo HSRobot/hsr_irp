@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include 
+	file="$(find hsr_description)/launch/br606_with_gripper_kinect_upload.launch"/>
+
+  <include 
+	file="$(find hsr_gazebo)/launch/robot_with_gripper_gazebo.launch"/>
+
+  <include 
+	file="$(find hsr_bringup)/launch/ork_base_tf.launch"/>
+
+</launch>

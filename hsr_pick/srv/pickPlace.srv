@@ -1,0 +1,4 @@
+geometry_msgs/PoseStamped pickPos
+geometry_msgs/PoseStamped placePos
+---
+bool isPickFinshed

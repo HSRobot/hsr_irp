@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<robot
+  name="hsr_br606" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find hsr_br606)/urdf/hsr_br606.urdf" />
+<xacro:include filename="$(find hsr_br606)/urdf/hsr_kinect.xacro.xml" />
+
+</robot>

@@ -1,0 +1,4 @@
+string serialNo
+int32 baudrate
+---
+bool serial_opened

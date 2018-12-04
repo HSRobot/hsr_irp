@@ -1,0 +1,477 @@
+<robot
+  name="hsr_co602">
+
+
+  <link name="world"/>
+
+  <joint name="fixed" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+	<origin
+      xyz="0 0 0.368"
+      rpy="0 0 0" />
+  </joint>
+
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.053135 0.00011269 -0.23463"
+        rpy="0 0 0" />
+      <mass
+        value="9.6397" />
+      <inertia
+        ixx="0.0131883649088827"
+        ixy="0.000223190726719286"
+        ixz="0.0065397673191675"
+        iyy="0.381831864466054"
+        iyz="-5.12287437923494E-05"
+        izz="0.379772548456655" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/co602/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/co602/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="link1">
+    <inertial>
+      <origin
+        xyz="1.7273E-05 0.041032 -0.008841"
+        rpy="0 0 0" />
+      <mass
+        value="3.228" />
+      <inertia
+        ixx="0.0131883649088827"
+        ixy="0.000223190726719286"
+        ixz="0.0065397673191675"
+        iyy="0.381831864466054"
+        iyz="-5.12287437923494E-05"
+        izz="0.379772548456655" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/co602/link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/co602/link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint1"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="-2.4562E-16 -3.154E-16 9.8608E-32" />
+    <parent
+      link="base_link" />
+    <child
+      link="link1" />
+    <axis
+      xyz="0 0 1" />
+    <limit  lower="-3.4" upper="3.4" effort="28.0" velocity="3.2"/>
+  <safety_controller k_position="100"
+                     k_velocity="10"
+                     soft_lower_limit="-3.4"
+                     soft_upper_limit="3.4" />
+  </joint>
+  <link
+    name="link2">
+    <inertial>
+      <origin
+        xyz="0.18307 -4.0145E-05 -0.0052846"
+        rpy="0 0 0" />
+      <mass
+        value="2.9808" />
+      <inertia
+        ixx="0.0131883649088827"
+        ixy="0.000223190726719286"
+        ixz="0.0065397673191675"
+        iyy="0.381831864466054"
+        iyz="-5.12287437923494E-05"
+        izz="0.379772548456655" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/co602/link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/co602/link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint2"
+    type="revolute">
+    <origin
+      xyz="0 0.221 0"
+      rpy="-1.5708 3.2234E-16 -9.0966E-30" />
+    <parent
+      link="link1" />
+    <child
+      link="link2" />
+    <axis
+      xyz="0 0 1" />
+    <limit  lower="-3.0" upper="0.0" effort="28.0" velocity="3.2"/>
+  <safety_controller k_position="100"
+                     k_velocity="10"
+                     soft_lower_limit="-3.0"
+                     soft_upper_limit="0.0" />
+  </joint>
+  <link
+    name="link3">
+    <inertial>
+      <origin
+        xyz="5.3736057578635E-06 -0.00567869938833004 -0.143945640445635"
+        rpy="0 0 0" />
+      <mass
+        value="1.40027181615014" />
+      <inertia
+        ixx="0.00181207507130265"
+        ixy="-8.15897686341942E-07"
+        ixz="-8.10607375549069E-05"
+        iyy="0.00341914497805436"
+        iyz="-2.61386178037707E-08"
+        izz="0.00304056546013647" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/co602/link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/co602/link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint3"
+    type="revolute">
+    <origin
+      xyz="0.425 0 0"
+      rpy="6.7185E-17 -3.5791E-18 1.1796E-16" />
+    <parent
+      link="link2" />
+    <child
+      link="link3" />
+    <axis
+      xyz="0 0 1" />
+    <limit  lower="1.4" upper="4.0" effort="28.0" velocity="3.2"/>
+  <safety_controller k_position="100"
+                     k_velocity="10"
+                     soft_lower_limit="1.4"
+                     soft_upper_limit="4.0" /> 
+  </joint>
+  <link
+    name="link4">
+    <inertial>
+      <origin
+        xyz="-3.92068223845077E-05 -0.00221851491153464 0.239302943183666"
+        rpy="0 0 0" />
+      <mass
+        value="1.19786144008567" />
+      <inertia
+        ixx="0.100556216689899"
+        ixy="-8.97773998376489E-09"
+        ixz="-0.00192678369752958"
+        iyy="0.100584424161445"
+        iyz="9.85953790614856E-07"
+        izz="0.00297677714591598" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/co602/link4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/co602/link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint4"
+    type="revolute">
+    <origin
+      xyz="0 0 -0.172"
+      rpy="-1.5707963267949 -6.01453096837983E-18 3.14159265358979" />
+    <parent
+      link="link3" />
+    <child
+      link="link4" />
+    <axis
+      xyz="0 0 1" />
+    <limit  lower="-3.0" upper="3.0" effort="28.0" velocity="3.2"/>
+  <safety_controller k_position="100"
+                     k_velocity="10"
+                     soft_lower_limit="-3.0"
+                     soft_upper_limit="3.0" /> 
+  </joint>
+  <link
+    name="link5">
+    <inertial>
+      <origin
+        xyz="-5.76159559284584E-07 -0.0150768503324061 0.0357098887562333"
+        rpy="0 0 0" />
+      <mass
+        value="0.788300902451885" />
+      <inertia
+        ixx="0.00215689936272495"
+        ixy="-1.57018649810158E-08"
+        ixz="-1.86461968066964E-05"
+        iyy="0.00196991648067436"
+        iyz="-6.38364126417243E-07"
+        izz="0.000809062204349609" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/co602/link5.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/co602/link5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint5"
+    type="revolute">
+    <origin
+      xyz="0 -0.1605 0.375"
+      rpy="-1.5708 -6.9389E-18 2.9856E-17" />
+    <parent
+      link="link4" />
+    <child
+      link="link5" />
+    <axis
+      xyz="0 0 -1" />
+    <limit  lower="-1.9" upper="1.9" effort="28.0" velocity="3.2"/>
+  <safety_controller k_position="100"
+                     k_velocity="10"
+                     soft_lower_limit="-1.9"
+                     soft_upper_limit="1.9" /> 
+  </joint>
+  <link
+    name="link6">
+    <inertial>
+      <origin
+        xyz="1.6497834229523E-05 -7.5808022156898E-06 -0.0410458521588936"
+        rpy="0 0 0" />
+      <mass
+        value="0.41407451072884" />
+      <inertia
+        ixx="5.43734063572495E-06"
+        ixy="-1.00108295474267E-07"
+        ixz="4.39894702392336E-09"
+        iyy="5.43734063575559E-06"
+        iyz="-4.39894701843006E-09"
+        izz="1.01791524144431E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/co602/link6.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/co602/link6.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint6"
+    type="revolute">
+    <origin
+      xyz="0 -0.1615 0"
+      rpy="1.5708 -9.3415E-18 -4.21E-18" />
+    <parent
+      link="link5" />
+    <child
+      link="link6" />
+    <axis
+      xyz="0 0 1" />
+    <limit  lower="-6" upper="6" effort="28.0" velocity="3.2"/>
+  <safety_controller k_position="100"
+                     k_velocity="10"
+                     soft_lower_limit="-6"
+                     soft_upper_limit="6" /> 
+  </joint>
+
+<gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+  </gazebo>
+
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint1">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint2">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint3">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor3">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint4">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor4">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran5">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint5">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor5">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran6">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="joint6">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor6">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+</robot>
