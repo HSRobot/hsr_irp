@@ -1,5 +1,5 @@
 #include <moveit/move_group_interface/move_group.h>
-#include <hsr_msg/Joints.h>
+#include <hsr_msgs/Joints.h>
 
 #define DEBUG
 move_group_interface::MoveGroup *group;
@@ -21,7 +21,7 @@ void poseCallback(const geometry_msgs::Pose::ConstPtr& msg){
 }
 
 /* --------------关节空间运动接口回调函数-----------------*/
-void jointCallback(const hsr_msg::Joints::ConstPtr& msg){
+void jointCallback(const hsr_msgs::Joints::ConstPtr& msg){
 
 #ifdef DEBUG
 	std::cout << "joint1: " << msg->joint1 << std::endl;

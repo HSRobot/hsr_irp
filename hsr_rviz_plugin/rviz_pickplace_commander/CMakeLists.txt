@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   rviz
   std_msgs
   serial
+  gripper_control
 )
 
 ## System dependencies are found with CMake's conventions

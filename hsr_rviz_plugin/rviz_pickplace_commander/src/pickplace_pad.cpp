@@ -72,7 +72,7 @@ namespace rviz_pickplace_commander
 		client_detection = n_pickPlace.serviceClient<ork_interface::detection_srv>("detection");
 		
 		/* 创建抓取与放置模块相关客户端 */
-		client_pickPlace = n_runPickPlace.serviceClient<pick_and_place::pickPlace>("pick_and_place");
+		client_pickPlace = n_runPickPlace.serviceClient<hsr_pick::pickPlace>("pick_and_place");
 	/*******************定时器**************************************************************/
 	    getPickPoseFromORK_Timer = new QTimer(this);
 	    connect(getPickPoseFromORK_Timer,SIGNAL(timeout()),this,SLOT(slotGetPickPoseFromOrk()));
@@ -938,7 +938,7 @@ namespace rviz_pickplace_commander
 	{
 		//client_pickPlace		
 	    m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Ready to pick...");	
-		pick_and_place::pickPlace pickPlace_srv;
+		hsr_pick::pickPlace pickPlace_srv;
 		
 		geometry_msgs::PoseStamped pickPose,placePose;
 	

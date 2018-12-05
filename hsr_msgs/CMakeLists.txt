@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(rviz_control_commander)
+project(hsr_msgs)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -8,8 +8,8 @@ project(rviz_control_commander)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  message_generation
   roscpp
-  rviz
   std_msgs
 )
 
@@ -47,11 +47,10 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+ add_message_files(
+   FILES
+   Joints.msg
+  )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -68,10 +67,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   std_msgs
+ )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -104,8 +103,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES rviz_control_commander
-#  CATKIN_DEPENDS roscpp rviz std_msgs
+#  LIBRARIES hsr_msg
+#  CATKIN_DEPENDS message_generation roscpp std_msgs
 #  DEPENDS system_lib
 )
 
@@ -122,7 +121,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/rviz_control_commander.cpp
+#   src/${PROJECT_NAME}/hsr_msg.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -133,7 +132,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/rviz_control_commander_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/hsr_msg_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -190,49 +189,10 @@ include_directories(
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_rviz_control_commander.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_hsr_msg.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
-
-## This plugin includes Qt widgets, so we must include Qt like so:
-find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
-include(${QT_USE_FILE})
- 
-## I prefer the Qt signals and slots to avoid defining "emit", "slots",
-## etc because they can conflict with boost signals, so define QT_NO_KEYWORDS here.
-add_definitions(-DQT_NO_KEYWORDS)
- 
-## Here we specify which header files need to be run through "moc",
-## Qt's meta-object compiler.
-qt4_wrap_cpp(MOC_FILES
-  src/control_pad.h
-)
- 
-## Here we specify the list of source files, including the output of
-## the previous command which is stored in ``${MOC_FILES}``.
-set(SOURCE_FILES
-  src/control_pad.cpp 
-  ${MOC_FILES}
-)
- 
-## An rviz plugin is just a shared library, so here we declare the
-## library to be called ``${PROJECT_NAME}`` (which is
-## "rviz_plugin_tutorials", or whatever your version of this project
-## is called) and specify the list of source files we collected above
-## in ``${SOURCE_FILES}``.
-add_library(${PROJECT_NAME} ${SOURCE_FILES})
- 
-## Link the library with whatever Qt libraries have been defined by
-## the ``find_package(Qt4 ...)`` line above, and with whatever libraries
-## catkin has included.
-##
-## Although this puts "rviz_plugin_tutorials" (or whatever you have
-## called the project) as the name of the library, cmake knows it is a
-## library and names the actual file something like
-## "librviz_plugin_tutorials.so", or whatever is appropriate for your
-## particular OS.
-target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES} ${catkin_LIBRARIES})

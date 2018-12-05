@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  hsr_msgs
   moveit_core
   moveit_ros_planning_interface
   moveit_ros_perception

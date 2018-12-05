@@ -29,7 +29,7 @@
 #include "ork_interface/training_srv.h"
 #include "ork_interface/detection_srv.h"
 
-#include "pick_and_place/pickPlace.h"
+#include "hsr_pick/pickPlace.h"
 
 /* qtÍ·ÎÄ¼þ*/
 #include<QVBoxLayout>
