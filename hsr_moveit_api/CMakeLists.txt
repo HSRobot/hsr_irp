@@ -114,7 +114,7 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES hsr_moveit_api
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+  CATKIN_DEPENDS roscpp rospy std_msgs hsr_msgs
 #  DEPENDS system_lib
 )
 
