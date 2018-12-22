@@ -17,8 +17,9 @@ robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
 group = moveit_commander.MoveGroupCommander("arm")
 
-
 rospy.sleep(1)
+
+
 base_table_id = 'base_table'   
 base_table_size = [1.2, 1.2, 0.01]
 base_table_pose = PoseStamped()

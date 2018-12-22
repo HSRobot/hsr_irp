@@ -88,24 +88,19 @@ class MoveItDemo:
         # Allow replanning to increase the odds of a solution
         pick_arm.allow_replanning(True)
         
-        # Set the right arm reference frame
-	# 设置arm规划组的参考坐标系， 默认是base_link
+        # Set the right arm reference frame	
         pick_arm.set_pose_reference_frame(REFERENCE_FRAME)
         
         # Allow 5 seconds per planning attempt
-	# 设置最大规划时间，设置为5S
         pick_arm.set_planning_time(5)
         
         # Set a limit on the number of pick attempts before bailing
-	# 设置抓取尝试次数
         max_pick_attempts = 5
-        
+      
         # Set a limit on the number of place attempts
-	# 设置放置的尝试次数
         max_place_attempts = 5
                 
         # Give the scene a chance to catch up
-	# 给一定的时间，让moveit core启动起来
         rospy.sleep(2)
 
         # Give each of the scene objects a unique name
@@ -117,7 +112,6 @@ class MoveItDemo:
         tool_id = 'tool'
                 
         # Remove leftover objects from a previous run
-	# 清空场景中的障碍物和目标物体
         scene.remove_world_object(base_table_id)
         scene.remove_world_object(table_id)
         scene.remove_world_object(box1_id)
@@ -126,14 +120,12 @@ class MoveItDemo:
         scene.remove_world_object(tool_id)
         
         # Remove any attached objects from a previous session
-	# 删除附着在机械臂末端的目标物体
         scene.remove_attached_object(GRIPPER_FRAME, target_id)
         
         # Give the scene a chance to catch up    
         rospy.sleep(1)
         
         # Start the arm in the "resting" pose stored in the SRDF file
-	# 控制机械臂运动到home点
         pick_arm.set_named_target(ARM_HOME_POSE)
         pick_arm.go()
         
@@ -158,7 +150,7 @@ class MoveItDemo:
         
         # Add a base table to the scene
         base_table_pose = PoseStamped()
-        base_table_pose.header.frame_id = REFERENCE_FRAME
+        base_table_pose.header.frame_id = "world"
         base_table_pose.pose.position.x = 0.0
         base_table_pose.pose.position.y = 0.0
         base_table_pose.pose.position.z = -0.03
@@ -234,7 +226,6 @@ class MoveItDemo:
         grasps = self.make_grasps(grasp_pose, [target_id])
 
         # Publish the grasp poses so they can be viewed in RViz
-	# 可视化所有的抓取位姿
         for grasp in grasps:
             self.gripper_pose_pub.publish(grasp.grasp_pose)
             rospy.sleep(0.2)
@@ -244,7 +235,6 @@ class MoveItDemo:
         n_attempts = 0
         
         # Repeat until we succeed or run out of attempts
-	# 尝试抓五次
         while result != MoveItErrorCodes.SUCCESS and n_attempts < max_pick_attempts:
             n_attempts += 1
             rospy.loginfo("Pick attempt: " +  str(n_attempts))
@@ -344,11 +334,8 @@ class MoveItDemo:
         g.grasp_posture = self.make_gripper_posture(GRIPPER_CLOSED)    
 
         # Set the approach and retreat parameters as desired
-	# 生成逼近向量 [param2: 向量长度] [param3: 向量的方向]
         g.pre_grasp_approach = self.make_gripper_translation(0.01, 0.1, [1.0, 0.0, 0.0])
-
-# 生成撤退向量 [param2: 向量长度] [param3: 向量的方向]
-        g.post_grasp_retreat = self.make_gripper_translation(0.1, 0.15, [0.0, -1.0, 1.0])
+        g.post_grasp_retreat = self.make_gripper_translation(0.1, 0.15, [0.0, 0, 1.0])
 
         # Set the first grasp pose to the input pose
         g.grasp_pose = initial_pose_stamped

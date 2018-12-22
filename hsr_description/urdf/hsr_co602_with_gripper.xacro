@@ -4,6 +4,13 @@
 
 <xacro:include filename="$(find hsr_description)/urdf/hsr_co602.urdf" />
 
+  <joint name="gripper_robot_joint" type="fixed">
+      <parent link="link6" />
+      <child link="gripper_base_link" />
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+  </joint> 
+
+
   <joint name="pick_gripper_joint" type="fixed">
      <origin xyz="-0.0115 0.0 0.15" rpy="0 -1.5708 1.5708" />
      <axis xyz="0 0 1"/>
