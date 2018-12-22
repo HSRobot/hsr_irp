@@ -10,7 +10,7 @@
 		``` roslaunch hsr_description <robot>_upload.launch 										# 加载模型
 		``` roslaunch hsr_gazebo <robot>_gazebo.launch												# 启动gazebo
 		``` roslaunch <robot>_moveit_config <robot>_moveit_planning_execution.launch sim:=true		# 启动moveit核心
-		``` roslaunch <robot>_moveit_config moveit_rviz.launch										# 启动rviz
+		``` roslaunch co602_moveit_config moveit_rviz.launch										# 启动rviz
 
 #### 使用实际机器人
 	1，一键启动：	``` roslaunch hsr_bringup <robot>_go.launch robot_ip:=<robot_ip>

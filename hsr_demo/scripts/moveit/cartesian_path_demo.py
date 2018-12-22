@@ -21,14 +21,24 @@ waypoints = []
 start_pose = group.get_current_pose().pose
 # first orient gripper and move forward (+x)
 wpose = geometry_msgs.msg.Pose()
-wpose.orientation.w = 0.0482532222573 
+
+'''
 wpose.position.x = -0.512873527464	
 wpose.position.y = 0.410581743076
 wpose.position.z = 0.50244383546
+'''
+
+wpose.position.x = start_pose.position.x - 0.2 
+wpose.position.y = start_pose.position.y
+wpose.position.z = start_pose.position.z + 0.2
+wpose.orientation = start_pose.orientation
+
+'''
+wpose.orientation.w = 0.0482532222573 
 wpose.orientation.x = 0.254673315982
 wpose.orientation.y = 0.247313977335
 wpose.orientation.z = -0.933621403612
-
+'''
 group.set_pose_target(wpose)
 group.go(wait=True)
 
