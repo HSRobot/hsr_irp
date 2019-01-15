@@ -41,12 +41,11 @@
    ```
 
 **注意事项**
-如果执行第4步出现下面的错误，使用如下方式解决,切勿重启，否则会导致系统无法正常启动
-安装错误：
-	Errors were encountered while processing:
- 	/var/cache/apt/archives/python-rosdistro-modules_0.7.0-1_all.deb
- 	/var/cache/apt/archives/python-rosdistro_0.7.0-100_all.deb
-	E: Sub-process /usr/bin/dpkg returned an error code (1)
+如果执行第4步出现下面的错误，使用如下方式解决,切勿重启，否则会导致系统无法正常启动:
+Errors were encountered while processing:
+ /var/cache/apt/archives/python-rosdistro-modules_0.7.0-1_all.deb
+ /var/cache/apt/archives/python-rosdistro_0.7.0-100_all.deb
+E: Sub-process /usr/bin/dpkg returned an error code (1)
 **解决方案**：
    ```bash
    $ sudo apt-get purge ros-*
