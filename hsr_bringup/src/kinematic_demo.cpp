@@ -57,7 +57,7 @@ void doit(const std::vector<double> &in, std::vector<double> &out){
 
 	// 偏移后RPY转四元数
 	tf::Quaternion q;
-	q.setEulerZYX(C, B, A);
+	q.setEulerZYX((tfScalar)C, (tfScalar)B, (tfScalar)A);
 	tf::Vector3 axis = q.getAxis();
 #ifdef DEBUG
 	cout << "axis.x = " << axis.getX() << std::endl;
@@ -75,7 +75,7 @@ void doit(const std::vector<double> &in, std::vector<double> &out){
 		cout << "四元数转关节角成功" << endl;
 	std::vector<double> joint_values;
 	kinematic_state->copyJointGroupPositions(joint_model_group, joint_values);
-	for(std::size_t i = 0; i < 6; ++i)
+	for(int i = 0; i < 6; ++i)
 	{
 	  ROS_INFO("Joint %d: %f", i, joint_values[i]);
 	}
