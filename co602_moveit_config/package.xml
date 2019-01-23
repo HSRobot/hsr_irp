@@ -24,8 +24,8 @@
   <run_depend>joint_state_publisher</run_depend>
   <run_depend>robot_state_publisher</run_depend>
   <run_depend>xacro</run_depend>
-  <build_depend>hsr_co602</build_depend>
-  <run_depend>hsr_co602</run_depend>
+  <build_depend>hsr_description</build_depend>
+  <run_depend>hsr_description</run_depend>
 
 
 </package>
