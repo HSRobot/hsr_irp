@@ -67,7 +67,7 @@ E: Sub-process /usr/bin/dpkg returned an error code (1)
    ```bash
    $ sudo apt-get install git	# 安装git
    $ cd ~/catkin_ws/src
-   $ git clone git@github.com:HSRobot/hsr_irp.git
+   $ git clone https://github.com/HSRobot/hsr_irp.git
    ```
 
 ### 3, 下载依赖项：

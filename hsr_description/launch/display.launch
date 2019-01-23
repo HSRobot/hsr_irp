@@ -5,7 +5,7 @@
     name="gui"
     default="true" />
 
-  <arg name="rvizconfig" default="$(find urdf_tutorial)/rviz/urdf.rviz" />
+  <arg name="rvizconfig" default="$(find hsr_description)/rviz/urdf.rviz" />
 
   <param
     name="use_gui"

@@ -29,7 +29,7 @@
    ```bash
    $ roslaunch hsr_description <robot>_upload.launch 
    $ roslaunch <robot>_moveit_config <robot>_moveit_planning_execution.launch sim:=false
-   $ roslaunch industrial_robot_client robot_full_interface_download.launch robot_ip:=<robot_ip>
+   $ roslaunch hsr_rois_client robot_full_interface_download.launch robot_ip:=10.10.56.214
    $ roslaunch <robot>_moveit_config moveit_rviz.launch
    ```
 
@@ -52,7 +52,7 @@
    ```bash
    $ roslaunch hsr_description co602_with_gripper_upload.launch
    $ roslaunch <robot>_moveit_config <robot>_moveit_planning_execution.launch sim:=false
-   $ roslaunch industrial_robot_client robot_full_interface_download.launch robot_ip:=<robot_ip> 
+   $ roslaunch hsr_rosi_client robot_full_interface_download.launch robot_ip:=10.10.56.214
    $ rosrun hsr_gripper_driver gripper_control_srv
    $ rosrun hsr_gripper_driver gripper_action.py
    $ rosrun hsr_pick moveit_pick_and_place_demo.py
@@ -63,7 +63,7 @@
    $ roslaunch kinect2_bridge  kinect2_bridge.launch
    $ roslaunch hsr_description co602_with_gripper_upload.launch
    $ roslaunch <robot>_moveit_config <robot>_moveit_planning_execution.launch sim:=false
-   $ roslaunch industrial_robot_client robot_full_interface_download.launch robot_ip:=<robot_ip> 
+   $ roslaunch hsr_rosi_client robot_full_interface_download.launch robot_ip:=10.10.56.214
    $ rosrun hsr_gripper_driver gripper_control_srv
    $ rosrun hsr_gripper_driver gripper_action.py
    $ roslaunch hsr_bringup ork_base_tf.launch
