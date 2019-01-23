@@ -6,9 +6,6 @@
   <joint name="fixed" type="fixed">
     <parent link="world"/>
     <child link="base_link"/>
-	<origin
-      xyz="0 0 0.4"
-      rpy="0 0 0" />
   </joint>
 
   <link
@@ -96,14 +93,14 @@
     type="revolute">
     <origin
       xyz="0 0 0"
-      rpy="1.5707963267949 -1.5707963267949 0" />
+      rpy="-1.5707963267949 -1.5707963267949 0" />
     <parent
       link="base_link" />
     <child
       link="link1" />
     <axis
       xyz="1 0 0" />
-    <limit  lower="-3.141596" upper="3.141596" effort="28.0" velocity="3.2"/>
+    <limit  lower="-2.71415" upper="2.71415" effort="28.0" velocity="3.2"/>
   <safety_controller k_position="100"
                      k_velocity="10"
                      soft_lower_limit="-2.6179"
@@ -161,10 +158,10 @@
       link="link2" />
     <axis
       xyz="0 0 1" />
-    <limit  lower="-3.141596" upper="3.141596" effort="28.0" velocity="3.2"/>
+    <limit  lower="-3.1" upper="0" effort="28.0" velocity="3.2"/>
   <safety_controller k_position="100"
                      k_velocity="10"
-                     soft_lower_limit="-3.141596"
+                     soft_lower_limit="-3.1"
                      soft_upper_limit="0" /> 
   </joint>
   <link
@@ -219,11 +216,11 @@
       link="link3" />
     <axis
       xyz="0 0 1" />
-    <limit  lower="-3.141596" upper="3.141596" effort="28.0" velocity="3.2"/>
+    <limit  lower="-0.63" upper="3.4" effort="28.0" velocity="3.2"/>
   <safety_controller k_position="100"
                      k_velocity="10"
                      soft_lower_limit="-0.5585"
-                     soft_upper_limit="4.3633" /> 
+                     soft_upper_limit="3.4" /> 
   </joint>
   <link
     name="link4">
@@ -277,11 +274,11 @@
       link="link4" />
     <axis
       xyz="0 0 -0.999999999999999" />
-    <limit  lower="-3.141596" upper="3.141596" effort="28.0" velocity="3.2"/>
+    <limit  lower="-1.57" upper="1.57" effort="28.0" velocity="3.2"/>
   <safety_controller k_position="100"
                      k_velocity="10"
-                     soft_lower_limit="-1.570796"
-                     soft_upper_limit="1.570796" /> 
+                     soft_lower_limit="-1.57"
+                     soft_upper_limit="1.57" /> 
   </joint>
   <link
     name="link5">
@@ -335,11 +332,11 @@
       link="link5" />
     <axis
       xyz="0 0 -1" />
-    <limit  lower="-3.141596" upper="3.141596" effort="28.0" velocity="3.2"/>
+    <limit  lower="-1.68" upper="1.68" effort="28.0" velocity="3.2"/>
   <safety_controller k_position="100"
                      k_velocity="10"
-                     soft_lower_limit="-1.684242"
-                     soft_upper_limit="1.684242" /> 
+                     soft_lower_limit="-1.68"
+                     soft_upper_limit="1.68" /> 
   </joint>
   <link
     name="link6">
@@ -393,11 +390,11 @@
       link="link6" />
     <axis
       xyz="0 0 1" />
-    <limit  lower="-3.141596" upper="3.141596" effort="28.0" velocity="3.2"/>
+    <limit  lower="-4.5" upper="4.5" effort="28.0" velocity="3.2"/>
   <safety_controller k_position="100"
                      k_velocity="10"
-                     soft_lower_limit="-6.283185"
-                     soft_upper_limit="6.283185" /> 
+                     soft_lower_limit="-4.5"
+                     soft_upper_limit="4.5" /> 
   </joint>
 
 
