@@ -6,6 +6,7 @@ import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
 from geometry_msgs.msg import PoseStamped
+import random
 
 REFERENCE_FRAME = 'world'
 
@@ -13,7 +14,7 @@ TABLE_GROUND = 0.25
 
 print "============ Starting tutorial setup"
 moveit_commander.roscpp_initialize(sys.argv)
-rospy.init_node('loop test', anonymous=True)
+rospy.init_node('loop_test', anonymous=True)
 
 robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
@@ -95,4 +96,4 @@ group.set_max_velocity_scaling_factor(0.1)
 while not rospy.core.is_shutdown():
 	group.set_random_target()
 	group.go(wait=True)
-	rospy.sleep(1)
+	rospy.sleep(random.randint(1, 10))

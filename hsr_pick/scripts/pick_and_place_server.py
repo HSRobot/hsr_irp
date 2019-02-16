@@ -35,11 +35,11 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from tf.transformations import quaternion_from_euler
 from copy import deepcopy
 
-from pick_and_place.srv import *
+from hsr_pick.srv import *
 from gripper_control.srv import *
 
-GROUP_NAME_ARM = 'pick_arm_ur5'
-GROUP_NAME_GRIPPER = 'pick_gripper_ur5'
+GROUP_NAME_ARM = 'arm'
+GROUP_NAME_GRIPPER = 'gripper'
 
 ARM_HOME_POSE = 'home'
 
@@ -55,6 +55,7 @@ GRIPPER_JOINT_NAMES = ['right_finger_2_joint']
 GRIPPER_EFFORT = [1.0]
 
 REFERENCE_FRAME = 'base_link'
+open_client = None
 
 class MoveItDemo:
     def __init__(self, pickPos, placePos):
@@ -94,7 +95,7 @@ class MoveItDemo:
         # Set the right arm reference frame
         pick_arm.set_pose_reference_frame(REFERENCE_FRAME)
 
-        #pick_arm.set_planner_id("RRTConnectkConfigDefault")        
+        pick_arm.set_planner_id("RRTConnectkConfigDefault")        
 
         # Allow 5 seconds per planning attempt
         pick_arm.set_planning_time(5)
@@ -152,7 +153,7 @@ class MoveItDemo:
         base_table_pose.header.frame_id = REFERENCE_FRAME
         base_table_pose.pose.position.x = 0.0
         base_table_pose.pose.position.y = 0.0
-        base_table_pose.pose.position.z = -0.01
+        base_table_pose.pose.position.z = -0.3
         base_table_pose.pose.orientation.w = 1.0
         scene.add_box(base_table_id, base_table_pose, base_table_size)
 
@@ -176,8 +177,8 @@ class MoveItDemo:
         scene.add_box(table_id, table_pose, table_size)       
     
         # Set the target pose in between the boxes and on the table
-	target_pose = PoseStamped()
-	target_pose.header.frame_id = REFERENCE_FRAME
+        target_pose = PoseStamped()
+        target_pose.header.frame_id = REFERENCE_FRAME
 #        target_pose.pose.position.x = 0.47
 #        target_pose.pose.position.y = -0.4
 #        target_pose.pose.position.z = table_ground + table_size[2] + target_size[2] / 2.0
@@ -213,6 +214,9 @@ class MoveItDemo:
         #z方向取桌面高度table_ground + 桌面厚度table_size[2] + 目标物体高度的一半target_size[2] / 2.0
         place_pose.pose.position.z = placePos.pose.position.z
         place_pose.pose.orientation.w = placePos.pose.orientation.w
+        place_pose.pose.orientation.x = placePos.pose.orientation.x
+        place_pose.pose.orientation.y = placePos.pose.orientation.y
+        place_pose.pose.orientation.z = placePos.pose.orientation.z
 
         # Initialize the grasp pose to the target pose
         grasp_pose = target_pose
@@ -224,7 +228,7 @@ class MoveItDemo:
         # Generate a list of grasps
         grasps = self.make_grasps(grasp_pose, [target_id])
 
-        # Publish the grasp poses so they can be viewed in RViz
+        # Publish the grasp poses so they can be viewed in RV
         for grasp in grasps:
             self.gripper_pose_pub.publish(grasp.grasp_pose)
             rospy.sleep(0.2)
@@ -243,21 +247,21 @@ class MoveItDemo:
         # If the pick was successful, attempt the place operation   
         if result == MoveItErrorCodes.SUCCESS:
             result = None
-            n_attempts = 0
-            
+            n_attempts = 0 
             # Generate valid place poses
-            places = self.make_places(place_pose)
-            
+            #places = self.make_places(place_pose)
+            pick_arm.set_pose_target(place_pose)
             # Repeat until we succeed or run out of attempts
-            while result != MoveItErrorCodes.SUCCESS and n_attempts < max_place_attempts:
-                n_attempts += 1
-                rospy.loginfo("Place attempt: " +  str(n_attempts))
-                for place in places:
-                    result = pick_arm.place(target_id, place)
-                    if result == MoveItErrorCodes.SUCCESS:
-                        break
-                rospy.sleep(0.2)
-                
+            #while result != MoveItErrorCodes.SUCCESS and n_attempts < max_place_attempts:
+            #    n_attempts += 1
+            #    rospy.loginfo("Place attempt: " +  str(n_attempts))
+            #    for place in places:
+            #        result = pick_arm.place(target_id, place)
+            #        if result == MoveItErrorCodes.SUCCESS:
+            #            break
+            #    rospy.sleep(0.2)
+            pick_arm.go(wait=True)
+            open_client(500)
             if result != MoveItErrorCodes.SUCCESS:
                 rospy.loginfo("Place operation failed after " + str(n_attempts) + " attempts.")
         else:
@@ -334,13 +338,13 @@ class MoveItDemo:
 
         # Set the approach and retreat parameters as desired
         g.pre_grasp_approach = self.make_gripper_translation(0.01, 0.1, [1.0, 0.0, 0.0])
-        g.post_grasp_retreat = self.make_gripper_translation(0.1, 0.15, [0.0, -1.0, 1.0])
+        g.post_grasp_retreat = self.make_gripper_translation(0.1, 0.15, [0.0, 0, 1.7])
 
         # Set the first grasp pose to the input pose
         g.grasp_pose = initial_pose_stamped
     
         # Pitch angles to try
-        pitch_vals = [0, 0.1, -0.1, 0.2, -0.2, 0.3, -0.3]
+        pitch_vals = [0, 0.1, -0.1, 0.2, -0.2, 0.3, -0.3, 0.5, 0.4, 0.6]
         
         # Yaw angles to try
         yaw_vals = [0]
@@ -399,6 +403,8 @@ class MoveItDemo:
 
         # A list to hold the places
         places = []
+
+        places.append(deepcopy(init_pose))
         
         # Generate a place pose for each angle and translation
         for y in yaw_vals:
@@ -409,13 +415,13 @@ class MoveItDemo:
                         place.pose.position.y = init_pose.pose.position.y + y
                         
                         # Create a quaternion from the Euler angles
-                        q = quaternion_from_euler(0, p, y)
+                        #q = quaternion_from_euler(0, p, y)
                         
                         # Set the place pose orientation accordingly
-                        place.pose.orientation.x = q[0]
-                        place.pose.orientation.y = q[1]
-                        place.pose.orientation.z = q[2]
-                        place.pose.orientation.w = q[3]
+                        #place.pose.orientation.x = q[0]
+                        #place.pose.orientation.y = q[1]
+                        #place.pose.orientation.z = q[2]
+                        #place.pose.orientation.w = q[3]
                         
                         # Append this place pose to the list
                         places.append(deepcopy(place))
@@ -470,6 +476,9 @@ def pick_and_place_server():
     rospy.spin()
 
 if __name__ == "__main__":
+    global open_client
+    rospy.wait_for_service('gripper_open')
+    open_client = rospy.ServiceProxy('gripper_open', open_srv)
     pick_and_place_server()
 
     

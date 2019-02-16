@@ -4,9 +4,6 @@
   <include 
 	file="$(find hsr_bringup)/launch/ork_interface.launch"/>
 
-  <include 
-	file="$(find hsr_description)/launch/co602_with_gripper_upload.launch"/>
-
   <node
     name="pick_server"
     pkg="hsr_pick"
@@ -22,17 +19,18 @@
     pkg="gripper_control"
     type="gripper_action.py"/>
 
-<!--
+
   <include 
-	file="$(find co602_gripper_moveit_config)/launch/hsr_co602_moveit_planning_execution.launch">
-	<arg name="sim" default="true"/>
+	file="$(find br606_gripper_moveit_config)/launch/hsr_br606_moveit_planning_execution.launch">
   </include>
 
   <include 
-	file="$(find co602_gripper_moveit_config)/launch/moveit_rviz.launch"/>
--->
+	file="$(find br606_gripper_moveit_config)/launch/moveit_rviz.launch"/>
 
+
+<!--
   <include 
 	file="$(find ur5_pick_moveit_config)/launch/demo.launch"/>
+-->
 
 </launch>

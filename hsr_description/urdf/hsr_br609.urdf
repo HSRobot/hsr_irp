@@ -89,7 +89,7 @@
     </collision>
   </link>
   <joint
-    name="joint1"
+    name="joint_1"
     type="continuous">
     <origin
       xyz="0 0 0.2755"
@@ -142,7 +142,7 @@
     </collision>
   </link>
   <joint
-    name="joint2"
+    name="joint_2"
     type="continuous">
     <origin
       xyz="0 -0.145 0"
@@ -195,7 +195,7 @@
     </collision>
   </link>
   <joint
-    name="joint3"
+    name="joint_3"
     type="continuous">
     <origin
       xyz="-0.625999999928 0 -0.13649874600638"
@@ -248,7 +248,7 @@
     </collision>
   </link>
   <joint
-    name="joint4"
+    name="joint_4"
     type="continuous">
     <origin
       xyz="0.0715000000000143 0 0.0860012539936202"
@@ -301,7 +301,7 @@
     </collision>
   </link>
   <joint
-    name="joint5"
+    name="joint_5"
     type="continuous">
     <origin
       xyz="0.0434999999994695 0 -0.459000000267993"
@@ -354,7 +354,7 @@
     </collision>
   </link>
   <joint
-    name="joint6"
+    name="joint_6"
     type="continuous">
     <origin
       xyz="0.0474999999995303 0 0.104999999999948"
@@ -377,7 +377,7 @@
 
   <transmission name="tran1">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint1">
+    <joint name="joint_1">
       <hardwareInterface>PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="motor1">
@@ -388,7 +388,7 @@
 
   <transmission name="tran2">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint2">
+    <joint name="joint_2">
       <hardwareInterface>PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="motor2">
@@ -399,7 +399,7 @@
 
   <transmission name="tran3">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint3">
+    <joint name="joint_3">
       <hardwareInterface>PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="motor3">
@@ -410,7 +410,7 @@
 
   <transmission name="tran4">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint4">
+    <joint name="joint_4">
       <hardwareInterface>PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="motor4">
@@ -421,7 +421,7 @@
 
   <transmission name="tran5">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint5">
+    <joint name="joint_5">
       <hardwareInterface>PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="motor5">
@@ -432,7 +432,7 @@
 
   <transmission name="tran6">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint6">
+    <joint name="joint_6">
       <hardwareInterface>PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="motor6">

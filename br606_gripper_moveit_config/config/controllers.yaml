@@ -4,12 +4,12 @@ controller_list:
     type: FollowJointTrajectory
     default: true
     joints:
-      - joint1
-      - joint2
-      - joint3
-      - joint4
-      - joint5
-      - joint6
+      - joint_1
+      - joint_2
+      - joint_3
+      - joint_4
+      - joint_5
+      - joint_6
 
   - name: gripper_controller
     action_ns: "follow_joint_trajectory"
@@ -19,3 +19,5 @@ controller_list:
       - left_finger_2_joint
       - right_finger_1_joint
       - right_finger_2_joint
+
+/follow_joint_trajectory/gripper_controller/goal
