@@ -5,6 +5,8 @@
   <!-- The name of the parameter under which the URDF is loaded -->
   <arg name="robot_description" default="robot_description"/>
 
+  <arg name="sim" default="false"/>
+
   <!-- Load universal robot description format (URDF) -->
   <param if="$(arg load_robot_description)" name="$(arg robot_description)" textfile="$(find hsr_br606)/urdf/hsr_br606.urdf"/>
 
@@ -13,7 +15,8 @@
   
   <!-- Load updated joint limits (override information from URDF) -->
   <group ns="$(arg robot_description)_planning">
-    <rosparam command="load" file="$(find br606_moveit_config)/config/joint_limits.yaml"/>
+    <rosparam if="$(arg sim)" command="load" file="$(find br606_moveit_config)/config/joint_limits_sim.yaml"/>
+ 	<rosparam unless="$(arg sim)" command="load" file="$(find br606_moveit_config)/config/joint_limits.yaml"/>
   </group>
 
   <!-- Load default settings for kinematics; these settings are overridden by settings in a node's namespace -->
