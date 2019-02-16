@@ -1,7 +1,9 @@
 <launch>
 
-  <include file="$(find br606_moveit_config)/launch/planning_context.launch" />
-
+  <arg name="sim" default="false" />
+  <include file="$(find br606_moveit_config)/launch/planning_context.launch">
+	<arg name="sim" value="$(arg sim)" />
+  </include>
   <!-- GDB Debug Option -->
   <arg name="debug" default="false" />
   <arg unless="$(arg debug)" name="launch_prefix" value="" />
