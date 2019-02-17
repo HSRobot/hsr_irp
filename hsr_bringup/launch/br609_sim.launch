@@ -2,13 +2,13 @@
 <launch>
 
   <include 
-	file="$(find hsr_description)/launch/br606_upload.launch"/>
+	file="$(find hsr_description)/launch/br609_upload.launch"/>
 
   <include 
 	file="$(find hsr_gazebo)/launch/robot_gazebo.launch"/>
 
   <include
-	file="$(find br606_moveit_config)/launch/hsr_br606_moveit_planning_execution.launch">
+	file="$(find br609_moveit_config)/launch/hsr_br609_moveit_planning_execution.launch">
 	<arg name="sim" default="true"/>
   </include>
 

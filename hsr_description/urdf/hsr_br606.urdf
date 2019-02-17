@@ -408,6 +408,28 @@
     </plugin>
   </gazebo>
 
+<gazebo reference="base_link">
+	<material>Gazebo/FlatBlack</material>
+</gazebo>
+<gazebo reference="link1">
+	<material>Gazebo/Red</material>
+</gazebo>
+<gazebo reference="link2">
+	<material>Gazebo/Grey</material>
+</gazebo>
+<gazebo reference="link3">
+	<material>Gazebo/Red</material>
+</gazebo>
+<gazebo reference="link4">
+	<material>Gazebo/Grey</material>
+</gazebo>
+<gazebo reference="link5">
+	<material>Gazebo/Red</material>
+</gazebo>
+<gazebo reference="link6">
+	<material>Gazebo/Black</material>
+</gazebo>
+
   <transmission name="tran1">
     <type>transmission_interface/SimpleTransmission</type>
     <joint name="joint_1">
