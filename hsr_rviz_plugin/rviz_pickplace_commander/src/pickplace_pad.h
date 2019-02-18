@@ -6,12 +6,12 @@
 #include <ros/console.h>
 #include <rviz/panel.h>                                     /* plugin基类的头文件 */
 
-#include "gripper_control/serial_open_srv.h"
-#include "gripper_control/close_srv.h"
-#include "gripper_control/open_srv.h"
-#include "gripper_control/stop_srv.h"
-#include "gripper_control/open_size_srv.h"
-#include "gripper_control/read_open_size_srv.h"
+#include "hsr_gripper_driver/serial_open_srv.h"
+#include "hsr_gripper_driver/close_srv.h"
+#include "hsr_gripper_driver/open_srv.h"
+#include "hsr_gripper_driver/stop_srv.h"
+#include "hsr_gripper_driver/open_size_srv.h"
+#include "hsr_gripper_driver/read_open_size_srv.h"
 
 #include <visualization_msgs/InteractiveMarkerFeedback.h>   /* 从模型读取坐标的头文件 */
 #include <geometry_msgs/Pose.h>                             /* 读取笛卡尔姿态头文件 */ 

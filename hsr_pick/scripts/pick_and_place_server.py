@@ -36,7 +36,7 @@ from tf.transformations import quaternion_from_euler
 from copy import deepcopy
 
 from hsr_pick.srv import *
-from gripper_control.srv import *
+from hsr_gripper_driver.srv import *
 
 GROUP_NAME_ARM = 'arm'
 GROUP_NAME_GRIPPER = 'gripper'

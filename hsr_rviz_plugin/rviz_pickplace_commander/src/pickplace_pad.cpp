@@ -57,11 +57,11 @@ namespace rviz_pickplace_commander
 		connect(m_pickPlaceWdg->runPickPlaceBtn,SIGNAL(clicked(bool)),this,SLOT(slotRunPickPlaceBtn()));
 	/******************ROS相关*********************************************************************/
         /* 创建串口打开客户端 */
-	    client_serialOpen = n_pickPlace.serviceClient<gripper_control::serial_open_srv>("serial_open");
-        client_gripperOpenSize = n_pickPlace.serviceClient<gripper_control::open_size_srv>("gripper_set_open_size");
-		client_gripperOpen = n_pickPlace.serviceClient<gripper_control::open_srv>("gripper_open");
-		client_gripperClose = n_pickPlace.serviceClient<gripper_control::close_srv>("gripper_close");
-		client_gripperStop = n_pickPlace.serviceClient<gripper_control::stop_srv>("gripper_stop");
+	    client_serialOpen = n_pickPlace.serviceClient<hsr_gripper_driver::serial_open_srv>("serial_open");
+        client_gripperOpenSize = n_pickPlace.serviceClient<hsr_gripper_driver::open_size_srv>("gripper_set_open_size");
+		client_gripperOpen = n_pickPlace.serviceClient<hsr_gripper_driver::open_srv>("gripper_open");
+		client_gripperClose = n_pickPlace.serviceClient<hsr_gripper_driver::close_srv>("gripper_close");
+		client_gripperStop = n_pickPlace.serviceClient<hsr_gripper_driver::stop_srv>("gripper_stop");
 		
 		/* 创建ORK模块相关客户端 */
 		client_objAdd = n_pickPlace.serviceClient<ork_interface::objAdd>("object_add");
@@ -132,7 +132,7 @@ namespace rviz_pickplace_commander
         //executeCMD(cmd,result);
 		//printf("%s", result);
 		
-		gripper_control::serial_open_srv serialOpen_srv;
+		hsr_gripper_driver::serial_open_srv serialOpen_srv;
 
 		/* 当前选中的串口设备号和波特率转成string类型后 传入服务参数*/
 		serialOpen_srv.request.serialNo = (std::string)("/dev/")+ m_serialWdg->serialNoComoBox->currentText().toStdString();
@@ -265,7 +265,7 @@ namespace rviz_pickplace_commander
 	    {
 	    	case 0:  //设置夹爪开口
 	    	{
-                gripper_control::open_size_srv gripperOpenSize_srv;
+                hsr_gripper_driver::open_size_srv gripperOpenSize_srv;
 
 		        gripperOpenSize_srv.request.max = m_gripperWdg->openMaxLineEdit->text().toInt();
 		        gripperOpenSize_srv.request.min = m_gripperWdg->openMinLineEdit->text().toInt();
@@ -302,7 +302,7 @@ namespace rviz_pickplace_commander
 	    {
 	    	case 0:     //夹爪打开
 	    	{
-                gripper_control::open_srv gripperOpen_srv;
+                hsr_gripper_driver::open_srv gripperOpen_srv;
 		        gripperOpen_srv.request.speed = gripperSpeed;
 				if(client_gripperOpen.call(gripperOpen_srv))
 				{
@@ -317,7 +317,7 @@ namespace rviz_pickplace_commander
 	    	}
 			case 1:    //夹爪关闭
 			{
-                gripper_control::close_srv gripperClose_srv;
+                hsr_gripper_driver::close_srv gripperClose_srv;
 				
 		        gripperClose_srv.request.speed = gripperSpeed;
 				gripperClose_srv.request.force = gripperForce;
@@ -335,7 +335,7 @@ namespace rviz_pickplace_commander
 			}
 			case 2:    //夹爪急停
 			{
-				gripper_control::stop_srv gripperStop_srv;
+				hsr_gripper_driver::stop_srv gripperStop_srv;
 				
 				if(client_gripperStop.call(gripperStop_srv))
 				{

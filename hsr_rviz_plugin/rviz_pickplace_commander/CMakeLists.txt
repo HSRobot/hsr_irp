@@ -12,11 +12,11 @@ find_package(catkin REQUIRED COMPONENTS
   rviz
   std_msgs
   serial
-  gripper_control
+  hsr_gripper_driver
 )
 
 catkin_package(
-  CATKIN_DEPENDS roscpp rviz std_msgs gripper_control
+  CATKIN_DEPENDS roscpp rviz std_msgs hsr_gripper_driver
 )
 
 include_directories(

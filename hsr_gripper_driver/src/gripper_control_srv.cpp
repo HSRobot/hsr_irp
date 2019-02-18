@@ -14,12 +14,12 @@
 
 #include "ros/ros.h"
 
-#include "gripper_control/serial_open_srv.h"
-#include "gripper_control/close_srv.h"
-#include "gripper_control/open_srv.h"
-#include "gripper_control/stop_srv.h"
-#include "gripper_control/open_size_srv.h"
-#include "gripper_control/read_open_size_srv.h"
+#include "hsr_gripper_driver/serial_open_srv.h"
+#include "hsr_gripper_driver/close_srv.h"
+#include "hsr_gripper_driver/open_srv.h"
+#include "hsr_gripper_driver/stop_srv.h"
+#include "hsr_gripper_driver/open_size_srv.h"
+#include "hsr_gripper_driver/read_open_size_srv.h"
 
 #include "serial/serial.h"
 
@@ -49,8 +49,8 @@ serial::Serial ros_ser;
 * @autor		wanghaoqing
 * @date			2018/10/10
 */
-bool serial_open(gripper_control::serial_open_srv::Request  &req,
-                 gripper_control::serial_open_srv::Response &res)
+bool serial_open(hsr_gripper_driver::serial_open_srv::Request  &req,
+                 hsr_gripper_driver::serial_open_srv::Response &res)
 {
      if(ros_ser.isOpen())
      {
@@ -97,8 +97,8 @@ bool serial_open(gripper_control::serial_open_srv::Request  &req,
 * @autor		wanghaoqing
 * @date			2018/09/18
 */
-bool close(gripper_control::close_srv::Request  &req,
-           gripper_control::close_srv::Response &res)
+bool close(hsr_gripper_driver::close_srv::Request  &req,
+           hsr_gripper_driver::close_srv::Response &res)
 {
   if(req.speed > 1000 || req.speed <1)
   {
@@ -155,8 +155,8 @@ bool close(gripper_control::close_srv::Request  &req,
 * @autor		wanghaoqing
 * @date			2018/09/18
 */
-bool open(gripper_control::open_srv::Request  &req,
-          gripper_control::open_srv::Response &res)
+bool open(hsr_gripper_driver::open_srv::Request  &req,
+          hsr_gripper_driver::open_srv::Response &res)
 {
   if(req.speed > 1000 || req.speed <1)
   {
@@ -195,8 +195,8 @@ bool open(gripper_control::open_srv::Request  &req,
 * @autor		wanghaoqing
 * @date			2018/09/18
 */
-bool stop(gripper_control::stop_srv::Request  &req,
-          gripper_control::stop_srv::Response &res)
+bool stop(hsr_gripper_driver::stop_srv::Request  &req,
+          hsr_gripper_driver::stop_srv::Response &res)
 {
 
   unsigned char stop_buffer[] = ARRAY_STOP_GRIPPER;
@@ -220,8 +220,8 @@ bool stop(gripper_control::stop_srv::Request  &req,
 * @autor		wanghaoqing
 * @date			2018/09/18
 */
-bool set_open_size(gripper_control::open_size_srv::Request  &req,
-                   gripper_control::open_size_srv::Response &res)
+bool set_open_size(hsr_gripper_driver::open_size_srv::Request  &req,
+                   hsr_gripper_driver::open_size_srv::Response &res)
 {
 
   if(req.max > 1000 || req.max <0)
@@ -278,8 +278,8 @@ bool set_open_size(gripper_control::open_size_srv::Request  &req,
 * @autor		wanghaoqing
 * @date			2018/09/18
 */
-bool get_open_size(gripper_control::read_open_size_srv::Request  &req,
-                   gripper_control::read_open_size_srv::Response &res)
+bool get_open_size(hsr_gripper_driver::read_open_size_srv::Request  &req,
+                   hsr_gripper_driver::read_open_size_srv::Response &res)
 {
 
   unsigned char buffer[] = ARRAY_GET_OPEN_SIZE_GRIPPER;

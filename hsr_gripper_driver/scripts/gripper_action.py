@@ -4,7 +4,7 @@ import roslib
 import rospy
 import actionlib
 from control_msgs.msg import FollowJointTrajectoryAction
-from gripper_control.srv import *
+from hsr_gripper_driver.srv import *
 from sensor_msgs.msg import JointState
 import time
 import thread

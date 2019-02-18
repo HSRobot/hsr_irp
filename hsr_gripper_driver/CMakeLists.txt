@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(gripper_control)
+project(hsr_gripper_driver)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -167,6 +167,9 @@ target_link_libraries(
    gripper_close_srv
    ${catkin_LIBRARIES}
 )
+
+add_dependencies(gripper_control_srv ${${PROJECT_NAME}_EXPORTED_TARGETS})
+add_dependencies(gripper_close_srv ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 #############
 ## Install ##

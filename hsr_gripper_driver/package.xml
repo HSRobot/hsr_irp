@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>gripper_control</name>
+  <name>hsr_gripper_driver</name>
   <version>0.0.0</version>
   <description>The gripper_control package</description>
 
