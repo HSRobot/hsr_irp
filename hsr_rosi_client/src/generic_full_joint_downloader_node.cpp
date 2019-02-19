@@ -1,8 +1,10 @@
 /*
  * Software License Agreement (BSD License)
  *
- * Copyright (c) 2012, Southwest Research Institute
+ * Copyright (c) 2019, Foshan Huashu Robotics Co.,Ltd
  * All rights reserved.
+ * 
+ * Author: Kunlin Xu <1125290220@qq.com>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:

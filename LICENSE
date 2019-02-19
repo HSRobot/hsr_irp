@@ -3,8 +3,6 @@
  *
  * Copyright (c) 2019, Foshan Huashu Robotics Co.,Ltd
  * All rights reserved.
- * 
- * Author: Kunlin Xu <1125290220@qq.com>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -30,21 +28,3 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-
-#include "joint_trajectory_cubic_downloader.h"
-
-using industrial_robot_client::joint_trajectory_downloader::JointTrajectoryCubicDownloader;
-
-int main(int argc, char** argv)
-{
-  // initialize node
-  ros::init(argc, argv, "motion_interface");
-
-  // launch the default JointTrajectoryDownloader connection/handlers
-  JointTrajectoryCubicDownloader motionInterface;
-  motionInterface.init();
-  motionInterface.run();
-
-  return 0;
-}
