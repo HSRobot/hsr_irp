@@ -1,18 +1,25 @@
 # 1.简介
    此仓库为HIROP的软件平台，包含华数机器人部分机械臂的URDF模型、moveit配置、gazebo配置、ROS-I驱动包、夹爪驱动包、rviz控制面板、抓取Demo、抓取仿真环境、基础Demo等示例开发包。
+
    此平台遵循BSD开源协议。
+
    支持indigo、kinetic版本。如需下载kinetic版本，请将分支切换至kinetic分支。
+
    维护者: Kunlin Xu(1125290220@qq.com)
+
 
 # 2.准备工作
 
 ## 2.1 环境安装
    请先对ROS环境进行安装，支持indigo以及kinetic版本。
+
    ROS相关教程可参考：[完整的安装教程](https://github.com/HSRobot/hsr_irp/blob/master/ROS-install.md)
 
 ## 2.2安装gazebo模型
    由于indigo版本的gazebo模型源地址更换，所以无法自动获取完整的gazebo模型，按照以下步骤进行离线安装：
+
    1.从[此链接](https://bitbucket.org/osrf/gazebo_models/downloads/)处下载完整的gazebo模型压缩包
+
    2.将模型解压至 ~/.gazebo/modles 文件夹中
 
 # 3.实验之前说明
