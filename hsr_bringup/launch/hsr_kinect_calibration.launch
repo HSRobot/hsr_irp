@@ -22,9 +22,20 @@
         <param name="camera_frame"       value="kinect2_rgb_optical_frame"/>
         <param name="marker_frame"       value="camera_marker" />
     </node>
+   
+ 
+
+<include 
+	file="$(find hsr_description)/launch/br606_upload.launch"/>
+
+<include
+	file="$(find hsr_rosi_client)/launch/robot_full_interface_download.launch">
+	<arg name="robot_ip" default="10.10.56.214"/>
+  </include>
 
     <!-- start the robot -->
 	<include file="$(find br606_moveit_config)/launch/hsr_br606_moveit_planning_execution.launch">
+        <arg name="sim" default="false"/>
     </include>
 
     <!-- start easy_handeye -->

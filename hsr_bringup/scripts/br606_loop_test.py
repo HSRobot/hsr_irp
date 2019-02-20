@@ -50,7 +50,8 @@ base_table_pose.header.frame_id = REFERENCE_FRAME
 base_table_pose.pose.position.x = 0.0
 base_table_pose.pose.position.y = 0.0
 #base_table_pose.pose.position.z = TABLE_GROUND - base_table_size[2] / 2.0
-base_table_pose.pose.position.z = TABLE_GROUND - 0.45
+
+base_table_pose.pose.position.z = TABLE_GROUND +0.5#-0.45
 base_table_pose.pose.orientation.w = 1.0
 scene.add_box(base_table_id, base_table_pose, base_table_size)
 
