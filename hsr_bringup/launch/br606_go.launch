@@ -2,12 +2,25 @@
 <launch>
 
   <arg name="sip" default="10.10.56.214" />
+  <arg name="have_gripper" default="false" />
 
+  <!-- no gripper -->
   <include 
-	file="$(find hsr_description)/launch/br606_upload.launch"/>
+	file="$(find hsr_description)/launch/br606_upload.launch" unless="$(arg have_gripper)"/>
 
+  <!-- if have gripper -->
+  <include 
+	file="$(find hsr_description)/launch/br606_with_gripper_kinect_upload.launch" if="$(arg have_gripper)" />
+
+  <!-- no gripper -->
   <include
-	file="$(find br606_moveit_config)/launch/hsr_br606_moveit_planning_execution.launch">
+	file="$(find br606_moveit_config)/launch/hsr_br606_moveit_planning_execution.launch" unless="$(arg have_gripper)">
+	<arg name="sim" default="false"/>
+  </include>
+
+  <!-- if have gripper -->
+  <include
+	file="$(find br606_gripper_moveit_config)/launch/hsr_br606_moveit_planning_execution.launch" if="$(arg have_gripper)">
 	<arg name="sim" default="false"/>
   </include>
 

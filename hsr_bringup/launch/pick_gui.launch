@@ -4,6 +4,12 @@
   <include 
 	file="$(find hsr_bringup)/launch/ork_interface.launch"/>
 
+  <include 
+	file="$(find easy_handeye)/launch/publish.launch">
+	<arg name="eye_on_hand" value="false"/>
+	<arg name="namespace_prefix" value="hsr_kinect_handeyecalibration"/>
+  </include>
+
   <node
     name="pick_server"
     pkg="hsr_pick"
@@ -18,19 +24,5 @@
     name="gripper_action"
     pkg="hsr_gripper_driver"
     type="gripper_action.py"/>
-
-
-  <include 
-	file="$(find br606_gripper_moveit_config)/launch/hsr_br606_moveit_planning_execution.launch">
-  </include>
-
-  <include 
-	file="$(find br606_gripper_moveit_config)/launch/moveit_rviz.launch"/>
-
-
-<!--
-  <include 
-	file="$(find ur5_pick_moveit_config)/launch/demo.launch"/>
--->
-
+	
 </launch>

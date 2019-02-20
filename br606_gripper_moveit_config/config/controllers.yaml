@@ -20,4 +20,3 @@ controller_list:
       - right_finger_1_joint
       - right_finger_2_joint
 
-/follow_joint_trajectory/gripper_controller/goal
