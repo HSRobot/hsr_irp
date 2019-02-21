@@ -39,20 +39,24 @@
 #include <pcl/compression/octree_pointcloud_compression.h>
 #include <sstream>
 #include <hsr_pcl/LoadPCD.h>
+
 #include <hsr_pcl/SavePCD.h>
 
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 
 pcl::PointCloud<pcl::PointXYZ>::Ptr cloudOut (new pcl::PointCloud<pcl::PointXYZ> ());
+pcl::PointCloud<pcl::PointXYZ>::Ptr cloudSave(new pcl::PointCloud<pcl::PointXYZ>());
 ros::Publisher pub;
 
 bool flage = false;
+bool flage_table = false;
 
 /**
     save the point cloud as pcd file
  * */
 int savePCD(std::string fileName){
-    pcl::io::savePCDFileASCII (fileName, *cloudOut);
+    //pcl::io::savePCDFileASCII (fileName, *cloudOut);
+    pcl::io::savePCDFileASCII (fileName, *cloudSave);
     ROS_INFO("save pcd success");
 }
 
@@ -106,19 +110,42 @@ void kinect_data_cb(const sensor_msgs::PointCloud2::ConstPtr & msg){
     cloudOut->points.resize (cloudOut->width * cloudOut->height);
 
     for (size_t i = 0; i < cloud->points.size (); ++i)
-        if(cloud->points[i].z < 1.5)
+        if(cloud->points[i].z < 3.5&&cloud->points[i].y > 0.10)
             cloudOut->points[i] =cloud->points[i];
 
 	flage = true;
     pubPointCloud();
 }
 
+void
+kinect_data_table(const sensor_msgs::PointCloud2::ConstPtr & msg){
+    
+    if(flage_table)
+        return;
+    pcl::PointCloud<pcl::PointXYZ>::Ptr cloudsave(new pcl::PointCloud<pcl::PointXYZ>());
+
+    const sensor_msgs::PointCloud2 tmp = *msg;
+    pcl::fromROSMsg(tmp, *cloudsave);
+
+    cloudSave->width = cloudsave->width;
+    cloudSave->height = cloudsave->height;
+    cloudSave->points.resize (cloudSave->width * cloudSave->height);
+
+    for(size_t i = 0;i<cloudsave->points.size();i++)
+    {
+        //if(cloud->point[i].z < 1.5)
+            cloudSave ->points[i] = cloudsave ->points[i];
+    }
+    flage_table = true;
+}
+
 int main(int argc, char** argv)
 {
-  ros::init (argc, argv, "kinect_filter");
-  ros::NodeHandle nh;
+  ros::init (argc, argv, "kinect_filter");//initialize node name
+  ros::NodeHandle nh;                       //node Handle
   pub = nh.advertise<sensor_msgs::PointCloud2> ("/filter_points", 1);
   ros::Subscriber sub = nh.subscribe<sensor_msgs::PointCloud2>("/kinect2/qhd/points", 1, kinect_data_cb);
+  ros::Subscriber sub_table = nh.subscribe<sensor_msgs::PointCloud2>("/move_group/filtered_cloud",1,kinect_data_table);
   ros::ServiceServer saveSrv = nh.advertiseService("savePCD", saveSrvCb);
   ros::ServiceServer loadSrv = nh.advertiseService("loadPCD", loadSrvCb);
   ros::spin();
