@@ -56,8 +56,6 @@ def publish_joint_state(tname):
 
 if __name__ == '__main__':
     rospy.init_node('gripper_action_server')
-    global close_client
-    global open_client
     server = actionlib.ActionServer("gripper_controller/follow_joint_trajectory", FollowJointTrajectoryAction,
                                              on_goal, on_cancel, auto_start=False)
 
