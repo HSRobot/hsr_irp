@@ -137,21 +137,35 @@ namespace rviz_pickplace_commander
 		m_pickPlaceWdg->pickPlaceStatusTextEdit->append(tr("join the function of slotSerialNoComoBoxClicked"));
 		
 		glob_t ttyUSBpath_buf;
+        glob_t ttySpath_buf;
         int i;
         glob("/dev/ttyUSB*",GLOB_NOSORT, NULL, &ttyUSBpath_buf);		
+        glob("/dev/ttyS*",GLOB_NOSORT, NULL, &ttySpath_buf);
         
 		m_serialWdg->serialNoComoBox->clear();           /* 触发该槽函数后，清除设备备选号，防止在旧的设备号后追加 */
 		
+
         for(i=0; i < ttyUSBpath_buf.gl_pathc; i++)
         {
 			m_pickPlaceWdg->pickPlaceStatusTextEdit->append(QString::fromStdString(ttyUSBpath_buf.gl_pathv[i]));
 			
 			QFileInfo ttyUSBpath_Info = QFileInfo(QString::fromStdString(ttyUSBpath_buf.gl_pathv[i]));			
-			/* 将搜索到的ttyUSB添加到备选设备号下拉框中 */
+			// 将搜索到的ttyUSB添加到备选设备号下拉框中 
 			m_serialWdg->serialNoComoBox->addItem(ttyUSBpath_Info.fileName()); 
         }
- 
+
+
+        for(i=0; i < ttySpath_buf.gl_pathc; i++)
+        {
+			m_pickPlaceWdg->pickPlaceStatusTextEdit->append(QString::fromStdString(ttySpath_buf.gl_pathv[i]));
+			
+			QFileInfo ttySpath_Info = QFileInfo(QString::fromStdString(ttySpath_buf.gl_pathv[i]));			
+			// 将搜索到的ttyS添加到备选设备号下拉框中 
+			m_serialWdg->serialNoComoBox->addItem(ttySpath_Info.fileName()); 
+        }
+        
         globfree(&ttyUSBpath_buf);
+        globfree(&ttySpath_buf);
 	}
 	
 	void PickPlacePanel::slotSerialConnectBtn()
@@ -167,12 +181,13 @@ namespace rviz_pickplace_commander
 
 		/* 当前选中的串口设备号和波特率转成string类型后 传入服务参数*/
 		serialOpen_srv.request.serialNo = (std::string)("/dev/")+ m_serialWdg->serialNoComoBox->currentText().toStdString();
+        //serialOpen_srv.request.serialNo = "/dev/ttyUSB0";
 		serialOpen_srv.request.baudrate = m_serialWdg->baudrateComoBox->currentText().toInt();
         m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Baudrate:");
 		m_pickPlaceWdg->pickPlaceStatusTextEdit->append(QString::number(serialOpen_srv.request.baudrate, 10));
 		m_pickPlaceWdg->pickPlaceStatusTextEdit->append("SerialNo:");
 		m_pickPlaceWdg->pickPlaceStatusTextEdit->append(m_serialWdg->serialNoComoBox->currentText());
-		
+
 		if(client_serialOpen.call(serialOpen_srv))
 		{
 			m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Serial Port opened!!!");

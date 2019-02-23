@@ -41,6 +41,7 @@
 #include <hsr_pcl/LoadPCD.h>
 
 #include <hsr_pcl/SavePCD.h>
+#include <hsr_pcl/Filter_Point_Again.h>
 
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 
@@ -92,6 +93,15 @@ bool loadSrvCb(hsr_pcl::LoadPCD::Request  &req,
   return true;
 }
 
+bool filter_point_again(hsr_pcl::Filter_Point_Again::Request  &req,
+         hsr_pcl::Filter_Point_Again::Response &res)
+{
+  
+  flage = false;
+  ROS_INFO("request: filter_point_again service succeed!");
+  return true;
+}
+
 
 
 
@@ -110,7 +120,7 @@ void kinect_data_cb(const sensor_msgs::PointCloud2::ConstPtr & msg){
     cloudOut->points.resize (cloudOut->width * cloudOut->height);
 
     for (size_t i = 0; i < cloud->points.size (); ++i)
-        if(cloud->points[i].z < 3.5&&cloud->points[i].y > 0.10)
+        if(cloud->points[i].z > 0.1 && cloud->points[i].z < 2.8 && cloud->points[i].y > 0.10)
             cloudOut->points[i] =cloud->points[i];
 
 	flage = true;
@@ -148,5 +158,6 @@ int main(int argc, char** argv)
   ros::Subscriber sub_table = nh.subscribe<sensor_msgs::PointCloud2>("/move_group/filtered_cloud",1,kinect_data_table);
   ros::ServiceServer saveSrv = nh.advertiseService("savePCD", saveSrvCb);
   ros::ServiceServer loadSrv = nh.advertiseService("loadPCD", loadSrvCb);
+  ros::ServiceServer Filter_p_Again = nh.advertiseService("filter_point_again", filter_point_again);
   ros::spin();
 }

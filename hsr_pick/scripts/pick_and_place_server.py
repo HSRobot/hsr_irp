@@ -111,7 +111,7 @@ class MoveItDemo:
 
         # Give each of the scene objects a unique name
         base_table_id = 'base_table'        
-        table_id = 'table'
+        #table_id = 'table'
         #box1_id = 'box1'
         #box2_id = 'box2'
         target_id = 'target'
@@ -119,7 +119,7 @@ class MoveItDemo:
                 
         # Remove leftover objects from a previous run
         scene.remove_world_object(base_table_id)
-        scene.remove_world_object(table_id)
+        #scene.remove_world_object(table_id)
         #scene.remove_world_object(box1_id)
         #scene.remove_world_object(box2_id)
         scene.remove_world_object(target_id)
@@ -141,7 +141,7 @@ class MoveItDemo:
 
         # Set the dimensions of the scene objects [l, w, h]
         base_table_size = [2, 2, 0.04]
-        table_size = [0.2, 0.7, 0.01]
+        #table_size = [0.2, 0.7, 0.01]
         #box1_size = [0.1, 0.05, 0.05]
         #box2_size = [0.05, 0.05, 0.15]
         
@@ -168,13 +168,13 @@ class MoveItDemo:
 
 
         # Add a table top and two boxes to the scene
-        table_pose = PoseStamped()
-        table_pose.header.frame_id = REFERENCE_FRAME
-        table_pose.pose.position.x = 0.5
-        table_pose.pose.position.y = -0.4
-        table_pose.pose.position.z = table_ground + table_size[2] / 2.0
-        table_pose.pose.orientation.w = 1.0
-        scene.add_box(table_id, table_pose, table_size)       
+        #table_pose = PoseStamped()
+        #table_pose.header.frame_id = REFERENCE_FRAME
+        #table_pose.pose.position.x = 0.5
+        #table_pose.pose.position.y = -0.4
+        #table_pose.pose.position.z = table_ground + table_size[2] / 2.0
+        #table_pose.pose.orientation.w = 1.0
+        #scene.add_box(table_id, table_pose, table_size)       
     
         # Set the target pose in between the boxes and on the table
         target_pose = PoseStamped()
@@ -193,7 +193,7 @@ class MoveItDemo:
         scene.add_box(target_id, target_pose, target_size)
         
         # Make the table red and the boxes orange
-        self.setColor(table_id, 0.8, 0, 0, 1.0)
+        #self.setColor(table_id, 0.8, 0, 0, 1.0)
 #        self.setColor(box1_id, 0.8, 0.4, 0, 1.0)
 #        self.setColor(box2_id, 0.8, 0.4, 0, 1.0)
         
@@ -204,9 +204,10 @@ class MoveItDemo:
         self.sendColors()
         
         # Set the support surface name to the table object
-        pick_arm.set_support_surface_name(table_id)
+        #pick_arm.set_support_surface_name(table_id)
         
-        # Specify a pose to place the target after being picked up
+        # Specify a pose to place the target after being picked up 
+		#指定拾取后的放置目标姿态
         place_pose = PoseStamped()
         place_pose.header.frame_id = REFERENCE_FRAME
         place_pose.pose.position.x = placePos.pose.position.x
@@ -219,6 +220,7 @@ class MoveItDemo:
         place_pose.pose.orientation.z = placePos.pose.orientation.z
 
         # Initialize the grasp pose to the target pose
+		#初始化抓取目标点位
         grasp_pose = target_pose
         
         # Shift the grasp pose by half the width of the target to center it
@@ -238,6 +240,7 @@ class MoveItDemo:
         n_attempts = 0
         
         # Repeat until we succeed or run out of attempts
+		#重复直到成功或者超出尝试的次数
         while result != MoveItErrorCodes.SUCCESS and n_attempts < max_pick_attempts:
             n_attempts += 1
             rospy.loginfo("Pick attempt: " +  str(n_attempts))
@@ -245,6 +248,7 @@ class MoveItDemo:
             rospy.sleep(0.2)
         
         # If the pick was successful, attempt the place operation   
+		#如果抓取成功，尝试放置操作
         if result == MoveItErrorCodes.SUCCESS:
             result = None
             n_attempts = 0 
@@ -268,6 +272,7 @@ class MoveItDemo:
             rospy.loginfo("Pick operation failed after " + str(n_attempts) + " attempts.")
                 
         # Return the arm to the "home" pose stored in the SRDF file
+		#将机械臂返回到SRDF中的“home”姿态
         pick_arm.set_named_target(ARM_HOME_POSE)
         pick_arm.go()
         

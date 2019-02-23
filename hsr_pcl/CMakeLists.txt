@@ -18,6 +18,7 @@ add_service_files(
    FILES
   LoadPCD.srv
   SavePCD.srv
+  Filter_Point_Again.srv
 )
 
 generate_messages(
