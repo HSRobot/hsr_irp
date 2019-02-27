@@ -2,7 +2,7 @@
 <package format="2">
   <name>hsr_description</name>
   <version>1.0.0</version>
-  <description>The hsr_description br606/609 jr605 co602 package</description>
+  <description>The hsr_description br606/609 jr605/603 co602 package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
