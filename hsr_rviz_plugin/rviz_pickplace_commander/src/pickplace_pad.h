@@ -173,6 +173,7 @@ private:
 	
 	TRAINED_MODEL *m_trainingMdoel;
 	T_POSE_FORM_CAMERA *m_poseFromCamera;
+    T_POSE_FORM_CAMERA *m_poseFrom3ds;
 	
 	QString newAddModel_ID;
 	
@@ -180,6 +181,8 @@ private:
 	//std::vector<geometry_msgs::PoseStamped> base_detectPoseFromCamera;
 	geometry_msgs::PoseStamped *detectPoseFromCamera;
 	geometry_msgs::PoseStamped *base_detectPoseFromCamera;
+    geometry_msgs::PoseStamped *detectPoseFrom3d;
+    geometry_msgs::PoseStamped *base_detectPoseFrom3d;
 
     int num_detectedObj;          /*本次监测到的识别物体值*/
     int pro_num_detectedObj;      /*上一次监测到的识别物体值*/

@@ -32,4 +32,8 @@
   <include 
 	file="$(find br606_moveit_config)/launch/moveit_rviz.launch"/>
 
+  <!-- if have gripper -->
+  <!--include 
+	file="$(find hsr_bringup)/launch/pick_gui.launch" if="$(arg have_gripper)" /-->
+
 </launch>

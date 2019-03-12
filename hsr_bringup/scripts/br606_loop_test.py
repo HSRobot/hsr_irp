@@ -93,7 +93,7 @@ scene.add_box(backward_wall_id, backward_wall_pose, backward_wall_size)
 
 # Give the scene a chance to catch up    
 rospy.sleep(2)
-group.set_max_velocity_scaling_factor(0.8)
+group.set_max_velocity_scaling_factor(0.2)
 while not rospy.core.is_shutdown():
 	group.set_random_target()
 	group.go(wait=True)

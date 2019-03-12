@@ -140,7 +140,7 @@ namespace rviz_pickplace_commander
         glob_t ttySpath_buf;
         int i;
         glob("/dev/ttyUSB*",GLOB_NOSORT, NULL, &ttyUSBpath_buf);		
-        glob("/dev/ttyS*",GLOB_NOSORT, NULL, &ttySpath_buf);
+        //glob("/dev/ttyS*",GLOB_NOSORT, NULL, &ttySpath_buf);
         
 		m_serialWdg->serialNoComoBox->clear();           /* 触发该槽函数后，清除设备备选号，防止在旧的设备号后追加 */
 		
@@ -154,18 +154,25 @@ namespace rviz_pickplace_commander
 			m_serialWdg->serialNoComoBox->addItem(ttyUSBpath_Info.fileName()); 
         }
 
-
-        for(i=0; i < ttySpath_buf.gl_pathc; i++)
+        m_serialWdg->serialNoComoBox->addItem("ttyS0"); 
+        m_serialWdg->serialNoComoBox->addItem("ttyS1"); 
+        m_serialWdg->serialNoComoBox->addItem("ttyS2"); 
+        m_serialWdg->serialNoComoBox->addItem("ttyS3"); 
+        m_serialWdg->serialNoComoBox->addItem("ttyS4"); 
+        m_serialWdg->serialNoComoBox->addItem("ttyS5"); 
+        /*
+        for(i=ttySpath_buf.gl_pathc; i >= 0;i--)
         {
-			m_pickPlaceWdg->pickPlaceStatusTextEdit->append(QString::fromStdString(ttySpath_buf.gl_pathv[i]));
+			//m_pickPlaceWdg->pickPlaceStatusTextEdit->append(QString::fromStdString(ttySpath_buf.gl_pathv[i]));
 			
-			QFileInfo ttySpath_Info = QFileInfo(QString::fromStdString(ttySpath_buf.gl_pathv[i]));			
+			//QFileInfo ttySpath_Info = QFileInfo(QString::fromStdString(ttySpath_buf.gl_pathv[i]));			
 			// 将搜索到的ttyS添加到备选设备号下拉框中 
 			m_serialWdg->serialNoComoBox->addItem(ttySpath_Info.fileName()); 
         }
+        */
         
         globfree(&ttyUSBpath_buf);
-        globfree(&ttySpath_buf);
+        //globfree(&ttySpath_buf);
 	}
 	
 	void PickPlacePanel::slotSerialConnectBtn()
@@ -818,19 +825,57 @@ namespace rviz_pickplace_commander
 	}
 	void PickPlacePanel::poseFrom3d_callback(const visualization_msgs::InteractiveMarkerFeedback::ConstPtr& msg)
 	{
-		//
-		float X = msg->pose.position.x;
-		float Y = msg->pose.position.y;
-		float Z = msg->pose.position.z;
+        detectPoseFrom3d = new geometry_msgs::PoseStamped[1];
+		base_detectPoseFrom3d = new geometry_msgs::PoseStamped[1];
+		//m_poseFrom3d = new T_POSE_FORM_CAMERA[1];
 		
-		float q0 = msg->pose.orientation.w;
-		float q1 = msg->pose.orientation.x;
-		float q2 = msg->pose.orientation.y;
-		float q3 = msg->pose.orientation.z;
+		tf::TransformListener listener;
+		geometry_msgs::PoseStamped base_temp;
+		
+	    detectPoseFrom3d[0].header.seq = 1;
+		detectPoseFrom3d[0].header.frame_id = "world";
+			
+		detectPoseFrom3d[0].pose = msg->pose;
+        ROS_ERROR("detectPoseFrom3d[0].pose.X:%f",detectPoseFrom3d[0].pose.position.x);
+			
+	    while(1)
+        {
+        	static int count =0;
+		    try
+		    {
+				listener.transformPose("base_link",detectPoseFrom3d[0],base_detectPoseFrom3d[0]);
+			}
+			catch(tf::TransformException &ex)
+			{
+		         ROS_ERROR("%s",ex.what());
+		         ros::Duration(1.0).sleep();
+                 ROS_ERROR("form world frame to Base frame failed !!!");
+		    }
+
+            if((base_detectPoseFrom3d[0].pose.position.x !=0.0 )&& (base_detectPoseFrom3d[0].pose.position.y !=0.0))
+                 break;
+                /* 循环100次，若还未读到坐标则跳出 */
+            count++;
+            if(count >100)
+            {
+               ROS_ERROR("form world frame to Base frame failed !!!");
+               break;
+            }
+        }
+		
+		float X = base_detectPoseFrom3d[0].pose.position.x;
+		float Y = base_detectPoseFrom3d[0].pose.position.y;
+		float Z = base_detectPoseFrom3d[0].pose.position.z;
+		
+		float q0 = base_detectPoseFrom3d[0].pose.orientation.w;
+		float q1 = base_detectPoseFrom3d[0].pose.orientation.x;
+		float q2 = base_detectPoseFrom3d[0].pose.orientation.y;
+		float q3 = base_detectPoseFrom3d[0].pose.orientation.z;
 		
 		float A = atan2(2*(q0*q1+q2*q3),1-2*(q1*q1+q2*q2));
 		float B = asin(2*(q0*q2-q1*q3));
 		float C = atan2(2*(q0*q3+q1*q2),1-2*(q2*q2+q3*q3));
+
 		
 		if(m_pickPlaceWdg->getPlacePoseMeans->currentIndex()==0)
 		{
@@ -863,6 +908,8 @@ namespace rviz_pickplace_commander
 		    m_pickPlaceWdg->pickEulerPlineEdit->setText(QString::number(B*180/PI, 'f', 3));
 		    m_pickPlaceWdg->pickEulerYlineEdit->setText(QString::number(C*180/PI, 'f', 3));
 		}
+
+        
 	}
 	
 	void PickPlacePanel::slotGetPickPoseMeansComoBox(int index)

@@ -79,7 +79,7 @@ class MoveItDemo:
         # Initialize the move group for the right arm
         pick_arm = MoveGroupCommander(GROUP_NAME_ARM)
         
-        # Initialize the move group for the right gripper
+        # Initialize the momitive group for the right gripper
         pick_gripper = MoveGroupCommander(GROUP_NAME_GRIPPER)
         
         # Get the name of the end-effector link
@@ -98,7 +98,7 @@ class MoveItDemo:
         pick_arm.set_planner_id("RRTConnectkConfigDefault")        
 
         # Allow 5 seconds per planning attempt
-        pick_arm.set_planning_time(5)
+        pick_arm.set_planning_time(10)
         
         # Set a limit on the number of pick attempts before bailing
         max_pick_attempts = 5
@@ -111,9 +111,6 @@ class MoveItDemo:
 
         # Give each of the scene objects a unique name
         base_table_id = 'base_table'        
-        #table_id = 'table'
-        #box1_id = 'box1'
-        #box2_id = 'box2'
         target_id = 'target'
         #tool_id = 'tool'
                 
@@ -146,7 +143,7 @@ class MoveItDemo:
         #box2_size = [0.05, 0.05, 0.15]
         
         # Set the target size [l, w, h]
-        target_size = [0.02, 0.01, 0.04]
+        target_size = [0.055, 0.055, 0.12]
         
         # Add a base table to the scene
         base_table_pose = PoseStamped()
@@ -179,10 +176,6 @@ class MoveItDemo:
         # Set the target pose in between the boxes and on the table
         target_pose = PoseStamped()
         target_pose.header.frame_id = REFERENCE_FRAME
-#        target_pose.pose.position.x = 0.47
-#        target_pose.pose.position.y = -0.4
-#        target_pose.pose.position.z = table_ground + table_size[2] + target_size[2] / 2.0
-#        target_pose.pose.orientation.w = 1.0
 
         target_pose.pose.position.x = pickPos.pose.position.x
         target_pose.pose.position.y = pickPos.pose.position.y
@@ -212,12 +205,12 @@ class MoveItDemo:
         place_pose.header.frame_id = REFERENCE_FRAME
         place_pose.pose.position.x = placePos.pose.position.x
         place_pose.pose.position.y = placePos.pose.position.y
-        #z方向取桌面高度table_ground + 桌面厚度table_size[2] + 目标物体高度的一半target_size[2] / 2.0
         place_pose.pose.position.z = placePos.pose.position.z
         place_pose.pose.orientation.w = placePos.pose.orientation.w
         place_pose.pose.orientation.x = placePos.pose.orientation.x
         place_pose.pose.orientation.y = placePos.pose.orientation.y
         place_pose.pose.orientation.z = placePos.pose.orientation.z
+
 
         # Initialize the grasp pose to the target pose
 		#初始化抓取目标点位
@@ -246,14 +239,18 @@ class MoveItDemo:
             rospy.loginfo("Pick attempt: " +  str(n_attempts))
             result = pick_arm.pick(target_id, grasps)
             rospy.sleep(0.2)
-        
         # If the pick was successful, attempt the place operation   
 		#如果抓取成功，尝试放置操作
-        if result == MoveItErrorCodes.SUCCESS:
-            result = None
-            n_attempts = 0 
+        result = None
+        n_attempts = 2
+        #if result == MoveItErrorCodes.SUCCESS:
+        while result != MoveItErrorCodes.SUCCESS and n_attempts < max_pick_attempts:      
             # Generate valid place poses
             #places = self.make_places(place_pose)
+            n_attempts += 1
+            print("-------------------")
+            print(place_pose)
+            pick_arm.set_start_state_to_current_state()
             pick_arm.set_pose_target(place_pose)
             # Repeat until we succeed or run out of attempts
             #while result != MoveItErrorCodes.SUCCESS and n_attempts < max_place_attempts:
@@ -264,15 +261,18 @@ class MoveItDemo:
             #        if result == MoveItErrorCodes.SUCCESS:
             #            break
             #    rospy.sleep(0.2)
-            pick_arm.go(wait=True)
+            result = pick_arm.go(wait=True)
+            rospy.logerr("pick_arm.go： " + str(result))
             open_client(500)
+            rospy.sleep(0.2)
             if result != MoveItErrorCodes.SUCCESS:
-                rospy.loginfo("Place operation failed after " + str(n_attempts) + " attempts.")
-        else:
-            rospy.loginfo("Pick operation failed after " + str(n_attempts) + " attempts.")
+                rospy.logerr("Place operation failed after " + str(n_attempts) + " attempts.")
+        #else:
+        #    rospy.loginfo("Pick operation failed after " + str(n_attempts) + " attempts.")
                 
         # Return the arm to the "home" pose stored in the SRDF file
 		#将机械臂返回到SRDF中的“home”姿态
+        open_client(500)
         pick_arm.set_named_target(ARM_HOME_POSE)
         pick_arm.go()
         

@@ -62,7 +62,8 @@ bool serial_open(hsr_gripper_driver::serial_open_srv::Request  &req,
 	try
 	{
 	    ros_ser.setPort(req.serialNo);
-	    ROS_ERROR_STREAM("serial No. ");
+	    ROS_ERROR_STREAM("serial No.:");
+        ROS_ERROR_STREAM((std::string)req.serialNo);
 	    ros_ser.setBaudrate((int)req.baudrate);
 	    serial::Timeout to = serial::Timeout::simpleTimeout(1000);
 	    ros_ser.setTimeout(to);
@@ -134,12 +135,25 @@ bool close(hsr_gripper_driver::close_srv::Request  &req,
                                                       close_buffer[6] + close_buffer[7] + close_buffer[8])&0xFF);
 
   ros_ser.write(close_buffer,size_close_buffer);
-  ROS_INFO("THE COMMAND OF --CLOSE-- HAS BEEN LOADED!!!");
-  //ROS_INFO("[0x%02x]",close_buffer[7]);
-  //ROS_INFO("close_buffer[5],[0x%02x]",close_buffer[5]);
-  //ROS_INFO("close_buffer[6],[0x%02x]",close_buffer[6]);
-  //ROS_INFO("close_buffer[9],[0x%02x]",close_buffer[9]);
+  ROS_ERROR_STREAM("THE COMMAND OF --CLOSE-- HAS BEEN LOADED!!!");
+/*
+  for(int i=0;i<10;i++)
+  {
+     //ROS_ERROR_STREAM(i);
+     ROS_ERROR_STREAM("CLOSE:");
+     ROS_ERROR_STREAM(close_buffer[i]);
+  }
 
+  ROS_ERROR_STREAM("close_buffer[7]");
+  ROS_ERROR_STREAM(close_buffer[7]);
+  ROS_ERROR_STREAM("close_buffer[5]");
+  ROS_ERROR_STREAM(close_buffer[5]);
+  ROS_ERROR_STREAM("close_buffer[6]");
+  ROS_ERROR_STREAM(close_buffer[6]);
+  ROS_ERROR_STREAM("close_buffer[9]");
+  ROS_ERROR_STREAM(close_buffer[9]);
+*/
+  ROS_ERROR_STREAM("gripper closed!");
   res.closed = true;
  
  return true;
@@ -181,6 +195,7 @@ bool open(hsr_gripper_driver::open_srv::Request  &req,
    ROS_INFO("THE COMMAND OF --OPEN-- HAS BEEN LOADED!!!");
 
    res.opened = true;
+   ROS_ERROR_STREAM("gripper open!");
 
  return true;
 }
