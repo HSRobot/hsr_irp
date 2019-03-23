@@ -7,6 +7,7 @@
   
   <!-- Launch moveit -->
   <include file="$(find jr603_moveit_config)/launch/move_group.launch">
+	<arg name="sim" value="$(arg sim)" />
   </include>
 </launch>
 

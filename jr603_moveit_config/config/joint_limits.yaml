@@ -3,32 +3,52 @@
 # Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
 joint_limits:
   joint_1:
-    has_velocity_limits: false
-    max_velocity: 0
-    has_acceleration_limits: false
-    max_acceleration: 0
+    has_velocity_limits: true
+    max_velocity: 1.47
+    has_acceleration_limits: true
+    max_acceleration: 1.47
+    has_position_limits: true
+    max_position: 3.132866
+    min_position: -3.132866
   joint_2:
-    has_velocity_limits: false
-    max_velocity: 0
-    has_acceleration_limits: false
-    max_acceleration: 0
+    has_velocity_limits: true
+    max_velocity: 1.47
+    has_acceleration_limits: true
+    max_acceleration: 1.47
+    has_position_limits: true
+    max_position: 0.0785398
+    min_position: -2.696533
   joint_3:
-    has_velocity_limits: false
-    max_velocity: 0
-    has_acceleration_limits: false
-    max_acceleration: 0
+    has_velocity_limits: true
+    max_velocity: 1.47
+    has_acceleration_limits: true
+    max_acceleration: 1.47
+    has_position_limits: true
+    max_position: 4.18
+    min_position: -0.340339
   joint_4:
-    has_velocity_limits: false
-    max_velocity: 0
-    has_acceleration_limits: false
-    max_acceleration: 0
+    has_velocity_limits: true
+    max_velocity: 1.47
+    has_acceleration_limits: true
+    max_acceleration: 1.47
+    has_position_limits: true
+    max_position: 3.132866
+    min_position: -3.132866
   joint_5:
-    has_velocity_limits: false
-    max_velocity: 0
-    has_acceleration_limits: false
-    max_acceleration: 0
+    has_velocity_limits: true
+    max_velocity: 1.47
+    has_acceleration_limits: true
+    max_acceleration: 1.47
+    has_position_limits: true
+    max_position: 1.649336
+    min_position: -1.649336
   joint_6:
-    has_velocity_limits: false
-    max_velocity: 0
-    has_acceleration_limits: false
-    max_acceleration: 0
+    has_velocity_limits: true
+    max_velocity: 1.47
+    has_acceleration_limits: true
+    max_acceleration: 1.47
+    has_position_limits: true
+    #max_position: 6.274458
+    #min_position: -6.274458
+    max_position: 0.017
+    min_position: -0.017

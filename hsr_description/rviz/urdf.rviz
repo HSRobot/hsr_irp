@@ -6,6 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /RobotModel1
       Splitter Ratio: 0.5
     Tree Height: 623
   - Class: rviz/Selection
@@ -48,7 +49,7 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
-    - Alpha: 0.8
+    - Alpha: 1
       Class: rviz/RobotModel
       Collision Enabled: false
       Enabled: true
@@ -59,11 +60,6 @@ Visualization Manager:
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
         base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        camera_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -154,76 +150,19 @@ Visualization Manager:
       Value: true
       Visual Enabled: true
     - Class: rviz/TF
-      Enabled: true
+      Enabled: false
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        base_link:
-          Value: true
-        camera_link:
-          Value: true
-        gripper_base_link:
-          Value: true
-        grisper_body_link:
-          Value: true
-        left_finger_1_link:
-          Value: true
-        left_finger_2_link:
-          Value: true
-        left_finger_end_link:
-          Value: true
-        link1:
-          Value: true
-        link2:
-          Value: true
-        link3:
-          Value: true
-        link4:
-          Value: true
-        link5:
-          Value: true
-        link6:
-          Value: true
-        pick_gripper_link:
-          Value: true
-        right_finger_1_link:
-          Value: true
-        right_finger_2_link:
-          Value: true
-        right_finger_end_link:
-          Value: true
-        world:
-          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        world:
-          base_link:
-            camera_link:
-              {}
-            link1:
-              link2:
-                link3:
-                  link4:
-                    link5:
-                      link6:
-                        gripper_base_link:
-                          grisper_body_link:
-                            left_finger_1_link:
-                              left_finger_2_link:
-                                left_finger_end_link:
-                                  {}
-                            right_finger_1_link:
-                              right_finger_2_link:
-                                right_finger_end_link:
-                                  {}
-                          pick_gripper_link:
-                            {}
+        {}
       Update Interval: 0
-      Value: true
+      Value: false
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -248,7 +187,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.59635
+      Distance: 2.24654
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -260,10 +199,10 @@ Visualization Manager:
         Z: 0
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.465398
+      Pitch: 0.455398
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.905399
+      Yaw: 0.640399
     Saved: ~
 Window Geometry:
   Displays:
@@ -281,5 +220,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1851
-  X: 65
-  Y: 24
+  X: 55
+  Y: 14

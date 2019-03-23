@@ -5,6 +5,7 @@
 
     <arg name="marker_size" doc="Size of the ArUco marker used, in meters"  default="0.1" />
     <arg name="marker_id" doc="The ID of the ArUco marker used" default="100" />
+   
 
     <!-- start the Kinect -->
     <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch" >
