@@ -120,7 +120,7 @@ void kinect_data_cb(const sensor_msgs::PointCloud2::ConstPtr & msg){
     cloudOut->points.resize (cloudOut->width * cloudOut->height);
 
     for (size_t i = 0; i < cloud->points.size (); ++i)
-        if(cloud->points[i].z > 0.1 && cloud->points[i].z < 2.8 && cloud->points[i].y > 0.10)
+        if(cloud->points[i].z > 0.1 && cloud->points[i].z < 1.8 && cloud->points[i].y > 0.10)
             cloudOut->points[i] =cloud->points[i];
 
 	flage = true;

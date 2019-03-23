@@ -1,4 +1,16 @@
-planner_configs:
+planner_configs:  
+  RRTstarkConfigDefault:
+    type: geometric::RRTstar
+    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    optimization_objective: MaximizeMinClearanceObjective
+    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
+    delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default 1
+  PRMstarkConfigDefault:
+    type: geometric::PRMstar
+    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+    optimization_objective: MaximizeMinClearanceObjective
+    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
+    delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default 1
   SBLkConfigDefault:
     type: geometric::SBL
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
@@ -31,11 +43,11 @@ planner_configs:
   RRTConnectkConfigDefault:
     type: geometric::RRTConnect
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
-  RRTstarkConfigDefault:
-    type: geometric::RRTstar
-    range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
-    goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
-    delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default 1
+  #RRTstarkConfigDefault:
+  #  type: geometric::RRTstar
+  #  range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
+  #  goal_bias: 0.05  # When close to goal select goal, with this probability? default: 0.05
+  #  delay_collision_checking: 1  # Stop collision checking as soon as C-free parent found. default 1
   TRRTkConfigDefault:
     type: geometric::TRRT
     range: 0.0  # Max motion added to tree. ==> maxDistance_ default: 0.0, if 0.0, set on setup()
@@ -50,10 +62,12 @@ planner_configs:
   PRMkConfigDefault:
     type: geometric::PRM
     max_nearest_neighbors: 10  # use k nearest neighbors. default: 10
-  PRMstarkConfigDefault:
-    type: geometric::PRMstar
+  #PRMstarkConfigDefault:
+  #  type: geometric::PRMstar
 arm:
   planner_configs:
+    - RRTstarkConfigDefault
+    - PRMstarkConfigDefault
     - SBLkConfigDefault
     - ESTkConfigDefault
     - LBKPIECEkConfigDefault
@@ -61,9 +75,9 @@ arm:
     - KPIECEkConfigDefault
     - RRTkConfigDefault
     - RRTConnectkConfigDefault
-    - RRTstarkConfigDefault
+    #- RRTstarkConfigDefault
     - TRRTkConfigDefault
     - PRMkConfigDefault
-    - PRMstarkConfigDefault
+    #- PRMstarkConfigDefault
   projection_evaluator: joints(joint_1,joint_2)
   longest_valid_segment_fraction: 0.05

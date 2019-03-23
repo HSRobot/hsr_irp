@@ -725,7 +725,9 @@ namespace rviz_pickplace_commander
         ROS_ERROR("the count of objects is %d",num_detectedObj);
         ROS_ERROR("**************************************");
 		for(int i=0;i<num_detectedObj;i++)
-		{
+		{ 
+            if(base_detectPoseFromCamera[i].pose.position.z > 0.4)
+               continue;
 			m_orkWdg->recognizedPoseComboBox->addItem("识别目标"+QString::number(i+1, 10));
 			
 			m_poseFromCamera[i].X = base_detectPoseFromCamera[i].pose.position.x;

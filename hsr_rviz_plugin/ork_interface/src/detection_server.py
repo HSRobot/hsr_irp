@@ -95,7 +95,7 @@ def handles_detection(req):
 def detection_server():
     # 初始化节点 用节点 发布服务数据
     rospy.init_node('detection_server', argv = None)
-    # 声明了一个 'detection'的服务， detection_srv 调用handles_training回调函数
+    # 声明了一个 'detection'的服务， detection_srv 调用handles_detection回调函数
     s = rospy.Service('detection', detection_srv, handles_detection)
     rate = rospy.Rate(10.0)
     global pid

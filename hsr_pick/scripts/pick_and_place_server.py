@@ -95,8 +95,9 @@ class MoveItDemo:
         # Set the right arm reference frame
         pick_arm.set_pose_reference_frame(REFERENCE_FRAME)
 
-        pick_arm.set_planner_id("RRTConnectkConfigDefault")        
-
+        #pick_arm.set_planner_id("RRTConnectkConfigDefault")        
+        #pick_arm.set_planner_id("RRTstarkConfigDefault")
+        pick_arm.set_planner_id("PRMstarkConfigDefault")
         # Allow 5 seconds per planning attempt
         pick_arm.set_planning_time(10)
         
@@ -112,6 +113,7 @@ class MoveItDemo:
         # Give each of the scene objects a unique name
         base_table_id = 'base_table'        
         target_id = 'target'
+        limit_table_id = 'limit_table'
         #tool_id = 'tool'
                 
         # Remove leftover objects from a previous run
@@ -121,6 +123,7 @@ class MoveItDemo:
         #scene.remove_world_object(box2_id)
         scene.remove_world_object(target_id)
         #scene.remove_world_object(tool_id)
+        scene.remove_world_object(limit_table_id)
         
         # Remove any attached objects from a previous session
         scene.remove_attached_object(GRIPPER_FRAME, target_id)
@@ -144,6 +147,9 @@ class MoveItDemo:
         
         # Set the target size [l, w, h]
         target_size = [0.055, 0.055, 0.12]
+        target_radius = 0.03305
+        target_height = 0.12310
+        limit_table_size = [0.6, 1.8, 0.04]
         
         # Add a base table to the scene
         base_table_pose = PoseStamped()
@@ -184,6 +190,17 @@ class MoveItDemo:
  
         # Add the target object to the scene
         scene.add_box(target_id, target_pose, target_size)
+        #scene.add_cylinder(target_id,target_pose,target_height,target_radius)
+              
+        #Add the limit_table object to the scene
+        limit_table_pose = PoseStamped()
+        limit_table_pose.header.frame_id = REFERENCE_FRAME
+        limit_table_pose.pose.position.x = 0.58
+        limit_table_pose.pose.position.y = -0.4
+        limit_table_pose.pose.position.z = 0.18
+        limit_table_pose.pose.orientation.w = 1.0
+        #scene.add_box(limit_table_id, limit_table_pose, limit_table_size) 
+        self.setColor(limit_table_id, 0.6, 0.2, 0.2, 1.0)
         
         # Make the table red and the boxes orange
         #self.setColor(table_id, 0.8, 0, 0, 1.0)
@@ -211,6 +228,8 @@ class MoveItDemo:
         place_pose.pose.orientation.y = placePos.pose.orientation.y
         place_pose.pose.orientation.z = placePos.pose.orientation.z
 
+        #设置机器人运行最大速度位百分之～
+        pick_arm.set_max_velocity_scaling_factor(0.5)
 
         # Initialize the grasp pose to the target pose
 		#初始化抓取目标点位
@@ -231,20 +250,22 @@ class MoveItDemo:
         # Track success/failure and number of attempts for pick operation
         result = None
         n_attempts = 0
-        
+ 
         # Repeat until we succeed or run out of attempts
 		#重复直到成功或者超出尝试的次数
-        while result != MoveItErrorCodes.SUCCESS and n_attempts < max_pick_attempts:
+        #while result != MoveItErrorCodes.SUCCESS and n_attempts < max_pick_attempts:
+        while result != 1 and n_attempts < max_pick_attempts:
             n_attempts += 1
             rospy.loginfo("Pick attempt: " +  str(n_attempts))
             result = pick_arm.pick(target_id, grasps)
+            rospy.logerr("pick_arm.pick： " + str(result))
             rospy.sleep(0.2)
         # If the pick was successful, attempt the place operation   
 		#如果抓取成功，尝试放置操作
-        result = None
+        result_g = None
         n_attempts = 2
         #if result == MoveItErrorCodes.SUCCESS:
-        while result != MoveItErrorCodes.SUCCESS and n_attempts < max_pick_attempts:      
+        while result_g != True and n_attempts < max_pick_attempts and result == 1:      
             # Generate valid place poses
             #places = self.make_places(place_pose)
             n_attempts += 1
@@ -261,12 +282,12 @@ class MoveItDemo:
             #        if result == MoveItErrorCodes.SUCCESS:
             #            break
             #    rospy.sleep(0.2)
-            result = pick_arm.go(wait=True)
-            rospy.logerr("pick_arm.go： " + str(result))
+            result_g = pick_arm.go(wait=True)
+            rospy.logerr("pick_arm.go： " + str(result_g))
             open_client(500)
             rospy.sleep(0.2)
-            if result != MoveItErrorCodes.SUCCESS:
-                rospy.logerr("Place operation failed after " + str(n_attempts) + " attempts.")
+            #if result == "False"
+            #    rospy.logerr("Place operation failed after " + str(n_attempts) + " attempts.")
         #else:
         #    rospy.loginfo("Pick operation failed after " + str(n_attempts) + " attempts.")
                 
@@ -337,6 +358,17 @@ class MoveItDemo:
         # Initialize the grasp object
         g = Grasp()
         
+        #g.grasp_pose = initial_pose_stamped
+        #q0 = g.grasp_pose.pose.orientation.w
+        #q1 = g.grasp_pose.pose.orientation.x
+        #q2 = g.grasp_pose.pose.orientation.y
+        #q3 = g.grasp_pose.pose.orientation.z
+        #eulerR = atan2(2*(q0*q1+q2*q3),1-2*(q1*q1+q2*q2))
+        #eulerP = asin(2*(q0*q2-q1*q3))
+        #eulerY = atan2(2*(q0*q3+q1*q2),1-2*(q2*q2+q3*q3))
+        #print(eulerR)
+        #print(eulerY)
+        #print(eulerP)
         # Set the pre-grasp and grasp postures appropriately
         g.pre_grasp_posture = self.make_gripper_posture(GRIPPER_OPEN)
         g.grasp_posture = self.make_gripper_posture(GRIPPER_CLOSED)

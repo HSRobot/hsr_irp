@@ -91,6 +91,7 @@ backward_wall_pose.pose.position.z = TABLE_GROUND
 backward_wall_pose.pose.orientation.w = 1.0
 scene.add_box(backward_wall_id, backward_wall_pose, backward_wall_size)
 
+
 # Give the scene a chance to catch up    
 rospy.sleep(2)
 group.set_max_velocity_scaling_factor(0.2)
