@@ -65,11 +65,11 @@ $rosrun kinect2_viewer kinect2_viewer
 #1，安装
 $sudo apt-get install ros-indigo-visp
 
-#2，源码安装
-$cd ~/catkin_ws/src
-$git clone -b indigo-devel https://github.com/pal-robotics/aruco_ros
-$cd ..
-$catkin_make
+#这个和第一个一样！
+cd ~/catkin_ws/src
+git clone -b indigo-devel https://github.com/lagadic/vision_visp.git
+cd ..
+catkin_make --pkg visp_hand2eye_calibration
 
 #3，源码安装
 #如编译发生opencv版本不匹配，则修改aruco_ros/aruco/CMakeLists.txt的第六行：“OpenCV 3 REQUIRED” 改为 “OpenCV REQUIRED”
@@ -86,6 +86,12 @@ $cd ..
 $catkin_make
 
 #三、安装ORK和linemod算法
+#install ecto
+sudo apt-get install ros-indigo-ecto
+sudo apt-get install ros-indigo-ecto-image-pipeline
+sudo apt-get install ros-indigo-opencv-candidate
+sudo apt-get install ros-indigo-ecto-ros
+sudo apt-get install libsdl1.2-dev 
 #安装ORk用到的package,下载源码
 $cd catkin_ws/src
 $git clone http://github.com/wg-perception/object_recognition_msgs
@@ -124,7 +130,7 @@ $cd .. && catkin_make
 #添加需要训练的模型名称及描述
 $rosrun object_recognition_core object_add.py -n "coke " -d "A universal can of coke" --commit
 #添加stl模型至服务器
-$rosrun object_recognition_core mesh_add.py 0be612246c9b0a00baaa4adefb0009eb /home/rosindigo/catkin_ws/src/ork_tutorials/data/coke.stl --commit
+$rosrun object_recognition_core mesh_add.py $id$ /home/fshs/catkin_ws/src/ork_tutorials/data/coke.stl --commit
 #linemod算法训练模型
 $rosrun object_recognition_core training -c `rospack find object_recognition_linemod`/conf/training.ork
 #识别
