@@ -6,7 +6,7 @@
 
   <param
 	name="robot_name"
-	value="hsr_br606"
+	value="hsr_br609"
 	/>
 
 </launch>
