@@ -97,7 +97,7 @@ class MoveItDemo:
 
         #pick_arm.set_planner_id("RRTConnectkConfigDefault")        
         #pick_arm.set_planner_id("RRTstarkConfigDefault")
-        pick_arm.set_planner_id("PRMstarkConfigDefault")
+        pick_arm.set_planner_id("RRTstarkConfigDefault")
         # Allow 5 seconds per planning attempt
         pick_arm.set_planning_time(10)
         

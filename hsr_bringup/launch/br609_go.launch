@@ -3,6 +3,7 @@
 
   <arg name="sip" default="10.10.56.214" />
   <arg name="have_gripper" default="false" />
+  <arg name="calibrate" default="false" />
 
   <!-- no gripper -->
   <include 
@@ -30,10 +31,10 @@
   </include>
 
   <include 
-	file="$(find br609_moveit_config)/launch/moveit_rviz.launch"/>
+	file="$(find br609_moveit_config)/launch/moveit_rviz.launch" unless="$(arg calibrate)"/>
 
   <!-- if have gripper -->
-  <include 
-	file="$(find hsr_bringup)/launch/pick_gui.launch" if="$(arg have_gripper)" />
+  <!--include 
+	file="$(find hsr_bringup)/launch/pick_gui.launch" if="$(arg have_gripper)" /-->
 
 </launch>

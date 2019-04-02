@@ -29,7 +29,7 @@
         <joint name="joint_2" value="-1.57" />
         <joint name="joint_3" value="0" />
         <joint name="joint_4" value="0" />
-        <joint name="joint_5" value="1.57" />
+        <joint name="joint_5" value="0" />
         <joint name="joint_6" value="0" />
     </group_state>
     <group_state name="pick" group="arm">
@@ -37,7 +37,7 @@
         <joint name="joint_2" value="-1.57" />
         <joint name="joint_3" value="0" />
         <joint name="joint_4" value="0" />
-        <joint name="joint_5" value="0" />
+        <joint name="joint_5" value="1.57" />
         <joint name="joint_6" value="0" />
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
