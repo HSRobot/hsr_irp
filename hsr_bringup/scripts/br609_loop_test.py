@@ -59,7 +59,7 @@ scene.add_box(base_table_id, base_table_pose, base_table_size)
 left_wall_pose = PoseStamped()
 left_wall_pose.header.frame_id = REFERENCE_FRAME
 left_wall_pose.pose.position.x = 0.0
-left_wall_pose.pose.position.y = -0.7
+left_wall_pose.pose.position.y = -1.2
 left_wall_pose.pose.position.z = TABLE_GROUND
 left_wall_pose.pose.orientation.w = 1.0
 scene.add_box(left_wall_id, left_wall_pose, left_wall_size)
@@ -68,7 +68,7 @@ scene.add_box(left_wall_id, left_wall_pose, left_wall_size)
 right_wall_pose = PoseStamped()
 right_wall_pose.header.frame_id = REFERENCE_FRAME
 right_wall_pose.pose.position.x = 0.0
-right_wall_pose.pose.position.y = 0.7
+right_wall_pose.pose.position.y = 1.2
 right_wall_pose.pose.position.z = TABLE_GROUND
 right_wall_pose.pose.orientation.w = 1.0
 scene.add_box(right_wall_id, right_wall_pose, right_wall_size)
@@ -76,7 +76,7 @@ scene.add_box(right_wall_id, right_wall_pose, right_wall_size)
 # Add a foreward_wall to the scene
 foreward_wall_pose = PoseStamped()
 foreward_wall_pose.header.frame_id = REFERENCE_FRAME
-foreward_wall_pose.pose.position.x = 0.7
+foreward_wall_pose.pose.position.x = 1.2
 foreward_wall_pose.pose.position.y = 0.0
 foreward_wall_pose.pose.position.z = TABLE_GROUND
 foreward_wall_pose.pose.orientation.w = 1.0
@@ -85,15 +85,16 @@ scene.add_box(foreward_wall_id, foreward_wall_pose, foreward_wall_size)
 # Add a backward_wall to the scene
 backward_wall_pose = PoseStamped()
 backward_wall_pose.header.frame_id = REFERENCE_FRAME
-backward_wall_pose.pose.position.x = -0.7
+backward_wall_pose.pose.position.x = -1.2
 backward_wall_pose.pose.position.y = 0.0
 backward_wall_pose.pose.position.z = TABLE_GROUND
 backward_wall_pose.pose.orientation.w = 1.0
 scene.add_box(backward_wall_id, backward_wall_pose, backward_wall_size)
 
+
 # Give the scene a chance to catch up    
 rospy.sleep(2)
-group.set_max_velocity_scaling_factor(0.8)
+group.set_max_velocity_scaling_factor(0.2)
 while not rospy.core.is_shutdown():
 	group.set_random_target()
 	group.go(wait=True)

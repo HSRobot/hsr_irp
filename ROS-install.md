@@ -75,7 +75,11 @@ E: Sub-process /usr/bin/dpkg returned an error code (1)
    $ sudo apt-get install ros-indigo-industrial-core		# 安装ROS-I
    $ sudo apt-get install ros-indigo-moveit-full		# 安装Moveit
    $ sudo apt-get install ros-indigo-serial			# 安装serial
-   ```
+   $ sudo apt-get install ros-indigo-gazebo-ros-control         # install gazebo control
+   $ sudo apt-get install ros-indigo-joint-trajectory-controller 
+   $ sudo apt-get install ros-indigo-joint-state-controller
+   $ sudo apt-get install ros-indigo-effort-controllers
+   $ sudo apt-get install ros-indigo-position-controllers 
 	
 ### 4, 编译：
    ```bash
