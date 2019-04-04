@@ -62,8 +62,6 @@ bool serial_open(hsr_gripper_driver::serial_open_srv::Request  &req,
 	try
 	{
 	    ros_ser.setPort(req.serialNo);
-	    ROS_ERROR_STREAM("serial No.:");
-        ROS_ERROR_STREAM((std::string)req.serialNo);
 	    ros_ser.setBaudrate((int)req.baudrate);
 	    serial::Timeout to = serial::Timeout::simpleTimeout(1000);
 	    ros_ser.setTimeout(to);

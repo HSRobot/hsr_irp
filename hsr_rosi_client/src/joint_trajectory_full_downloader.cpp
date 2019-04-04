@@ -70,7 +70,7 @@ bool JointTrajectoryFullDownloader::send_to_robot(const std::vector<JointTrajPtF
 	float time;
 	points[i].point_.getTime(time);
 
-    ROS_ERROR("Sending time = %f", time);
+    ROS_DEBUG("Sending time = %f", time);
     points[i].toTopic(msg);
     bool ptRslt = this->connection_->sendMsg(msg);
     if (ptRslt)

@@ -641,7 +641,7 @@ namespace rviz_pickplace_commander
 	{
 		num_detectedObj = 0;
 		num_detectedObj = msg->objects.size();
-        ROS_ERROR("num_detectedObj:%d",num_detectedObj);
+        ROS_DEBUG("num_detectedObj:%d",num_detectedObj);
 		
 		if(!num_detectedObj)
 			return;
@@ -679,7 +679,7 @@ namespace rviz_pickplace_commander
 			detectPoseFromCamera[i].header.frame_id = "kinect2_rgb_optical_frame";
 			
 			detectPoseFromCamera[i].pose = msg->objects[i].pose.pose.pose;
-            ROS_ERROR("detectPoseFromCamera[i].pose.X:%f",detectPoseFromCamera[i].pose.position.x);
+            ROS_DEBUG("detectPoseFromCamera[i].pose.X:%f",detectPoseFromCamera[i].pose.position.x);
 			
 			 while(1)
             {
@@ -708,9 +708,9 @@ namespace rviz_pickplace_commander
 		}
 
        static int count_update =0;
-       ROS_ERROR("**************************************");
-       ROS_ERROR("the count_update is %d",count_update);
-       ROS_ERROR("**************************************");
+       ROS_DEBUG("**************************************");
+       ROS_DEBUG("the count_update is %d",count_update);
+       ROS_DEBUG("**************************************");
        
        if(num_detectedObj != pro_num_detectedObj )
              count_update =0; 
@@ -721,9 +721,9 @@ namespace rviz_pickplace_commander
         disconnect(m_orkWdg->recognizedPoseComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotToSelectDetectComoBox(int)));
 		m_orkWdg->recognizedPoseComboBox->clear();
         
-        ROS_ERROR("**************************************");
-        ROS_ERROR("the count of objects is %d",num_detectedObj);
-        ROS_ERROR("**************************************");
+        ROS_DEBUG("**************************************");
+        ROS_DEBUG("the count of objects is %d",num_detectedObj);
+        ROS_DEBUG("**************************************");
 		for(int i=0;i<num_detectedObj;i++)
 		{ 
             if(base_detectPoseFromCamera[i].pose.position.z > 0.4)
@@ -743,7 +743,7 @@ namespace rviz_pickplace_commander
 		    m_poseFromCamera[i].eulerP = asin(2*(q0*q2-q1*q3));
 		    m_poseFromCamera[i].eulerY = atan2(2*(q0*q3+q1*q2),1-2*(q2*q2+q3*q3));
 
-            ROS_ERROR("识别目标:%d,其X坐标为%f",i,m_poseFromCamera[i].X);
+            ROS_INFO("识别目标:%d,其X坐标为%f",i,m_poseFromCamera[i].X);
 				
 		}
         
@@ -766,7 +766,7 @@ namespace rviz_pickplace_commander
 		m_orkWdg->ORKeulerRlineEdit->setText(QString::number(m_poseFromCamera[0].eulerR*180/PI, 'f', 3));
 		m_orkWdg->ORKeulerPlineEdit->setText(QString::number(m_poseFromCamera[0].eulerP*180/PI, 'f', 3));
 		m_orkWdg->ORKeulerYlineEdit->setText(QString::number(m_poseFromCamera[0].eulerY*180/PI, 'f', 3));
-        ROS_ERROR("X:%f",m_poseFromCamera[0].X);
+        //ROS_ERROR("X:%f",m_poseFromCamera[0].X);
       //}
       count_update++;
       pro_num_detectedObj = num_detectedObj;
