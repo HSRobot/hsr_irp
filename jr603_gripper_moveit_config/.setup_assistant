@@ -5,6 +5,6 @@ moveit_setup_assistant_config:
   SRDF:
     relative_path: config/hsr_jr603.srdf
   CONFIG:
-    author_name: shencanjun
+    author_name: shenanjun
     author_email: 1252773119@qq.com
-    generated_timestamp: 1553162732
+    generated_timestamp: 1554370549
