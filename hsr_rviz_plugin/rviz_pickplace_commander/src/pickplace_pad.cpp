@@ -793,7 +793,8 @@ namespace rviz_pickplace_commander
 		//
 		m_pickPlaceWdg->pickXlineEdit->setText(m_orkWdg->ORKposeXlineEdit->text());
 		m_pickPlaceWdg->pickYlineEdit->setText(m_orkWdg->ORKposeYlineEdit->text());
-		m_pickPlaceWdg->pickZlineEdit->setText(m_orkWdg->ORKposeZlineEdit->text());
+                double orkz = m_orkWdg->ORKposeZlineEdit->text().toDouble()+0.015;
+		m_pickPlaceWdg->pickZlineEdit->setText(QString::number(orkz,10,3));
 		m_pickPlaceWdg->pickEulerRlineEdit->setText(m_orkWdg->ORKeulerRlineEdit->text());
 		m_pickPlaceWdg->pickEulerPlineEdit->setText(m_orkWdg->ORKeulerPlineEdit->text());
 		m_pickPlaceWdg->pickEulerYlineEdit->setText(m_orkWdg->ORKeulerYlineEdit->text());
@@ -931,7 +932,7 @@ namespace rviz_pickplace_commander
 				m_pickPlaceWdg->pickZlineEdit->setReadOnly(true);
 				m_pickPlaceWdg->pickEulerRlineEdit->setReadOnly(true);
 				m_pickPlaceWdg->pickEulerPlineEdit->setReadOnly(true);
-			    m_pickPlaceWdg->pickEulerYlineEdit->setReadOnly(true);
+			        m_pickPlaceWdg->pickEulerYlineEdit->setReadOnly(true);
 				
 				m_pickPlaceWdg->pickQuaterXlineEdit->setReadOnly(true);
 				m_pickPlaceWdg->pickQuaterYlineEdit->setReadOnly(true);

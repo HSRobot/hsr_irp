@@ -99,7 +99,7 @@ class MoveItDemo:
         #pick_arm.set_planner_id("RRTstarkConfigDefault")
         pick_arm.set_planner_id("RRTstarkConfigDefault")
         # Allow 5 seconds per planning attempt
-        pick_arm.set_planning_time(10)
+        pick_arm.set_planning_time(3)
         
         # Set a limit on the number of pick attempts before bailing
         max_pick_attempts = 5
@@ -265,7 +265,7 @@ class MoveItDemo:
         result_g = None
         n_attempts = 2
         #if result == MoveItErrorCodes.SUCCESS:
-        while result_g != True and n_attempts < max_pick_attempts and result == 1:      
+        while result_g != True and n_attempts < max_pick_attempts:#and result == 1:      
             # Generate valid place poses
             #places = self.make_places(place_pose)
             n_attempts += 1
@@ -386,35 +386,39 @@ class MoveItDemo:
         # Yaw angles to try
         yaw_vals = [0]
 
+        # Roll angles to try
+        roll_vals = [-3.14, 0]
+
         # A list to hold the grasps
         grasps = []
 
-        # Generate a grasp for each pitch and yaw angle
-        for y in yaw_vals:
-            for p in pitch_vals:
-                # Create a quaternion from the Euler angles
-                q = quaternion_from_euler(0, p, y)
+        # Generate a grasp for each pitch and yaw angle\
+        for r in roll_vals:
+            for y in yaw_vals:
+                for p in pitch_vals:
+                    # Create a quaternion from the Euler angles
+                    q = quaternion_from_euler(r, p, y)
                 
-                # Set the grasp pose orientation accordingly
-                g.grasp_pose.pose.orientation.x = q[0]
-                g.grasp_pose.pose.orientation.y = q[1]
-                g.grasp_pose.pose.orientation.z = q[2]
-                g.grasp_pose.pose.orientation.w = q[3]
+                    # Set the grasp pose orientation accordingly
+                    g.grasp_pose.pose.orientation.x = q[0]
+                    g.grasp_pose.pose.orientation.y = q[1]
+                    g.grasp_pose.pose.orientation.z = q[2]
+                    g.grasp_pose.pose.orientation.w = q[3]
                 
-                # Set and id for this grasp (simply needs to be unique)
-                g.id = str(len(grasps))
+                    # Set and id for this grasp (simply needs to be unique)
+                    g.id = str(len(grasps))
                 
-                # Set the allowed touch objects to the input list
-                g.allowed_touch_objects = allowed_touch_objects
+                    # Set the allowed touch objects to the input list
+                    g.allowed_touch_objects = allowed_touch_objects
                 
-                # Don't restrict contact force
-                g.max_contact_force = 0
+                    # Don't restrict contact force
+                    g.max_contact_force = 0
                 
-                # Degrade grasp quality for increasing pitch angles
-                g.grasp_quality = 1.0 - abs(p)
+                    # Degrade grasp quality for increasing pitch angles
+                    g.grasp_quality = 1.0 - abs(p)
                 
-                # Append the grasp to the list
-                grasps.append(deepcopy(g))
+                    # Append the grasp to the list
+                    grasps.append(deepcopy(g))
                 
         # Return the list
         return grasps

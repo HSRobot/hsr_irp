@@ -32,7 +32,7 @@
   <include 
 	file="$(find hsr_bringup)/launch/moveit_rviz.launch"/>
 
-  <include 
-	file="$(find hsr_bringup)/launch/pick_gui.launch" if="$(arg have_gripper)" />
+  <!--include 
+	file="$(find hsr_bringup)/launch/pick_gui.launch" if="$(arg have_gripper)" /-->
   
 </launch>

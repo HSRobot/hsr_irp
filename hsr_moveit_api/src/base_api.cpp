@@ -125,7 +125,7 @@ int main(int argc, char **argv){
 		// 休眠
 		loop_rate.sleep();
 		
-		//std::cout << "rpy = " << rpy[0] << " || " << rpy[1] << " || " << rpy[2] << std::endl; 
+		std::cout << "rpy = " << rpy[0] << " || " << rpy[1] << " || " << rpy[2] << std::endl; 
 	
 	}
 }
