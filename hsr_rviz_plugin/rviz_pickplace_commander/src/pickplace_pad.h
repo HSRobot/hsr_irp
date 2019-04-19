@@ -32,10 +32,9 @@
 #ifndef CONTROL_PAD_H
 #define CONTROL_PAD_H
 
-/* ros头文件 */
 #include <ros/ros.h>
 #include <ros/console.h>
-#include <rviz/panel.h>                                     /* plugin基类的头文件 */
+#include <rviz/panel.h>                                    
 
 #include "hsr_gripper_driver/serial_open_srv.h"
 #include "hsr_gripper_driver/close_srv.h"
@@ -44,8 +43,8 @@
 #include "hsr_gripper_driver/open_size_srv.h"
 #include "hsr_gripper_driver/read_open_size_srv.h"
 
-#include <visualization_msgs/InteractiveMarkerFeedback.h>   /* 从模型读取坐标的头文件 */
-#include <geometry_msgs/Pose.h>                             /* 读取笛卡尔姿态头文件 */ 
+#include <visualization_msgs/InteractiveMarkerFeedback.h>   
+#include <geometry_msgs/Pose.h>                             
 #include <geometry_msgs/PoseStamped.h>
 //#include <tf>
 #include <tf/transform_listener.h>
@@ -60,9 +59,18 @@
 #include "ork_interface/training_srv.h"
 #include "ork_interface/detection_srv.h"
 
+#include <moveit/move_group_interface/move_group.h>
+#include <moveit/planning_scene_interface/planning_scene_interface.h>
+#include <moveit_msgs/DisplayRobotState.h> 
+#include <moveit_msgs/DisplayTrajectory.h> 
+#include <moveit_msgs/AttachedCollisionObject.h> 
+#include <moveit_msgs/CollisionObject.h> 
+
+#include <rviz_pickplace_commander/voicePickCoke.h>
+#include <rviz_pickplace_commander/voicePickDiamond.h>
+
 #include "hsr_pick/pickPlace.h"
 
-/* qt头文件*/
 #include<QVBoxLayout>
 
 #include <QTimer>
@@ -76,17 +84,18 @@
 #include "OrkWdg.h"
 #include "PickPlaceWdg.h"
 
-/* 数学库 */
+
 #include <cmath>
 
-/* 其他 */
 #include <glob.h>
 #include <stdio.h>
 #include <string.h>
 #include <vector>
+#include <sstream>
 
-/* 宏定义及全局变量 */
 #define PI 3.1415926
+#define COKE_ID "c74677f2dac7ae441e6fb2901d00285a"
+#define DIAMOND_ID "c74677f2dac7ae441e6fb2901d00285a"
 
 typedef struct
 {
@@ -111,7 +120,7 @@ typedef struct
 
 namespace rviz_pickplace_commander
 {
-    /* 所有的plugin都必须是rviz::Panel的子类 */
+  
 class PickPlacePanel: public rviz::Panel
 {
     Q_OBJECT
@@ -120,107 +129,127 @@ public:
     PickPlacePanel( QWidget* parent = 0 );	
 	~PickPlacePanel();
 	
-	/* 可识别物体列表 初始化 */
+	
 	void canRecognizedModelListInit();
 	
-	/*命令行执行命令并输出结果*/
 	void executeCMD(const char *cmd, char *result);
  
-    /* 公共槽 */
 public Q_SLOTS:
    
 protected Q_SLOTS:
 
 protected:
-	/* Qt相关 */
-    SerialWdg *m_serialWdg;                        /* 串口模块 */
-    GripperWdg *m_gripperWdg;                      /* 夹爪模块 */  
-	OrkWdg *m_orkWdg;                              /* 识别与定位模块 */
-	PickPlaceWdg *m_pickPlaceWdg;                  /* 抓取与放置模块 */
+        SerialWdg *m_serialWdg;                       
+        GripperWdg *m_gripperWdg;                     
+	OrkWdg *m_orkWdg;                            
+	PickPlaceWdg *m_pickPlaceWdg;                 
 	
-	QVBoxLayout *mainLayout;                       /* 整体布局 */
+	QVBoxLayout *mainLayout;                     
 	
-	QTimer *getPickPoseFromORK_Timer;              /* 从ORK模块获取抓取物坐标 实时刷新定时器 */
-	QTimer *syncGetSerialDevNo_Timer;              /* 获取串口设备号 实时刷新定时器 */
-    //QTimer *showPoseFromCamera_Timer;              /* 从Camera获取位姿 实时刷新定时器 */
+	QTimer *getPickPoseFromORK_Timer;             
+	QTimer *syncGetSerialDevNo_Timer;             
+    //QTimer *showPoseFromCamera_Timer;             
 
-	/* ROS相关 */
-	ros::NodeHandle n_pickPlace;                   /* 节点句柄 */
-	ros::NodeHandle n_runPickPlace;                /* 节点句柄 */
-	ros::ServiceClient client_serialOpen;          /* 串口打开客户端 */
-    ros::ServiceClient client_gripperOpenSize;     /* 夹爪开口大小客户端 */
-	ros::ServiceClient client_gripperOpen;         /* 夹爪打开客户端 */
-	ros::ServiceClient client_gripperClose;        /* 夹爪关闭客户端 */
-	ros::ServiceClient client_gripperStop;         /* 夹爪关闭客户端 */
 	
-	ros::ServiceClient client_objDelete;           /* 删除识别物体客户端 */
-	ros::ServiceClient client_objAdd;              /* 添加识别物体客户端 */
-	ros::ServiceClient client_meshAdd;             /* 添加物体mesh客户端 */
-	ros::ServiceClient client_objSearch;           /* 查找识别物体客户端 */
-	ros::ServiceClient client_training;            /* 训练模型客户端 */
-	ros::ServiceClient client_detection;           /* 训练模型客户端 */
+	ros::NodeHandle n_pickPlace;                 
+	ros::NodeHandle n_runPickPlace;               
+	ros::ServiceClient client_serialOpen;        
+        ros::ServiceClient client_gripperOpenSize;     
+	ros::ServiceClient client_gripperOpen;        
+	ros::ServiceClient client_gripperClose;       
+	ros::ServiceClient client_gripperStop;        
 	
-	ros::ServiceClient client_pickPlace;           /* 抓取与放置客户端 */
+	ros::ServiceClient client_objDelete;           
+	ros::ServiceClient client_objAdd;            
+	ros::ServiceClient client_meshAdd;          
+	ros::ServiceClient client_objSearch;      
+	ros::ServiceClient client_training;         
+	ros::ServiceClient client_detection;         
 	
-	ros::Subscriber sub_poseFrom3d;                /* 订阅读取位姿话题，从三维环境中读取位姿信息 */
-	ros::Subscriber sub_poseFromCamera;            /* 订阅从相机读取位姿话题 */
+	ros::ServiceClient client_pickPlace;
+
+        ros::ServiceServer voice_pick_coke;         
+	ros::ServiceServer voice_pick_diamond;
+
+	ros::Subscriber sub_poseFrom3d;              
+	ros::Subscriber sub_poseFromCamera;
+        moveit::planning_interface::PlanningSceneInterface planning_scene_interface;     
 	
 private:
-    int openSizeMax;
+        int openSizeMax;
 	int openSizeMin;
 	int gripperSpeed;
 	int gripperForce;
 	
 	TRAINED_MODEL *m_trainingMdoel;
 	T_POSE_FORM_CAMERA *m_poseFromCamera;
-    T_POSE_FORM_CAMERA *m_poseFrom3ds;
+        T_POSE_FORM_CAMERA *m_poseFrom3ds;
 	
 	QString newAddModel_ID;
+        QString detectionModel_ID;
 	
 	//std::vector<geometry_msgs::PoseStamped> detectPoseFromCamera;
 	//std::vector<geometry_msgs::PoseStamped> base_detectPoseFromCamera;
 	geometry_msgs::PoseStamped *detectPoseFromCamera;
 	geometry_msgs::PoseStamped *base_detectPoseFromCamera;
-    geometry_msgs::PoseStamped *detectPoseFrom3d;
-    geometry_msgs::PoseStamped *base_detectPoseFrom3d;
+        geometry_msgs::PoseStamped *detectPoseFrom3d;
+        geometry_msgs::PoseStamped *base_detectPoseFrom3d;
 
-    int num_detectedObj;          /*本次监测到的识别物体值*/
-    int pro_num_detectedObj;      /*上一次监测到的识别物体值*/
-
-    std::string path_detect_config;  /* 识别配置文件路径 */
+        int num_detectedObj;         
+        int pro_num_detectedObj;    
+        std::string detection_ID[10];
+        std::string path_detect_config;
+        std::stringstream os;  
+  
+        moveit_msgs::CollisionObject collision_object;
+    
+        shape_msgs::SolidPrimitive primitive;
+        geometry_msgs::Pose box_pose;    
+        std::vector<moveit_msgs::CollisionObject> collision_objects;
+        std::vector<std::string> object_ids;
 	
 private Q_SLOTS:
 	
-	void slotSerialNoComoBoxClicked();                     /* 点击串口设备选择下拉框 槽函数 */
+	void slotSerialNoComoBoxClicked();                  
 	
-	void slotSerialConnectBtn();                           /* 串口连接按钮槽函数 */
-	void slotGripperParmSetComboBox(int index);            /* 夹爪参数设置项切换槽函数 */
-	void slotGripperSetBtn();                              /* 夹爪设置按钮槽函数 */
-	void slotGripperActRunBtn();                           /* 夹爪动作执行按钮槽函数 */
+	void slotSerialConnectBtn();                        
+	void slotGripperParmSetComboBox(int index);        
+	void slotGripperSetBtn();                          
+	void slotGripperActRunBtn();                        
 	
-	void slotAddOrDeleteComboBox(int index);               /* 新增或删除模型选择下拉框 切换槽函数 */
-	void slotToSelectDeleteComoBox(int index);             /* 待删除模型选择下拉框 切换槽函数 */
+	void slotAddOrDeleteComboBox(int index);            
+	void slotToSelectDeleteComoBox(int index);           
 	
-	//void slotCanRecognModelComboBox(int index);          /* 可识别模型选择下拉框 切换槽函数 */
-	void slotNewAddOrDeleteOkBtn();                        /* 新增加或删除模型确认按钮槽函数 */
-	void slotModelPathOpenBtn();                           /* 打开待训练模型路径按钮槽函数 */
-	void slotAddMeshOkBtn();                               /* 新增模型Mesh确认按钮槽函数 */
-	void slotToTrainBtn();                                 /* 开始训练按钮槽函数*/
-	void slotToRecognBtn();                                /* 开始识别按钮槽函数 */
+	//void slotCanRecognModelComboBox(int index);        
+	void slotNewAddOrDeleteOkBtn();                     
+	void slotModelPathOpenBtn();                         
+	void slotAddMeshOkBtn();                            
+	void slotToTrainBtn();                               
+	void slotToRecognBtn();                              
 
-   // void slotShowPoseFromCameraTimer();                    /* 从Camera获取位姿 实时刷新定时器 槽函数  */
+   // void slotShowPoseFromCameraTimer();                   
 	
-	void slotToSelectDetectComoBox(int index);             /* 待选择识别物选择下拉框 切换槽函数 */
-	void slotGetPickPoseFromOrk();                         /* 从ORK模块获取抓取物坐标 槽函数 */
+	void slotToSelectDetectComoBox(int index);            
+	void slotGetPickPoseFromOrk();                       
 	
-	void slotGetPickPoseMeansComoBox(int index);           /* 获取抓取目标点坐标方式选择下拉框 切换槽函数 */
-	void slotGetPlacePoseMeansComoBox(int index);          /* 获取放置目标点坐标方式选择下拉框 切换槽函数 */
-	void slotGetPlacePoseOkBtn();                          /* 获取放置位姿确认按钮 槽函数*/
+	void slotGetPickPoseMeansComoBox(int index);           
+	void slotGetPlacePoseMeansComoBox(int index);        
+	void slotGetPlacePoseOkBtn();                       
 	
-	void poseFromCamera_callback(const object_recognition_msgs::RecognizedObjectArray::ConstPtr& msg);        /* 从三维环境获取坐标 回调函数 */
-	void poseFrom3d_callback(const visualization_msgs::InteractiveMarkerFeedback::ConstPtr& msg);            /* 从三维环境获取坐标 回调函数 */
+	void poseFromCamera_callback(const object_recognition_msgs::RecognizedObjectArray::ConstPtr& msg);      
+	void poseFrom3d_callback(const visualization_msgs::InteractiveMarkerFeedback::ConstPtr& msg);           
 	
-	void slotRunPickPlaceBtn();                            /* 执行抓取与放置 槽函数 */
+	void slotRunPickPlaceBtn();  
+        void slotVoicePickPlaceBtn();  
+       
+        void addObjectBoxdefines(std::string detection_id,int num,geometry_msgs::Pose box_pose); 
+        void addObjectBox();   
+        void removeObjectBox();    
+        void voicePickServer();
+        bool voicePickCoke_callback(rviz_pickplace_commander::voicePickCoke::Request  &req,
+                                      rviz_pickplace_commander::voicePickCoke::Response &res);
+        bool voicePickDiamond_callback(rviz_pickplace_commander::voicePickDiamond::Request  &req,
+                                         rviz_pickplace_commander::voicePickDiamond::Response &res);                    
 	
 };
  

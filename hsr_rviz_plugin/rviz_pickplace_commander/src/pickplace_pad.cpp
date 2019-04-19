@@ -45,9 +45,9 @@ namespace rviz_pickplace_commander
    
     /******************界面相关*********************************************************************/
         m_serialWdg = new SerialWdg;
-		m_gripperWdg = new GripperWdg;
-		m_orkWdg = new OrkWdg;
-		m_pickPlaceWdg = new PickPlaceWdg;
+	m_gripperWdg = new GripperWdg;
+	m_orkWdg = new OrkWdg;
+	m_pickPlaceWdg = new PickPlaceWdg;
 					    		
         /* 整体布局 */
         mainLayout = new QVBoxLayout;
@@ -63,10 +63,10 @@ namespace rviz_pickplace_commander
         setLayout(mainLayout);
 		
     /******************槽函数*********************************************************************/
-	    connect(m_serialWdg->serialNoComoBox,SIGNAL(clicked(bool)),this,SLOT(slotSerialNoComoBoxClicked()));
+	        connect(m_serialWdg->serialNoComoBox,SIGNAL(clicked(bool)),this,SLOT(slotSerialNoComoBoxClicked()));
 		connect(m_serialWdg->serialConnectOrNotBtn,SIGNAL(pressed()),this,SLOT(slotSerialConnectBtn()));
-        connect(m_gripperWdg->gripperSetComoBox,SIGNAL(currentIndexChanged(int)),this,SLOT(slotGripperParmSetComboBox(int)));
-        connect(m_gripperWdg->gripperSetBtn,SIGNAL(pressed()),this,SLOT(slotGripperSetBtn()));
+                connect(m_gripperWdg->gripperSetComoBox,SIGNAL(currentIndexChanged(int)),this,SLOT(slotGripperParmSetComboBox(int)));
+                connect(m_gripperWdg->gripperSetBtn,SIGNAL(pressed()),this,SLOT(slotGripperSetBtn()));
 		connect(m_gripperWdg->gripperActRunBtn,SIGNAL(clicked(bool)),this,SLOT(slotGripperActRunBtn()));
 		
 		connect(m_orkWdg->addOrDeleteComoBox,SIGNAL(currentIndexChanged(int)),this,SLOT(slotAddOrDeleteComboBox(int)));
@@ -86,6 +86,9 @@ namespace rviz_pickplace_commander
 		connect(m_pickPlaceWdg->getPlacePoseOkBtn,SIGNAL(pressed()),this,SLOT(slotGetPlacePoseOkBtn()));
 		
 		connect(m_pickPlaceWdg->runPickPlaceBtn,SIGNAL(clicked(bool)),this,SLOT(slotRunPickPlaceBtn()));
+               
+                connect(m_pickPlaceWdg->voicePickPlaceBtn,SIGNAL(clicked(bool)),this,SLOT(slotVoicePickPlaceBtn()));
+              
 	/******************ROS相关*********************************************************************/
         /* 创建串口打开客户端 */
 	    client_serialOpen = n_pickPlace.serviceClient<hsr_gripper_driver::serial_open_srv>("serial_open");
@@ -627,6 +630,7 @@ namespace rviz_pickplace_commander
 	
 		if(client_detection.call(detection_srv))
 		{
+                        removeObjectBox();
 			m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Detection start sucessful!!!");
 			sub_poseFromCamera = n_pickPlace.subscribe("/recognized_object_array", 1000, &PickPlacePanel::poseFromCamera_callback, this);
 		}
@@ -641,11 +645,11 @@ namespace rviz_pickplace_commander
 	{
 		num_detectedObj = 0;
 		num_detectedObj = msg->objects.size();
-        ROS_DEBUG("num_detectedObj:%d",num_detectedObj);
+        ROS_ERROR("num_detectedObj:%d",num_detectedObj);
 		
 		if(!num_detectedObj)
 			return;
-       
+        
         ork_interface::detection_srv detection_srv;
         detection_srv.request.cmd = "\'c\'"; 
 		detection_srv.request.path = path_detect_config;
@@ -677,9 +681,9 @@ namespace rviz_pickplace_commander
 		{
 			detectPoseFromCamera[i].header.seq = 1;
 			detectPoseFromCamera[i].header.frame_id = "kinect2_rgb_optical_frame";
-			
+			detection_ID[i] = msg->objects[i].type.key;
 			detectPoseFromCamera[i].pose = msg->objects[i].pose.pose.pose;
-            ROS_DEBUG("detectPoseFromCamera[i].pose.X:%f",detectPoseFromCamera[i].pose.position.x);
+            ROS_ERROR("detectPoseFromCamera[i].pose.X:%f",detectPoseFromCamera[i].pose.position.x);
 			
 			 while(1)
             {
@@ -708,9 +712,9 @@ namespace rviz_pickplace_commander
 		}
 
        static int count_update =0;
-       ROS_DEBUG("**************************************");
-       ROS_DEBUG("the count_update is %d",count_update);
-       ROS_DEBUG("**************************************");
+       ROS_ERROR("**************************************");
+       ROS_ERROR("the count_update is %d",count_update);
+       ROS_ERROR("**************************************");
        
        if(num_detectedObj != pro_num_detectedObj )
              count_update =0; 
@@ -721,32 +725,37 @@ namespace rviz_pickplace_commander
         disconnect(m_orkWdg->recognizedPoseComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotToSelectDetectComoBox(int)));
 		m_orkWdg->recognizedPoseComboBox->clear();
         
-        ROS_DEBUG("**************************************");
-        ROS_DEBUG("the count of objects is %d",num_detectedObj);
-        ROS_DEBUG("**************************************");
-		for(int i=0;i<num_detectedObj;i++)
-		{ 
-            if(base_detectPoseFromCamera[i].pose.position.z > 0.4)
-               continue;
-			m_orkWdg->recognizedPoseComboBox->addItem("识别目标"+QString::number(i+1, 10));
+        ROS_ERROR("**************************************");
+        ROS_ERROR("the count of objects is %d",num_detectedObj);
+        ROS_ERROR("**************************************");
+	for(int i=0;i<num_detectedObj;i++)
+	{ 
+              //if(base_detectPoseFromCamera[i].pose.position.z > 30)
+              //continue;
+              m_orkWdg->recognizedPoseComboBox->addItem("识别目标"+QString::number(i+1, 10));
+              // detectionModel_ID = QString::fromStdString(detection_ID[i]);
+              // m_orkWdg->recognizedPoseComboBox->addItem(detectionModel_ID);
 			
-			m_poseFromCamera[i].X = base_detectPoseFromCamera[i].pose.position.x;
-		    m_poseFromCamera[i].Y = base_detectPoseFromCamera[i].pose.position.y;
-		    m_poseFromCamera[i].Z = base_detectPoseFromCamera[i].pose.position.z;
+              m_poseFromCamera[i].X = base_detectPoseFromCamera[i].pose.position.x;
+              m_poseFromCamera[i].Y = base_detectPoseFromCamera[i].pose.position.y;
+	      m_poseFromCamera[i].Z = base_detectPoseFromCamera[i].pose.position.z;
 		
-		    float q0 = m_poseFromCamera[i].quaterW = base_detectPoseFromCamera[i].pose.orientation.w;
-		    float q1 = m_poseFromCamera[i].quaterX = base_detectPoseFromCamera[i].pose.orientation.x;
-		    float q2 = m_poseFromCamera[i].quaterY = base_detectPoseFromCamera[i].pose.orientation.y;
-		    float q3 = m_poseFromCamera[i].quaterZ = base_detectPoseFromCamera[i].pose.orientation.z;
+              float q0 = m_poseFromCamera[i].quaterW = base_detectPoseFromCamera[i].pose.orientation.w;
+	      float q1 = m_poseFromCamera[i].quaterX = base_detectPoseFromCamera[i].pose.orientation.x;
+	      float q2 = m_poseFromCamera[i].quaterY = base_detectPoseFromCamera[i].pose.orientation.y;
+	      float q3 = m_poseFromCamera[i].quaterZ = base_detectPoseFromCamera[i].pose.orientation.z;
 		
-		    m_poseFromCamera[i].eulerR = atan2(2*(q0*q1+q2*q3),1-2*(q1*q1+q2*q2));
-		    m_poseFromCamera[i].eulerP = asin(2*(q0*q2-q1*q3));
-		    m_poseFromCamera[i].eulerY = atan2(2*(q0*q3+q1*q2),1-2*(q2*q2+q3*q3));
+	      m_poseFromCamera[i].eulerR = atan2(2*(q0*q1+q2*q3),1-2*(q1*q1+q2*q2));
+	      m_poseFromCamera[i].eulerP = asin(2*(q0*q2-q1*q3));
+	      m_poseFromCamera[i].eulerY = atan2(2*(q0*q3+q1*q2),1-2*(q2*q2+q3*q3));
 
-            ROS_INFO("识别目标:%d,其X坐标为%f",i,m_poseFromCamera[i].X);
-				
-		}
-        
+              ROS_ERROR("识别目标:%d,其X坐标为%f",i,m_poseFromCamera[i].X);
+              box_pose.orientation.w = 1.0;
+              box_pose.position.x =  m_poseFromCamera[i].X;
+              box_pose.position.y =  m_poseFromCamera[i].Y;
+              box_pose.position.z =  m_poseFromCamera[i].Z;
+	      addObjectBoxdefines(detection_ID[i],i,box_pose);		
+	}
         connect(m_orkWdg->recognizedPoseComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotToSelectDetectComoBox(int)));
         
         if((m_poseFromCamera[0].X == 0.0) && (m_poseFromCamera[0].Y == 0.0) && (m_poseFromCamera[0].Z==0.0))
@@ -766,12 +775,181 @@ namespace rviz_pickplace_commander
 		m_orkWdg->ORKeulerRlineEdit->setText(QString::number(m_poseFromCamera[0].eulerR*180/PI, 'f', 3));
 		m_orkWdg->ORKeulerPlineEdit->setText(QString::number(m_poseFromCamera[0].eulerP*180/PI, 'f', 3));
 		m_orkWdg->ORKeulerYlineEdit->setText(QString::number(m_poseFromCamera[0].eulerY*180/PI, 'f', 3));
-        //ROS_ERROR("X:%f",m_poseFromCamera[0].X);
+        ROS_ERROR("X:%f",m_poseFromCamera[0].X);
       //}
       count_update++;
       pro_num_detectedObj = num_detectedObj;
+      addObjectBox();
 	}
+  
+       void PickPlacePanel::addObjectBoxdefines(std::string detection_id,int num,geometry_msgs::Pose box_pose)
+       {
+            os.clear();
+            collision_object.primitives.clear();
+            collision_object.primitive_poses.clear();
+            collision_object.header.frame_id = "base_link";          
+            if(detection_id == COKE_ID)
+            {  
+                os<<"coke"<<num;
+                collision_object.id = os.str();
+                object_ids.push_back(collision_object.id);
+                primitive.type = primitive.CYLINDER;
+                primitive.dimensions.resize(3);
+                primitive.dimensions[0] = 0.11;
+                primitive.dimensions[1] = 0.031;
+                collision_object.primitives.push_back(primitive);
+                collision_object.primitive_poses.push_back(box_pose);
+                collision_object.operation = collision_object.ADD;
+                
+                collision_objects.push_back(collision_object);  
+           }
+           else if(detection_id == DIAMOND_ID) 
+           {
+               os<<"box"<<num;
+               collision_object.id = os.str();
+               object_ids.push_back(collision_object.id);
+               primitive.type = primitive.BOX;
+               primitive.dimensions.resize(3);
+               primitive.dimensions[0] = 0.055;
+               primitive.dimensions[1] = 0.055;
+               primitive.dimensions[2] = 0.11;
+               collision_object.primitives.push_back(primitive);
+               collision_object.primitive_poses.push_back(box_pose);
+               collision_object.operation = collision_object.ADD;
+                
+               collision_objects.push_back(collision_object);  
+           }            
+       }
+    
+       void PickPlacePanel::addObjectBox()
+       {
+              ROS_INFO("Add an object into the world");
+              planning_scene_interface.addCollisionObjects(collision_objects);
+
+              /* Sleep so we have time to see the object in RViz */
+              sleep(0.8);
+              collision_objects.clear();
+       }
+ 
+       void PickPlacePanel::removeObjectBox()
+       {
+            ROS_INFO("Remove the object from the world");
+            
+            object_ids.push_back(collision_object.id);
+            planning_scene_interface.removeCollisionObjects(object_ids);
+            /* Sleep to give Rviz time to show the object is no longer there. */
+            
+            sleep(1.0);
+            object_ids.clear();
+       }
+
+
+       void PickPlacePanel::voicePickServer()
+       {                     
+            //node Handle
+            ROS_ERROR("语音抓取开启...........");
+            m_pickPlaceWdg->pickPlaceStatusTextEdit->append("语音抓取开启...........");
+            voice_pick_coke = n_pickPlace.advertiseService("VoicePickCoke", &PickPlacePanel::voicePickCoke_callback, this);
+            voice_pick_diamond = n_pickPlace.advertiseService("VoicePickDiamond", &PickPlacePanel::voicePickDiamond_callback, this);
+            //ros::spin();
+       }
+
+       bool PickPlacePanel::voicePickCoke_callback(rviz_pickplace_commander::voicePickCoke::Request  &req,
+                                                   rviz_pickplace_commander::voicePickCoke::Response &res)
+       { 
+           for(int i=0;i<num_detectedObj;i++)
+	   { 
+                if(detection_ID[i] != "c74677f2dac7ae441e6fb2901d00285a")
+                    continue;
+
+                //ROS_ERROR("识别目标:%d,其X坐标为%f",i,m_poseFromCamera[i].X);
+
+                m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Ready to pick...");	
+		hsr_pick::pickPlace pickPlace_srv;
+		
+		geometry_msgs::PoseStamped pickPose,placePose;
 	
+		pickPose.pose.position.x = base_detectPoseFromCamera[i].pose.position.x;;
+		pickPose.pose.position.y = base_detectPoseFromCamera[i].pose.position.y;
+		pickPose.pose.position.z = base_detectPoseFromCamera[i].pose.position.z;
+		pickPose.pose.orientation.x = base_detectPoseFromCamera[i].pose.orientation.x;
+		pickPose.pose.orientation.y = base_detectPoseFromCamera[i].pose.orientation.y;
+		pickPose.pose.orientation.z = base_detectPoseFromCamera[i].pose.orientation.z;
+		pickPose.pose.orientation.w = base_detectPoseFromCamera[i].pose.orientation.w;
+		
+		placePose.pose.position.x = m_pickPlaceWdg->placeXlineEdit->text().toDouble();
+		placePose.pose.position.y = m_pickPlaceWdg->placeYlineEdit->text().toDouble();
+		placePose.pose.position.z = m_pickPlaceWdg->placeZlineEdit->text().toDouble();
+		placePose.pose.orientation.x = m_pickPlaceWdg->placeQuaterXlineEdit->text().toDouble();
+		placePose.pose.orientation.y = m_pickPlaceWdg->placeQuaterYlineEdit->text().toDouble();
+		placePose.pose.orientation.z = m_pickPlaceWdg->placeQuaterZlineEdit->text().toDouble();
+		placePose.pose.orientation.w = m_pickPlaceWdg->placeQuaterWlineEdit->text().toDouble();	
+
+		pickPlace_srv.request.pickPos = pickPose;
+		pickPlace_srv.request.placePos = placePose;
+		
+		if(client_pickPlace.call(pickPlace_srv))
+		{
+			m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Join the pickPlace_srv sucessful!!!");
+			ROS_INFO("Join the pickPlace_srv sucessful!!!");
+		}
+		else
+		{
+			m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Join the pickPlace_srv failed!!!");
+			ROS_ERROR("Join the pickPlace_srv failed!!!");
+		}	 
+	    }
+            return true;
+       }
+
+       bool PickPlacePanel::voicePickDiamond_callback(rviz_pickplace_commander::voicePickDiamond::Request  &req,
+                                                      rviz_pickplace_commander::voicePickDiamond::Response &res)
+       { 
+           for(int i=0;i<num_detectedObj;i++)
+	   { 
+                if(detection_ID[i] != "f45677f2dac7ae441e6fb2901d00286a")
+                    continue;
+
+                //ROS_ERROR("识别目标:%d,其X坐标为%f",i,m_poseFromCamera[i].X);
+
+                m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Ready to pick...");	
+		hsr_pick::pickPlace pickPlace_srv;
+		
+		geometry_msgs::PoseStamped pickPose,placePose;
+	
+		pickPose.pose.position.x = base_detectPoseFromCamera[i].pose.position.x;;
+		pickPose.pose.position.y = base_detectPoseFromCamera[i].pose.position.y;
+		pickPose.pose.position.z = base_detectPoseFromCamera[i].pose.position.z;
+		pickPose.pose.orientation.x = base_detectPoseFromCamera[i].pose.orientation.x;
+		pickPose.pose.orientation.y = base_detectPoseFromCamera[i].pose.orientation.y;
+		pickPose.pose.orientation.z = base_detectPoseFromCamera[i].pose.orientation.z;
+		pickPose.pose.orientation.w = base_detectPoseFromCamera[i].pose.orientation.w;
+		
+		placePose.pose.position.x = m_pickPlaceWdg->placeXlineEdit->text().toDouble();
+		placePose.pose.position.y = m_pickPlaceWdg->placeYlineEdit->text().toDouble();
+		placePose.pose.position.z = m_pickPlaceWdg->placeZlineEdit->text().toDouble();
+		placePose.pose.orientation.x = m_pickPlaceWdg->placeQuaterXlineEdit->text().toDouble();
+		placePose.pose.orientation.y = m_pickPlaceWdg->placeQuaterYlineEdit->text().toDouble();
+		placePose.pose.orientation.z = m_pickPlaceWdg->placeQuaterZlineEdit->text().toDouble();
+		placePose.pose.orientation.w = m_pickPlaceWdg->placeQuaterWlineEdit->text().toDouble();	
+
+		pickPlace_srv.request.pickPos = pickPose;
+		pickPlace_srv.request.placePos = placePose;
+		
+		if(client_pickPlace.call(pickPlace_srv))
+		{
+			m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Join the pickPlace_srv sucessful!!!");
+			ROS_INFO("Join the pickPlace_srv sucessful!!!");
+		}
+		else
+		{
+			m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Join the pickPlace_srv failed!!!");
+			ROS_ERROR("Join the pickPlace_srv failed!!!");
+		}	 
+	    }
+            return true;
+       }
+
 	void PickPlacePanel::slotToSelectDetectComoBox(int index)
 	{
 		m_orkWdg->ORKposeXlineEdit->setText(QString::number(m_poseFromCamera[index].X, 'f', 3));    /* X*1000 将单位由m转成mm */
@@ -793,8 +971,7 @@ namespace rviz_pickplace_commander
 		//
 		m_pickPlaceWdg->pickXlineEdit->setText(m_orkWdg->ORKposeXlineEdit->text());
 		m_pickPlaceWdg->pickYlineEdit->setText(m_orkWdg->ORKposeYlineEdit->text());
-                double orkz = m_orkWdg->ORKposeZlineEdit->text().toDouble()+0.015;
-		m_pickPlaceWdg->pickZlineEdit->setText(QString::number(orkz,10,3));
+		m_pickPlaceWdg->pickZlineEdit->setText(m_orkWdg->ORKposeZlineEdit->text());
 		m_pickPlaceWdg->pickEulerRlineEdit->setText(m_orkWdg->ORKeulerRlineEdit->text());
 		m_pickPlaceWdg->pickEulerPlineEdit->setText(m_orkWdg->ORKeulerPlineEdit->text());
 		m_pickPlaceWdg->pickEulerYlineEdit->setText(m_orkWdg->ORKeulerYlineEdit->text());
@@ -932,7 +1109,7 @@ namespace rviz_pickplace_commander
 				m_pickPlaceWdg->pickZlineEdit->setReadOnly(true);
 				m_pickPlaceWdg->pickEulerRlineEdit->setReadOnly(true);
 				m_pickPlaceWdg->pickEulerPlineEdit->setReadOnly(true);
-			        m_pickPlaceWdg->pickEulerYlineEdit->setReadOnly(true);
+			    m_pickPlaceWdg->pickEulerYlineEdit->setReadOnly(true);
 				
 				m_pickPlaceWdg->pickQuaterXlineEdit->setReadOnly(true);
 				m_pickPlaceWdg->pickQuaterYlineEdit->setReadOnly(true);
@@ -1033,7 +1210,7 @@ namespace rviz_pickplace_commander
 	void PickPlacePanel::slotRunPickPlaceBtn()
 	{
 		//client_pickPlace		
-	    m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Ready to pick...");	
+	        m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Ready to pick...");	
 		hsr_pick::pickPlace pickPlace_srv;
 		
 		geometry_msgs::PoseStamped pickPose,placePose;
@@ -1068,6 +1245,11 @@ namespace rviz_pickplace_commander
 			ROS_ERROR("Join the pickPlace_srv failed!!!");
 		}		
 	}
+
+        void PickPlacePanel::slotVoicePickPlaceBtn()
+        {
+              voicePickServer(); 
+        }
 }
 
 /* 声明此类是一个rviz的插件 */

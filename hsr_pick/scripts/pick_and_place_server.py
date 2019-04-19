@@ -189,7 +189,7 @@ class MoveItDemo:
         target_pose.pose.orientation.w = pickPos.pose.orientation.w
  
         # Add the target object to the scene
-        scene.add_box(target_id, target_pose, target_size)
+        #scene.add_box(target_id, target_pose, target_size)
         #scene.add_cylinder(target_id,target_pose,target_height,target_radius)
               
         #Add the limit_table object to the scene
@@ -302,7 +302,7 @@ class MoveItDemo:
         # pick_gripper.go()
        
         rospy.sleep(1)
-
+        rospy.logerr("pick_server over ")
         # Shut down MoveIt cleanly
         # moveit_commander.roscpp_shutdown()
         
