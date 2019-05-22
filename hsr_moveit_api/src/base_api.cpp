@@ -33,7 +33,6 @@
 
 #include <moveit/move_group_interface/move_group.h>
 #include <hsr_msgs/Joints.h>
-
 #define DEBUG
 move_group_interface::MoveGroup *group;
 
@@ -50,7 +49,6 @@ void poseCallback(const geometry_msgs::Pose::ConstPtr& msg){
 	std::cout << "z: " << msg->position.z << std::endl;
 #endif
 	group->setPoseTarget(*msg);
-	group->move();
 }
 
 /* --------------关节空间运动接口回调函数-----------------*/

@@ -189,7 +189,7 @@ class MoveItDemo:
         target_pose.pose.orientation.w = pickPos.pose.orientation.w
  
         # Add the target object to the scene
-        #scene.add_box(target_id, target_pose, target_size)
+        scene.add_box(target_id, target_pose, target_size)
         #scene.add_cylinder(target_id,target_pose,target_height,target_radius)
               
         #Add the limit_table object to the scene
@@ -256,8 +256,10 @@ class MoveItDemo:
         #while result != MoveItErrorCodes.SUCCESS and n_attempts < max_pick_attempts:
         while result != 1 and n_attempts < max_pick_attempts:
             n_attempts += 1
-            rospy.loginfo("Pick attempt: " +  str(n_attempts))
+            rospy.loginfo("Pick attempt: " +  str(n_attempts))\
+            #moveit中的pick接口，target_id为moveit添加场景的id，此处为目标物体，grasps为可尝试抓取的点位序列
             result = pick_arm.pick(target_id, grasps)
+            #打印信息
             rospy.logerr("pick_arm.pick： " + str(result))
             rospy.sleep(0.2)
         # If the pick was successful, attempt the place operation   
@@ -271,7 +273,9 @@ class MoveItDemo:
             n_attempts += 1
             print("-------------------")
             print(place_pose)
+            #更新当前的机械臂状态
             pick_arm.set_start_state_to_current_state()
+            #设置moveit运动的目标点位
             pick_arm.set_pose_target(place_pose)
             # Repeat until we succeed or run out of attempts
             #while result != MoveItErrorCodes.SUCCESS and n_attempts < max_place_attempts:
@@ -282,8 +286,10 @@ class MoveItDemo:
             #        if result == MoveItErrorCodes.SUCCESS:
             #            break
             #    rospy.sleep(0.2)
+            #moveit的运动接口，wait=True表示等到执行完成才返回
             result_g = pick_arm.go(wait=True)
             rospy.logerr("pick_arm.go： " + str(result_g))
+            #打开夹爪
             open_client(500)
             rospy.sleep(0.2)
             #if result == "False"
@@ -293,10 +299,13 @@ class MoveItDemo:
                 
         # Return the arm to the "home" pose stored in the SRDF file
 		#将机械臂返回到SRDF中的“home”姿态
+        #scene.remove_world_object(target_id)
+        #scene.remove_attached_object(GRIPPER_FRAME, target_id)
+        #scene.remove_world_object(target_id)
+        rospy.sleep(1)
         open_client(500)
         pick_arm.set_named_target(ARM_HOME_POSE)
         pick_arm.go()
-        
         # Open the gripper to the neutral position
         # pick_gripper.set_joint_value_target(GRIPPER_NEUTRAL)
         # pick_gripper.go()
