@@ -256,7 +256,7 @@ class MoveItDemo:
         #while result != MoveItErrorCodes.SUCCESS and n_attempts < max_pick_attempts:
         while result != 1 and n_attempts < max_pick_attempts:
             n_attempts += 1
-            rospy.loginfo("Pick attempt: " +  str(n_attempts))\
+            rospy.loginfo("Pick attempt: " +  str(n_attempts))
             #moveit中的pick接口，target_id为moveit添加场景的id，此处为目标物体，grasps为可尝试抓取的点位序列
             result = pick_arm.pick(target_id, grasps)
             #打印信息
