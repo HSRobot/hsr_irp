@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node
+    name="tf1"
+    pkg="tf"
+    type="static_transform_publisher"
+    args="0.8 0 1.5 1.57 3.14 0 base_link kinect_frame 40" />
+
+  <node
+    name="tf2"
+    pkg="tf"
+    type="static_transform_publisher"
+    args="0 0 0 0 0 0 kinect_frame camera_depth_optical_frame 40" />
+
+</launch>

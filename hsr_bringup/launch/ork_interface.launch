@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node
+    name="add_object"
+    pkg="ork_interface"
+    type="object_add_server.py"/>
+
+  <node
+    name="add_mesh"
+    pkg="ork_interface"
+    type="mesh_add_server.py"/>
+
+  <node
+    name="delete_object"
+    pkg="ork_interface"
+    type="object_delete_server.py"/>
+
+  <node
+    name="search_object"
+    pkg="ork_interface"
+    type="object_search_server.py"/>
+
+  <node
+    name="training_object"
+    pkg="ork_interface"
+    type="training_server.py"/>
+
+  <node
+    name="detection_object"
+    pkg="ork_interface"
+    type="detection_server.py"/>
+
+</launch>

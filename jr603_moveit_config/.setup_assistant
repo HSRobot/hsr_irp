@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: hsr_description
+    relative_path: urdf/hsr_jr603.urdf
+    xacro_args: "--inorder "
+  SRDF:
+    relative_path: config/hsr_jr603.srdf
+  CONFIG:
+    author_name: shencanjun
+    author_email: 1252773119@qq.com
+    generated_timestamp: 1560849896

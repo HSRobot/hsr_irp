@@ -1,0 +1,4 @@
+int32 max
+int32 min
+---
+bool openSetFinished

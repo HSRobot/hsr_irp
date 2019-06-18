@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+  <param
+    name="robot_description"
+    textfile="$(find hsr_description)/urdf/hsr_co602.urdf" />
+
+  <param
+	name="robot_name"
+	type="string"
+	value="hsr_co602"
+	/>
+
+</launch>

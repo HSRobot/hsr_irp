@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="sip" default="10.10.56.214" />
+
+  <include 
+	file="$(find hsr_description)/launch/co602_upload.launch"/>
+
+  <include
+	file="$(find co602_moveit_config)/launch/hsr_br606_moveit_planning_execution.launch">
+	<arg name="sim" default="false"/>
+  </include>
+
+  <include
+	file="$(find industrial_robot_client)/launch/robot_full_interface_download.launch.launch">
+	<arg name="robot_ip" default="$(arg ip)"/>
+  </include>
+
+  <include 
+	file="$(find co602_moveit_config)/launch/moveit_rviz.launch"/>
+
+</launch>

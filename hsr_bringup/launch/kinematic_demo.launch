@@ -1,0 +1,13 @@
+<launch>
+  <include file="$(find br606_moveit_config)/launch/planning_context.launch">
+    <arg name="load_robot_description" value="true"/>
+  </include>
+
+  <node name="kinematic_demo"
+        pkg="hsr_bringup"
+        type="kinematic_demo"
+        respawn="false" output="screen">
+    <rosparam command="load"
+              file="$(find br606_moveit_config)/config/kinematics.yaml"/>
+  </node>
+</launch>
