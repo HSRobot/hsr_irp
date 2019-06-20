@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   pcl_ros
   roscpp
+
 )
 
 ## Generate services in the 'srv' folder

@@ -195,16 +195,21 @@ PickPlaceWdg::PickPlaceWdg(QWidget *parent) : QWidget(parent)
 	pickPlaceStatusTextEdit = new QTextEdit;
 	pickPlaceStatusTextEdit->setWordWrapMode(QTextOption::NoWrap);
 	
-	runPickPlaceBtn = new QPushButton(tr("执行抓取与放置"));
-    runPickPlaceBtn->setFixedSize(150,50);
+	runPickPlaceBtn = new QPushButton(tr("执行抓取"));
+        runPickPlaceBtn->setFixedSize(100,50);
 	runPickPlaceBtn->setStyleSheet("font-size:20px;background-color: rgb(0,106,213);color: rgb(255,255,255);");
+        
+        voicePickPlaceBtn = new QPushButton(tr("语音抓取"));
+        voicePickPlaceBtn->setFixedSize(100,50);
+	voicePickPlaceBtn->setStyleSheet("font-size:20px;background-color: rgb(0,106,213);color: rgb(255,255,255);");
 	
 	pickPlaceInfoLayout = new QGridLayout;
-    pickPlaceInfoLayout->addWidget(pickPlaceStatuslabel,0,0,1,6);
-    pickPlaceInfoLayout->addWidget(pickPlaceStatusTextEdit,1,0,2,14);
-    pickPlaceInfoLayout->addWidget(runPickPlaceBtn,1,14,2,4);
+        pickPlaceInfoLayout->addWidget(pickPlaceStatuslabel,0,0,1,6);
+        pickPlaceInfoLayout->addWidget(pickPlaceStatusTextEdit,1,0,2,14);
+        pickPlaceInfoLayout->addWidget(runPickPlaceBtn,1,14,2,4);
+        pickPlaceInfoLayout->addWidget(voicePickPlaceBtn,1,22,2,4);
 
-    /* 抓取与放置模块整体布局 */
+        /* 抓取与放置模块整体布局 */
 	pickPlaceLayout = new QVBoxLayout;
 	pickPlaceLayout->addLayout(pickLayout);
 	pickPlaceLayout->addLayout(placeLayout);

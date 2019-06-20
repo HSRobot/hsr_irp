@@ -109,8 +109,8 @@
       effort="28"
       velocity="3.2" />
     <safety_controller
-      soft_upper="3.4819"
-      soft_lower="-3.4819"
+      soft_upper_limit="3.4819"
+      soft_lower_limit="-3.4819"
       k_position="0"
       k_velocity="1.6" />
   </joint>
@@ -172,8 +172,8 @@
       effort="28"
       velocity="3.2" />
     <safety_controller
-      soft_upper="-0.07853"
-      soft_lower="-2.60926"
+      soft_upper_limit="-0.07853"
+      soft_lower_limit="-2.60926"
       k_position="0"
       k_velocity="1.6" />
   </joint>
@@ -235,8 +235,8 @@
       effort="28"
       velocity="3.2" />
     <safety_controller
-      soft_upper="4.0927"
-      soft_lower="-0.34034"
+      soft_upper_limit="4.0927"
+      soft_lower_limit="-0.34034"
       k_position="0"
       k_velocity="1.6" />
   </joint>
@@ -298,8 +298,8 @@
       effort="28"
       velocity="3.2" />
     <safety_controller
-      soft_upper="3.124139"
-      soft_lower="-3.124139"
+      soft_upper_limit="3.124139"
+      soft_lower_limit="-3.124139"
       k_position="0"
       k_velocity="1.6" />
   </joint>
@@ -361,8 +361,8 @@
       effort="28"
       velocity="3.2" />
     <safety_controller
-      soft_upper="1.666789435654"
-      soft_lower="-1.562069680534"
+      soft_upper_limit="1.666789435654"
+      soft_lower_limit="-1.562069680534"
       k_position="0"
       k_velocity="1.6" />
   </joint>
@@ -424,8 +424,8 @@
       effort="28"
       velocity="3.2" />
     <safety_controller
-      soft_upper="6.283185307179"
-      soft_lower="0"
+      soft_upper_limit="6.283185307179"
+      soft_lower_limit="0"
       k_position="0"
       k_velocity="1.6" />
   </joint>

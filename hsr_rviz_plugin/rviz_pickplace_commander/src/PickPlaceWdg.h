@@ -142,7 +142,8 @@ public:
 
     QLabel *pickPlaceStatuslabel;            /* 抓取与放置状态反馈信息 标签*/
     QTextEdit *pickPlaceStatusTextEdit;      /* 抓取与放置状态反馈信息文本输入框 */
-	QPushButton *runPickPlaceBtn;            /* 执行抓取与放置按钮 */
+    QPushButton *runPickPlaceBtn;            /* 执行抓取与放置按钮 */
+    QPushButton *voicePickPlaceBtn;            /* 执行抓取与放置按钮 */
     QGridLayout *pickPlaceInfoLayout;        /* 抓取与放置反馈信息布局 */
 	
 	QVBoxLayout *pickPlaceLayout;            /* 抓取与放置模块布局 */

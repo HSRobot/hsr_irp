@@ -1,7 +1,7 @@
 sensors:
   - sensor_plugin: occupancy_map_monitor/PointCloudOctomapUpdater
     point_cloud_topic: /filter_points
-    max_range: 5.0
+    max_range: 1.0
     point_subsample: 1
     padding_offset: 0.1
     padding_scale: 1.0

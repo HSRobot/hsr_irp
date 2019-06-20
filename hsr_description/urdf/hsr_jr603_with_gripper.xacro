@@ -12,7 +12,7 @@
   </joint> 
 
   <joint name="pick_gripper_joint" type="fixed">
-     <origin xyz="-0.0115 0.0 0.15" rpy="0 -1.5708 1.5708" />
+     <origin xyz="0.0 0.0 0.18" rpy="0 -1.5708 1.5708" />
      <axis xyz="0 0 1"/>
      <parent link="gripper_base_link" />
      <child link="pick_gripper_link" />  
