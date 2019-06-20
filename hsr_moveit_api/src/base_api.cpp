@@ -116,6 +116,14 @@ int main(int argc, char **argv){
 		// 获取当前笛卡尔坐标
 		now_pose = group->getCurrentPose();
 
+		std::cout<<"now_pose.px:"<<now_pose.pose.position.x<<std::endl;
+		std::cout<<"now_pose.py:"<<now_pose.pose.position.y<<std::endl;
+		std::cout<<"now_pose.pz:"<<now_pose.pose.position.z<<std::endl;
+		std::cout<<"now_pose.ox:"<<now_pose.pose.orientation.x<<std::endl;
+		std::cout<<"now_pose.oy:"<<now_pose.pose.orientation.y<<std::endl;
+		std::cout<<"now_pose.oz:"<<now_pose.pose.orientation.z<<std::endl;
+		std::cout<<"now_pose.ow:"<<now_pose.pose.orientation.w<<std::endl;
+
 		// 获取当前RPY
 		rpy = group->getCurrentRPY();
 

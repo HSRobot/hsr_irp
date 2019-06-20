@@ -40,6 +40,7 @@ add_executable(pcl_demo src/pcl_demo.cpp)
 add_executable(kinect_filter src/kinect_filter.cpp)
 
 add_dependencies(kinect_filter ${catkin_EXPORTED_TARGETS})
+add_dependencies(kinect_filter ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 target_link_libraries(pcl_demo
   ${catkin_LIBRARIES}
