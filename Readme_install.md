@@ -139,7 +139,7 @@ $roslaunch easy_handeye publish.launch eye_on_hand:=false namespace_prefix:=hsr_
 #启动kinect驱动
 $roslaunch kinect2_bridge kinect2_bridge.launch #启动kinect驱动
 #识别模型
-$rosrun object_recognition_core detection -c  `rospack find object_recognition_linemod`/conf/detection.ros.ork 
+$ rosrun object_recognition_core detection -c  `rospack find object_recognition_linemod`/conf/detection.ros.ork 
 
 #四、利用solidworks和blender创建新的ork训练模型（stl）
 #首先在SolidWorks建模

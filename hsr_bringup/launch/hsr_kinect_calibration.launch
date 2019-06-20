@@ -6,6 +6,7 @@
     <arg name="marker_size" doc="Size of the ArUco marker used, in meters"  default="0.1" />
     <arg name="marker_id" doc="The ID of the ArUco marker used" default="100" />
     <arg name ="calibrate" doc="The IP address of the UR5 robot"/>
+    <arg name = "robot_name" default=" "/>
    
 
     <!-- start the Kinect -->
@@ -26,23 +27,23 @@
     </node>
    
 
-<!--include 
-	file="$(find hsr_bringup)/launch/br609_go.launch">
-        <arg name ="calibrate" default="true"/>
-</include-->
-
-<!--include 
-	file="$(find hsr_description)/launch/br609_upload.launch"/>
+<include 
+	file="$(find hsr_description)/launch/$(arg robot_name)_upload.launch"/>
 
 <include
 	file="$(find hsr_rosi_client)/launch/robot_full_interface_download.launch">
 	<arg name="robot_ip" default="10.10.56.214"/>
-  </include-->
+  </include>
 
     <!-- start the robot -->
-	<!--include file="$(find br609_moveit_config)/launch/hsr_br609_moveit_planning_execution.launch">
+	<include file="$(find robot_name_moveit_config)/launch/hsr_$(arg robot_name)_moveit_planning_execution.launch">
         <arg name="sim" default="false"/>
-    </include-->
+    </include>
+    
+    <include file="/home/fshs/catkin_ws/src/hsr_irp/$(arg robot_name)_moveit_config/launch/hsr_$(arg robot_name)_moveit_planning_execution.launch">
+
+        <arg name="sim" default="false"/>
+    </include>
 
     <!-- start easy_handeye -->
     <include file="$(find easy_handeye)/launch/calibrate.launch" >

@@ -99,7 +99,7 @@ class MoveItDemo:
         #pick_arm.set_planner_id("RRTstarkConfigDefault")
         pick_arm.set_planner_id("RRTstarkConfigDefault")
         # Allow 5 seconds per planning attempt
-        pick_arm.set_planning_time(10)
+        pick_arm.set_planning_time(3)
         
         # Set a limit on the number of pick attempts before bailing
         max_pick_attempts = 5
@@ -257,7 +257,9 @@ class MoveItDemo:
         while result != 1 and n_attempts < max_pick_attempts:
             n_attempts += 1
             rospy.loginfo("Pick attempt: " +  str(n_attempts))
+            #moveit中的pick接口，target_id为moveit添加场景的id，此处为目标物体，grasps为可尝试抓取的点位序列
             result = pick_arm.pick(target_id, grasps)
+            #打印信息
             rospy.logerr("pick_arm.pick： " + str(result))
             rospy.sleep(0.2)
         # If the pick was successful, attempt the place operation   
@@ -265,13 +267,15 @@ class MoveItDemo:
         result_g = None
         n_attempts = 2
         #if result == MoveItErrorCodes.SUCCESS:
-        while result_g != True and n_attempts < max_pick_attempts and result == 1:      
+        while result_g != True and n_attempts < max_pick_attempts:#and result == 1:      
             # Generate valid place poses
             #places = self.make_places(place_pose)
             n_attempts += 1
             print("-------------------")
             print(place_pose)
+            #更新当前的机械臂状态
             pick_arm.set_start_state_to_current_state()
+            #设置moveit运动的目标点位
             pick_arm.set_pose_target(place_pose)
             # Repeat until we succeed or run out of attempts
             #while result != MoveItErrorCodes.SUCCESS and n_attempts < max_place_attempts:
@@ -282,8 +286,10 @@ class MoveItDemo:
             #        if result == MoveItErrorCodes.SUCCESS:
             #            break
             #    rospy.sleep(0.2)
+            #moveit的运动接口，wait=True表示等到执行完成才返回
             result_g = pick_arm.go(wait=True)
             rospy.logerr("pick_arm.go： " + str(result_g))
+            #打开夹爪
             open_client(500)
             rospy.sleep(0.2)
             #if result == "False"
@@ -293,16 +299,19 @@ class MoveItDemo:
                 
         # Return the arm to the "home" pose stored in the SRDF file
 		#将机械臂返回到SRDF中的“home”姿态
+        #scene.remove_world_object(target_id)
+        #scene.remove_attached_object(GRIPPER_FRAME, target_id)
+        #scene.remove_world_object(target_id)
+        rospy.sleep(1)
         open_client(500)
         pick_arm.set_named_target(ARM_HOME_POSE)
         pick_arm.go()
-        
         # Open the gripper to the neutral position
         # pick_gripper.set_joint_value_target(GRIPPER_NEUTRAL)
         # pick_gripper.go()
        
         rospy.sleep(1)
-
+        rospy.logerr("pick_server over ")
         # Shut down MoveIt cleanly
         # moveit_commander.roscpp_shutdown()
         
@@ -386,35 +395,39 @@ class MoveItDemo:
         # Yaw angles to try
         yaw_vals = [0]
 
+        # Roll angles to try
+        roll_vals = [-3.14, 0]
+
         # A list to hold the grasps
         grasps = []
 
-        # Generate a grasp for each pitch and yaw angle
-        for y in yaw_vals:
-            for p in pitch_vals:
-                # Create a quaternion from the Euler angles
-                q = quaternion_from_euler(0, p, y)
+        # Generate a grasp for each pitch and yaw angle\
+        for r in roll_vals:
+            for y in yaw_vals:
+                for p in pitch_vals:
+                    # Create a quaternion from the Euler angles
+                    q = quaternion_from_euler(r, p, y)
                 
-                # Set the grasp pose orientation accordingly
-                g.grasp_pose.pose.orientation.x = q[0]
-                g.grasp_pose.pose.orientation.y = q[1]
-                g.grasp_pose.pose.orientation.z = q[2]
-                g.grasp_pose.pose.orientation.w = q[3]
+                    # Set the grasp pose orientation accordingly
+                    g.grasp_pose.pose.orientation.x = q[0]
+                    g.grasp_pose.pose.orientation.y = q[1]
+                    g.grasp_pose.pose.orientation.z = q[2]
+                    g.grasp_pose.pose.orientation.w = q[3]
                 
-                # Set and id for this grasp (simply needs to be unique)
-                g.id = str(len(grasps))
+                    # Set and id for this grasp (simply needs to be unique)
+                    g.id = str(len(grasps))
                 
-                # Set the allowed touch objects to the input list
-                g.allowed_touch_objects = allowed_touch_objects
+                    # Set the allowed touch objects to the input list
+                    g.allowed_touch_objects = allowed_touch_objects
                 
-                # Don't restrict contact force
-                g.max_contact_force = 0
+                    # Don't restrict contact force
+                    g.max_contact_force = 0
                 
-                # Degrade grasp quality for increasing pitch angles
-                g.grasp_quality = 1.0 - abs(p)
+                    # Degrade grasp quality for increasing pitch angles
+                    g.grasp_quality = 1.0 - abs(p)
                 
-                # Append the grasp to the list
-                grasps.append(deepcopy(g))
+                    # Append the grasp to the list
+                    grasps.append(deepcopy(g))
                 
         # Return the list
         return grasps

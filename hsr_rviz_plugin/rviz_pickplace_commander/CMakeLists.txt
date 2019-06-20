@@ -13,19 +13,29 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   serial
   hsr_gripper_driver
+  message_generation
 )
 
+## Generate services in the 'srv' folder
+add_service_files(
+   FILES
+   voicePickCoke.srv
+   voicePickDiamond.srv
+ )
+
+generate_messages(
+   DEPENDENCIES
+   std_msgs
+ )
+
 catkin_package(
-  CATKIN_DEPENDS roscpp rviz std_msgs hsr_gripper_driver
+  CATKIN_DEPENDS roscpp rviz std_msgs hsr_gripper_driver message_runtime 
 )
 
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
 )
-
-
-
 
 find_package(Qt4 COMPONENTS QtCore QtGui REQUIRED)
 include(${QT_USE_FILE})

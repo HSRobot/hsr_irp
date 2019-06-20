@@ -33,7 +33,6 @@
 
 #include <moveit/move_group_interface/move_group.h>
 #include <hsr_msgs/Joints.h>
-
 #define DEBUG
 move_group_interface::MoveGroup *group;
 
@@ -50,7 +49,6 @@ void poseCallback(const geometry_msgs::Pose::ConstPtr& msg){
 	std::cout << "z: " << msg->position.z << std::endl;
 #endif
 	group->setPoseTarget(*msg);
-	group->move();
 }
 
 /* --------------关节空间运动接口回调函数-----------------*/
@@ -116,6 +114,14 @@ int main(int argc, char **argv){
 		// 获取当前笛卡尔坐标
 		now_pose = group->getCurrentPose();
 
+		std::cout<<"now_pose.px:"<<now_pose.pose.position.x<<std::endl;
+		std::cout<<"now_pose.py:"<<now_pose.pose.position.y<<std::endl;
+		std::cout<<"now_pose.pz:"<<now_pose.pose.position.z<<std::endl;
+		std::cout<<"now_pose.ox:"<<now_pose.pose.orientation.x<<std::endl;
+		std::cout<<"now_pose.oy:"<<now_pose.pose.orientation.y<<std::endl;
+		std::cout<<"now_pose.oz:"<<now_pose.pose.orientation.z<<std::endl;
+		std::cout<<"now_pose.ow:"<<now_pose.pose.orientation.w<<std::endl;
+
 		// 获取当前RPY
 		rpy = group->getCurrentRPY();
 
@@ -125,7 +131,7 @@ int main(int argc, char **argv){
 		// 休眠
 		loop_rate.sleep();
 		
-		//std::cout << "rpy = " << rpy[0] << " || " << rpy[1] << " || " << rpy[2] << std::endl; 
+		std::cout << "rpy = " << rpy[0] << " || " << rpy[1] << " || " << rpy[2] << std::endl; 
 	
 	}
 }
