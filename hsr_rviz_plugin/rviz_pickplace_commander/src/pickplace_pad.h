@@ -32,10 +32,10 @@
 #ifndef CONTROL_PAD_H
 #define CONTROL_PAD_H
 
-/* rosÍ·ÎÄ¼ş */
+/* roså¤´æ–‡ä»¶ */
 #include <ros/ros.h>
 #include <ros/console.h>
-#include <rviz/panel.h>                                     /* plugin»ùÀàµÄÍ·ÎÄ¼ş */
+#include <rviz/panel.h>                                     /* pluginåŸºç±»çš„å¤´æ–‡ä»¶ */
 
 #include "hsr_gripper_driver/serial_open_srv.h"
 #include "hsr_gripper_driver/close_srv.h"
@@ -44,8 +44,8 @@
 #include "hsr_gripper_driver/open_size_srv.h"
 #include "hsr_gripper_driver/read_open_size_srv.h"
 
-#include <visualization_msgs/InteractiveMarkerFeedback.h>   /* ´ÓÄ£ĞÍ¶ÁÈ¡×ø±êµÄÍ·ÎÄ¼ş */
-#include <geometry_msgs/Pose.h>                             /* ¶ÁÈ¡µÑ¿¨¶û×ËÌ¬Í·ÎÄ¼ş */ 
+#include <visualization_msgs/InteractiveMarkerFeedback.h>   /* ä»æ¨¡å‹è¯»å–åæ ‡çš„å¤´æ–‡ä»¶ */
+#include <geometry_msgs/Pose.h>                             /* è¯»å–ç¬›å¡å°”å§¿æ€å¤´æ–‡ä»¶ */ 
 #include <geometry_msgs/PoseStamped.h>
 //#include <tf>
 #include <tf/transform_listener.h>
@@ -62,7 +62,7 @@
 
 #include "hsr_pick/pickPlace.h"
 
-/* qtÍ·ÎÄ¼ş*/
+/* qtå¤´æ–‡ä»¶*/
 #include<QVBoxLayout>
 
 #include <QTimer>
@@ -76,16 +76,16 @@
 #include "OrkWdg.h"
 #include "PickPlaceWdg.h"
 
-/* ÊıÑ§¿â */
+/* æ•°å­¦åº“ */
 #include <cmath>
 
-/* ÆäËû */
+/* å…¶ä»– */
 #include <glob.h>
 #include <stdio.h>
 #include <string.h>
 #include <vector>
 
-/* ºê¶¨Òå¼°È«¾Ö±äÁ¿ */
+/* å®å®šä¹‰åŠå…¨å±€å˜é‡ */
 #define PI 3.1415926
 
 typedef struct
@@ -111,7 +111,7 @@ typedef struct
 
 namespace rviz_pickplace_commander
 {
-    /* ËùÓĞµÄplugin¶¼±ØĞëÊÇrviz::PanelµÄ×ÓÀà */
+    /* æ‰€æœ‰çš„pluginéƒ½å¿…é¡»æ˜¯rviz::Panelçš„å­ç±» */
 class PickPlacePanel: public rviz::Panel
 {
     Q_OBJECT
@@ -120,50 +120,50 @@ public:
     PickPlacePanel( QWidget* parent = 0 );	
 	~PickPlacePanel();
 	
-	/* ¿ÉÊ¶±ğÎïÌåÁĞ±í ³õÊ¼»¯ */
+	/* å¯è¯†åˆ«ç‰©ä½“åˆ—è¡¨ åˆå§‹åŒ– */
 	void canRecognizedModelListInit();
 	
-	/*ÃüÁîĞĞÖ´ĞĞÃüÁî²¢Êä³ö½á¹û*/
+	/*å‘½ä»¤è¡Œæ‰§è¡Œå‘½ä»¤å¹¶è¾“å‡ºç»“æœ*/
 	void executeCMD(const char *cmd, char *result);
  
-    /* ¹«¹²²Û */
+    /* å…¬å…±æ§½ */
 public Q_SLOTS:
    
 protected Q_SLOTS:
 
 protected:
-	/* QtÏà¹Ø */
-    SerialWdg *m_serialWdg;                        /* ´®¿ÚÄ£¿é */
-    GripperWdg *m_gripperWdg;                      /* ¼Ğ×¦Ä£¿é */  
-	OrkWdg *m_orkWdg;                              /* Ê¶±ğÓë¶¨Î»Ä£¿é */
-	PickPlaceWdg *m_pickPlaceWdg;                  /* ×¥È¡Óë·ÅÖÃÄ£¿é */
+	/* Qtç›¸å…³ */
+    SerialWdg *m_serialWdg;                        /* ä¸²å£æ¨¡å— */
+    GripperWdg *m_gripperWdg;                      /* å¤¹çˆªæ¨¡å— */  
+	OrkWdg *m_orkWdg;                              /* è¯†åˆ«ä¸å®šä½æ¨¡å— */
+	PickPlaceWdg *m_pickPlaceWdg;                  /* æŠ“å–ä¸æ”¾ç½®æ¨¡å— */
 	
-	QVBoxLayout *mainLayout;                       /* ÕûÌå²¼¾Ö */
+	QVBoxLayout *mainLayout;                       /* æ•´ä½“å¸ƒå±€ */
 	
-	QTimer *getPickPoseFromORK_Timer;              /* ´ÓORKÄ£¿é»ñÈ¡×¥È¡Îï×ø±ê ÊµÊ±Ë¢ĞÂ¶¨Ê±Æ÷ */
-	QTimer *syncGetSerialDevNo_Timer;              /* »ñÈ¡´®¿ÚÉè±¸ºÅ ÊµÊ±Ë¢ĞÂ¶¨Ê±Æ÷ */
-    //QTimer *showPoseFromCamera_Timer;              /* ´ÓCamera»ñÈ¡Î»×Ë ÊµÊ±Ë¢ĞÂ¶¨Ê±Æ÷ */
+	QTimer *getPickPoseFromORK_Timer;              /* ä»ORKæ¨¡å—è·å–æŠ“å–ç‰©åæ ‡ å®æ—¶åˆ·æ–°å®šæ—¶å™¨ */
+	QTimer *syncGetSerialDevNo_Timer;              /* è·å–ä¸²å£è®¾å¤‡å· å®æ—¶åˆ·æ–°å®šæ—¶å™¨ */
+    //QTimer *showPoseFromCamera_Timer;              /* ä»Cameraè·å–ä½å§¿ å®æ—¶åˆ·æ–°å®šæ—¶å™¨ */
 
-	/* ROSÏà¹Ø */
-	ros::NodeHandle n_pickPlace;                   /* ½Úµã¾ä±ú */
-	ros::NodeHandle n_runPickPlace;                /* ½Úµã¾ä±ú */
-	ros::ServiceClient client_serialOpen;          /* ´®¿Ú´ò¿ª¿Í»§¶Ë */
-    ros::ServiceClient client_gripperOpenSize;     /* ¼Ğ×¦¿ª¿Ú´óĞ¡¿Í»§¶Ë */
-	ros::ServiceClient client_gripperOpen;         /* ¼Ğ×¦´ò¿ª¿Í»§¶Ë */
-	ros::ServiceClient client_gripperClose;        /* ¼Ğ×¦¹Ø±Õ¿Í»§¶Ë */
-	ros::ServiceClient client_gripperStop;         /* ¼Ğ×¦¹Ø±Õ¿Í»§¶Ë */
+	/* ROSç›¸å…³ */
+	ros::NodeHandle n_pickPlace;                   /* èŠ‚ç‚¹å¥æŸ„ */
+	ros::NodeHandle n_runPickPlace;                /* èŠ‚ç‚¹å¥æŸ„ */
+	ros::ServiceClient client_serialOpen;          /* ä¸²å£æ‰“å¼€å®¢æˆ·ç«¯ */
+    ros::ServiceClient client_gripperOpenSize;     /* å¤¹çˆªå¼€å£å¤§å°å®¢æˆ·ç«¯ */
+	ros::ServiceClient client_gripperOpen;         /* å¤¹çˆªæ‰“å¼€å®¢æˆ·ç«¯ */
+	ros::ServiceClient client_gripperClose;        /* å¤¹çˆªå…³é—­å®¢æˆ·ç«¯ */
+	ros::ServiceClient client_gripperStop;         /* å¤¹çˆªå…³é—­å®¢æˆ·ç«¯ */
 	
-	ros::ServiceClient client_objDelete;           /* É¾³ıÊ¶±ğÎïÌå¿Í»§¶Ë */
-	ros::ServiceClient client_objAdd;              /* Ìí¼ÓÊ¶±ğÎïÌå¿Í»§¶Ë */
-	ros::ServiceClient client_meshAdd;             /* Ìí¼ÓÎïÌåmesh¿Í»§¶Ë */
-	ros::ServiceClient client_objSearch;           /* ²éÕÒÊ¶±ğÎïÌå¿Í»§¶Ë */
-	ros::ServiceClient client_training;            /* ÑµÁ·Ä£ĞÍ¿Í»§¶Ë */
-	ros::ServiceClient client_detection;           /* ÑµÁ·Ä£ĞÍ¿Í»§¶Ë */
+	ros::ServiceClient client_objDelete;           /* åˆ é™¤è¯†åˆ«ç‰©ä½“å®¢æˆ·ç«¯ */
+	ros::ServiceClient client_objAdd;              /* æ·»åŠ è¯†åˆ«ç‰©ä½“å®¢æˆ·ç«¯ */
+	ros::ServiceClient client_meshAdd;             /* æ·»åŠ ç‰©ä½“meshå®¢æˆ·ç«¯ */
+	ros::ServiceClient client_objSearch;           /* æŸ¥æ‰¾è¯†åˆ«ç‰©ä½“å®¢æˆ·ç«¯ */
+	ros::ServiceClient client_training;            /* è®­ç»ƒæ¨¡å‹å®¢æˆ·ç«¯ */
+	ros::ServiceClient client_detection;           /* è®­ç»ƒæ¨¡å‹å®¢æˆ·ç«¯ */
 	
-	ros::ServiceClient client_pickPlace;           /* ×¥È¡Óë·ÅÖÃ¿Í»§¶Ë */
+	ros::ServiceClient client_pickPlace;           /* æŠ“å–ä¸æ”¾ç½®å®¢æˆ·ç«¯ */
 	
-	ros::Subscriber sub_poseFrom3d;                /* ¶©ÔÄ¶ÁÈ¡Î»×Ë»°Ìâ£¬´ÓÈıÎ¬»·¾³ÖĞ¶ÁÈ¡Î»×ËĞÅÏ¢ */
-	ros::Subscriber sub_poseFromCamera;            /* ¶©ÔÄ´ÓÏà»ú¶ÁÈ¡Î»×Ë»°Ìâ */
+	ros::Subscriber sub_poseFrom3d;                /* è®¢é˜…è¯»å–ä½å§¿è¯é¢˜ï¼Œä»ä¸‰ç»´ç¯å¢ƒä¸­è¯»å–ä½å§¿ä¿¡æ¯ */
+	ros::Subscriber sub_poseFromCamera;            /* è®¢é˜…ä»ç›¸æœºè¯»å–ä½å§¿è¯é¢˜ */
 	
 private:
     int openSizeMax;
@@ -184,43 +184,43 @@ private:
     geometry_msgs::PoseStamped *detectPoseFrom3d;
     geometry_msgs::PoseStamped *base_detectPoseFrom3d;
 
-    int num_detectedObj;          /*±¾´Î¼à²âµ½µÄÊ¶±ğÎïÌåÖµ*/
-    int pro_num_detectedObj;      /*ÉÏÒ»´Î¼à²âµ½µÄÊ¶±ğÎïÌåÖµ*/
+    int num_detectedObj;          /*æœ¬æ¬¡ç›‘æµ‹åˆ°çš„è¯†åˆ«ç‰©ä½“å€¼*/
+    int pro_num_detectedObj;      /*ä¸Šä¸€æ¬¡ç›‘æµ‹åˆ°çš„è¯†åˆ«ç‰©ä½“å€¼*/
 
-    std::string path_detect_config;  /* Ê¶±ğÅäÖÃÎÄ¼şÂ·¾¶ */
+    std::string path_detect_config;  /* è¯†åˆ«é…ç½®æ–‡ä»¶è·¯å¾„ */
 	
 private Q_SLOTS:
 	
-	void slotSerialNoComoBoxClicked();                     /* µã»÷´®¿ÚÉè±¸Ñ¡ÔñÏÂÀ­¿ò ²Ûº¯Êı */
+	void slotSerialNoComoBoxClicked();                     /* ç‚¹å‡»ä¸²å£è®¾å¤‡é€‰æ‹©ä¸‹æ‹‰æ¡† æ§½å‡½æ•° */
 	
-	void slotSerialConnectBtn();                           /* ´®¿ÚÁ¬½Ó°´Å¥²Ûº¯Êı */
-	void slotGripperParmSetComboBox(int index);            /* ¼Ğ×¦²ÎÊıÉèÖÃÏîÇĞ»»²Ûº¯Êı */
-	void slotGripperSetBtn();                              /* ¼Ğ×¦ÉèÖÃ°´Å¥²Ûº¯Êı */
-	void slotGripperActRunBtn();                           /* ¼Ğ×¦¶¯×÷Ö´ĞĞ°´Å¥²Ûº¯Êı */
+	void slotSerialConnectBtn();                           /* ä¸²å£è¿æ¥æŒ‰é’®æ§½å‡½æ•° */
+	void slotGripperParmSetComboBox(int index);            /* å¤¹çˆªå‚æ•°è®¾ç½®é¡¹åˆ‡æ¢æ§½å‡½æ•° */
+	void slotGripperSetBtn();                              /* å¤¹çˆªè®¾ç½®æŒ‰é’®æ§½å‡½æ•° */
+	void slotGripperActRunBtn();                           /* å¤¹çˆªåŠ¨ä½œæ‰§è¡ŒæŒ‰é’®æ§½å‡½æ•° */
 	
-	void slotAddOrDeleteComboBox(int index);               /* ĞÂÔö»òÉ¾³ıÄ£ĞÍÑ¡ÔñÏÂÀ­¿ò ÇĞ»»²Ûº¯Êı */
-	void slotToSelectDeleteComoBox(int index);             /* ´ıÉ¾³ıÄ£ĞÍÑ¡ÔñÏÂÀ­¿ò ÇĞ»»²Ûº¯Êı */
+	void slotAddOrDeleteComboBox(int index);               /* æ–°å¢æˆ–åˆ é™¤æ¨¡å‹é€‰æ‹©ä¸‹æ‹‰æ¡† åˆ‡æ¢æ§½å‡½æ•° */
+	void slotToSelectDeleteComoBox(int index);             /* å¾…åˆ é™¤æ¨¡å‹é€‰æ‹©ä¸‹æ‹‰æ¡† åˆ‡æ¢æ§½å‡½æ•° */
 	
-	//void slotCanRecognModelComboBox(int index);          /* ¿ÉÊ¶±ğÄ£ĞÍÑ¡ÔñÏÂÀ­¿ò ÇĞ»»²Ûº¯Êı */
-	void slotNewAddOrDeleteOkBtn();                        /* ĞÂÔö¼Ó»òÉ¾³ıÄ£ĞÍÈ·ÈÏ°´Å¥²Ûº¯Êı */
-	void slotModelPathOpenBtn();                           /* ´ò¿ª´ıÑµÁ·Ä£ĞÍÂ·¾¶°´Å¥²Ûº¯Êı */
-	void slotAddMeshOkBtn();                               /* ĞÂÔöÄ£ĞÍMeshÈ·ÈÏ°´Å¥²Ûº¯Êı */
-	void slotToTrainBtn();                                 /* ¿ªÊ¼ÑµÁ·°´Å¥²Ûº¯Êı*/
-	void slotToRecognBtn();                                /* ¿ªÊ¼Ê¶±ğ°´Å¥²Ûº¯Êı */
+	//void slotCanRecognModelComboBox(int index);          /* å¯è¯†åˆ«æ¨¡å‹é€‰æ‹©ä¸‹æ‹‰æ¡† åˆ‡æ¢æ§½å‡½æ•° */
+	void slotNewAddOrDeleteOkBtn();                        /* æ–°å¢åŠ æˆ–åˆ é™¤æ¨¡å‹ç¡®è®¤æŒ‰é’®æ§½å‡½æ•° */
+	void slotModelPathOpenBtn();                           /* æ‰“å¼€å¾…è®­ç»ƒæ¨¡å‹è·¯å¾„æŒ‰é’®æ§½å‡½æ•° */
+	void slotAddMeshOkBtn();                               /* æ–°å¢æ¨¡å‹Meshç¡®è®¤æŒ‰é’®æ§½å‡½æ•° */
+	void slotToTrainBtn();                                 /* å¼€å§‹è®­ç»ƒæŒ‰é’®æ§½å‡½æ•°*/
+	void slotToRecognBtn();                                /* å¼€å§‹è¯†åˆ«æŒ‰é’®æ§½å‡½æ•° */
 
-   // void slotShowPoseFromCameraTimer();                    /* ´ÓCamera»ñÈ¡Î»×Ë ÊµÊ±Ë¢ĞÂ¶¨Ê±Æ÷ ²Ûº¯Êı  */
+   // void slotShowPoseFromCameraTimer();                    /* ä»Cameraè·å–ä½å§¿ å®æ—¶åˆ·æ–°å®šæ—¶å™¨ æ§½å‡½æ•°  */
 	
-	void slotToSelectDetectComoBox(int index);             /* ´ıÑ¡ÔñÊ¶±ğÎïÑ¡ÔñÏÂÀ­¿ò ÇĞ»»²Ûº¯Êı */
-	void slotGetPickPoseFromOrk();                         /* ´ÓORKÄ£¿é»ñÈ¡×¥È¡Îï×ø±ê ²Ûº¯Êı */
+	void slotToSelectDetectComoBox(int index);             /* å¾…é€‰æ‹©è¯†åˆ«ç‰©é€‰æ‹©ä¸‹æ‹‰æ¡† åˆ‡æ¢æ§½å‡½æ•° */
+	void slotGetPickPoseFromOrk();                         /* ä»ORKæ¨¡å—è·å–æŠ“å–ç‰©åæ ‡ æ§½å‡½æ•° */
 	
-	void slotGetPickPoseMeansComoBox(int index);           /* »ñÈ¡×¥È¡Ä¿±êµã×ø±ê·½Ê½Ñ¡ÔñÏÂÀ­¿ò ÇĞ»»²Ûº¯Êı */
-	void slotGetPlacePoseMeansComoBox(int index);          /* »ñÈ¡·ÅÖÃÄ¿±êµã×ø±ê·½Ê½Ñ¡ÔñÏÂÀ­¿ò ÇĞ»»²Ûº¯Êı */
-	void slotGetPlacePoseOkBtn();                          /* »ñÈ¡·ÅÖÃÎ»×ËÈ·ÈÏ°´Å¥ ²Ûº¯Êı*/
+	void slotGetPickPoseMeansComoBox(int index);           /* è·å–æŠ“å–ç›®æ ‡ç‚¹åæ ‡æ–¹å¼é€‰æ‹©ä¸‹æ‹‰æ¡† åˆ‡æ¢æ§½å‡½æ•° */
+	void slotGetPlacePoseMeansComoBox(int index);          /* è·å–æ”¾ç½®ç›®æ ‡ç‚¹åæ ‡æ–¹å¼é€‰æ‹©ä¸‹æ‹‰æ¡† åˆ‡æ¢æ§½å‡½æ•° */
+	void slotGetPlacePoseOkBtn();                          /* è·å–æ”¾ç½®ä½å§¿ç¡®è®¤æŒ‰é’® æ§½å‡½æ•°*/
 	
-	void poseFromCamera_callback(const object_recognition_msgs::RecognizedObjectArray::ConstPtr& msg);        /* ´ÓÈıÎ¬»·¾³»ñÈ¡×ø±ê »Øµ÷º¯Êı */
-	void poseFrom3d_callback(const visualization_msgs::InteractiveMarkerFeedback::ConstPtr& msg);            /* ´ÓÈıÎ¬»·¾³»ñÈ¡×ø±ê »Øµ÷º¯Êı */
+	void poseFromCamera_callback(const object_recognition_msgs::RecognizedObjectArray::ConstPtr& msg);        /* ä»ä¸‰ç»´ç¯å¢ƒè·å–åæ ‡ å›è°ƒå‡½æ•° */
+	void poseFrom3d_callback(const visualization_msgs::InteractiveMarkerFeedback::ConstPtr& msg);            /* ä»ä¸‰ç»´ç¯å¢ƒè·å–åæ ‡ å›è°ƒå‡½æ•° */
 	
-	void slotRunPickPlaceBtn();                            /* Ö´ĞĞ×¥È¡Óë·ÅÖÃ ²Ûº¯Êı */
+	void slotRunPickPlaceBtn();                            /* æ‰§è¡ŒæŠ“å–ä¸æ”¾ç½® æ§½å‡½æ•° */
 	
 };
  

@@ -17,13 +17,13 @@
      <child link="pick_gripper_link" />  
   </joint>
 
-
 <xacro:include filename="$(find hsr_description)/urdf/hsr_gripper.xacro.xml" />
+
 <xacro:include filename="$(find hsr_description)/urdf/hsr_kinect.xacro.xml" />
   <joint name="camera_joint" type="fixed">
     <axis xyz="0 0 0" />
-    <origin xyz="0.8 0 1.5" rpy="0 1.57 0"/>
-    <parent link="base_link"/>
+    <origin xyz="0 0 -0.05" rpy="0 -1.57 0"/>
+    <parent link="pick_gripper_link"/>
     <child link="camera_link"/>
   </joint>
 

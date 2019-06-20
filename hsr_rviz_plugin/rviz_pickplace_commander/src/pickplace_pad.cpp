@@ -33,23 +33,23 @@
 
 namespace rviz_pickplace_commander
 {
-    /* ¹¹Ôìº¯Êı£¬³õÊ¼»¯±äÁ¿ */
+    /* æ„é€ å‡½æ•°ï¼Œåˆå§‹åŒ–å˜é‡ */
     PickPlacePanel::PickPlacePanel(QWidget* parent) : rviz::Panel(parent),openSizeMax(1000),\
                                         openSizeMin(0),gripperSpeed(500),gripperForce(100)
     {	
-		//QTextCodec::setCodecForTr(QTextCodec::codecForLocale());	/* ´¦ÀíÖĞÎÄ×Ö·û */
-		QTextCodec::setCodecForCStrings(QTextCodec::codecForName("GB2312")); /* ´¦ÀíÖĞÎÄ×Ö·û */
+		//QTextCodec::setCodecForTr(QTextCodec::codecForLocale());	/* å¤„ç†ä¸­æ–‡å­—ç¬¦ */
+		QTextCodec::setCodecForCStrings(QTextCodec::codecForName("GB2312")); /* å¤„ç†ä¸­æ–‡å­—ç¬¦ */
 	
-	/******************Ïà¹ØÊı¾İ³õÊ¼»¯*********************************************************************/
+	/******************ç›¸å…³æ•°æ®åˆå§‹åŒ–*********************************************************************/
 		m_trainingMdoel = new TRAINED_MODEL[1];
    
-    /******************½çÃæÏà¹Ø*********************************************************************/
+    /******************ç•Œé¢ç›¸å…³*********************************************************************/
         m_serialWdg = new SerialWdg;
 		m_gripperWdg = new GripperWdg;
 		m_orkWdg = new OrkWdg;
 		m_pickPlaceWdg = new PickPlaceWdg;
 					    		
-        /* ÕûÌå²¼¾Ö */
+        /* æ•´ä½“å¸ƒå±€ */
         mainLayout = new QVBoxLayout;
 		mainLayout->addWidget(m_serialWdg->serialTitleLabel,1);
         mainLayout->addWidget(m_serialWdg,1);
@@ -62,7 +62,7 @@ namespace rviz_pickplace_commander
 		
         setLayout(mainLayout);
 		
-    /******************²Ûº¯Êı*********************************************************************/
+    /******************æ§½å‡½æ•°*********************************************************************/
 	    connect(m_serialWdg->serialNoComoBox,SIGNAL(clicked(bool)),this,SLOT(slotSerialNoComoBoxClicked()));
 		connect(m_serialWdg->serialConnectOrNotBtn,SIGNAL(pressed()),this,SLOT(slotSerialConnectBtn()));
         connect(m_gripperWdg->gripperSetComoBox,SIGNAL(currentIndexChanged(int)),this,SLOT(slotGripperParmSetComboBox(int)));
@@ -86,15 +86,15 @@ namespace rviz_pickplace_commander
 		connect(m_pickPlaceWdg->getPlacePoseOkBtn,SIGNAL(pressed()),this,SLOT(slotGetPlacePoseOkBtn()));
 		
 		connect(m_pickPlaceWdg->runPickPlaceBtn,SIGNAL(clicked(bool)),this,SLOT(slotRunPickPlaceBtn()));
-	/******************ROSÏà¹Ø*********************************************************************/
-        /* ´´½¨´®¿Ú´ò¿ª¿Í»§¶Ë */
+	/******************ROSç›¸å…³*********************************************************************/
+        /* åˆ›å»ºä¸²å£æ‰“å¼€å®¢æˆ·ç«¯ */
 	    client_serialOpen = n_pickPlace.serviceClient<hsr_gripper_driver::serial_open_srv>("serial_open");
         client_gripperOpenSize = n_pickPlace.serviceClient<hsr_gripper_driver::open_size_srv>("gripper_set_open_size");
 		client_gripperOpen = n_pickPlace.serviceClient<hsr_gripper_driver::open_srv>("gripper_open");
 		client_gripperClose = n_pickPlace.serviceClient<hsr_gripper_driver::close_srv>("gripper_close");
 		client_gripperStop = n_pickPlace.serviceClient<hsr_gripper_driver::stop_srv>("gripper_stop");
 		
-		/* ´´½¨ORKÄ£¿éÏà¹Ø¿Í»§¶Ë */
+		/* åˆ›å»ºORKæ¨¡å—ç›¸å…³å®¢æˆ·ç«¯ */
 		client_objAdd = n_pickPlace.serviceClient<ork_interface::objAdd>("object_add");
 		client_objDelete = n_pickPlace.serviceClient<ork_interface::objDelete>("object_delete");
 	    client_meshAdd = n_pickPlace.serviceClient<ork_interface::meshAdd>("mesh_add");
@@ -102,9 +102,9 @@ namespace rviz_pickplace_commander
 		client_training = n_pickPlace.serviceClient<ork_interface::training_srv>("training");
 		client_detection = n_pickPlace.serviceClient<ork_interface::detection_srv>("detection");
 		
-		/* ´´½¨×¥È¡Óë·ÅÖÃÄ£¿éÏà¹Ø¿Í»§¶Ë */
+		/* åˆ›å»ºæŠ“å–ä¸æ”¾ç½®æ¨¡å—ç›¸å…³å®¢æˆ·ç«¯ */
 		client_pickPlace = n_runPickPlace.serviceClient<hsr_pick::pickPlace>("pick_and_place");
-	/*******************¶¨Ê±Æ÷**************************************************************/
+	/*******************å®šæ—¶å™¨**************************************************************/
 	    getPickPoseFromORK_Timer = new QTimer(this);
 	    connect(getPickPoseFromORK_Timer,SIGNAL(timeout()),this,SLOT(slotGetPickPoseFromOrk()));
 		
@@ -112,7 +112,7 @@ namespace rviz_pickplace_commander
         //connect(showPoseFromCamera_Timer,SIGNAL(timeout()),this,SLOT(slotShowPoseFromCameraTimer()));
 
 		
-		//ÆäËû³õÊ¼»¯
+		//å…¶ä»–åˆå§‹åŒ–
 		canRecognizedModelListInit();
         path_detect_config = "";
         num_detectedObj = 0;
@@ -142,7 +142,7 @@ namespace rviz_pickplace_commander
         glob("/dev/ttyUSB*",GLOB_NOSORT, NULL, &ttyUSBpath_buf);		
         //glob("/dev/ttyS*",GLOB_NOSORT, NULL, &ttySpath_buf);
         
-		m_serialWdg->serialNoComoBox->clear();           /* ´¥·¢¸Ã²Ûº¯Êıºó£¬Çå³ıÉè±¸±¸Ñ¡ºÅ£¬·ÀÖ¹ÔÚ¾ÉµÄÉè±¸ºÅºó×·¼Ó */
+		m_serialWdg->serialNoComoBox->clear();           /* è§¦å‘è¯¥æ§½å‡½æ•°åï¼Œæ¸…é™¤è®¾å¤‡å¤‡é€‰å·ï¼Œé˜²æ­¢åœ¨æ—§çš„è®¾å¤‡å·åè¿½åŠ  */
 		
 
         for(i=0; i < ttyUSBpath_buf.gl_pathc; i++)
@@ -150,7 +150,7 @@ namespace rviz_pickplace_commander
 			m_pickPlaceWdg->pickPlaceStatusTextEdit->append(QString::fromStdString(ttyUSBpath_buf.gl_pathv[i]));
 			
 			QFileInfo ttyUSBpath_Info = QFileInfo(QString::fromStdString(ttyUSBpath_buf.gl_pathv[i]));			
-			// ½«ËÑË÷µ½µÄttyUSBÌí¼Óµ½±¸Ñ¡Éè±¸ºÅÏÂÀ­¿òÖĞ 
+			// å°†æœç´¢åˆ°çš„ttyUSBæ·»åŠ åˆ°å¤‡é€‰è®¾å¤‡å·ä¸‹æ‹‰æ¡†ä¸­ 
 			m_serialWdg->serialNoComoBox->addItem(ttyUSBpath_Info.fileName()); 
         }
 
@@ -166,7 +166,7 @@ namespace rviz_pickplace_commander
 			//m_pickPlaceWdg->pickPlaceStatusTextEdit->append(QString::fromStdString(ttySpath_buf.gl_pathv[i]));
 			
 			//QFileInfo ttySpath_Info = QFileInfo(QString::fromStdString(ttySpath_buf.gl_pathv[i]));			
-			// ½«ËÑË÷µ½µÄttySÌí¼Óµ½±¸Ñ¡Éè±¸ºÅÏÂÀ­¿òÖĞ 
+			// å°†æœç´¢åˆ°çš„ttySæ·»åŠ åˆ°å¤‡é€‰è®¾å¤‡å·ä¸‹æ‹‰æ¡†ä¸­ 
 			m_serialWdg->serialNoComoBox->addItem(ttySpath_Info.fileName()); 
         }
         */
@@ -186,7 +186,7 @@ namespace rviz_pickplace_commander
 		
 		hsr_gripper_driver::serial_open_srv serialOpen_srv;
 
-		/* µ±Ç°Ñ¡ÖĞµÄ´®¿ÚÉè±¸ºÅºÍ²¨ÌØÂÊ×ª³ÉstringÀàĞÍºó ´«Èë·şÎñ²ÎÊı*/
+		/* å½“å‰é€‰ä¸­çš„ä¸²å£è®¾å¤‡å·å’Œæ³¢ç‰¹ç‡è½¬æˆstringç±»å‹å ä¼ å…¥æœåŠ¡å‚æ•°*/
 		serialOpen_srv.request.serialNo = (std::string)("/dev/")+ m_serialWdg->serialNoComoBox->currentText().toStdString();
         //serialOpen_srv.request.serialNo = "/dev/ttyUSB0";
 		serialOpen_srv.request.baudrate = m_serialWdg->baudrateComoBox->currentText().toInt();
@@ -207,13 +207,13 @@ namespace rviz_pickplace_commander
 		
 	void PickPlacePanel::canRecognizedModelListInit()
 	{
-		//**********************************Æô¶¯½çÃæ¸üĞÂ¿ÉÊ¶±ğÄ£ĞÍÁĞ±í*******************************************
+		//**********************************å¯åŠ¨ç•Œé¢æ›´æ–°å¯è¯†åˆ«æ¨¡å‹åˆ—è¡¨*******************************************
 				
 		ork_interface::objSearch objSearch_srv;
 		
 		if(m_orkWdg->toSelectDeleteComoBox->count())
 		{
-			//Çå³ıÏÂÀ­Ñ¡Ôñ¿òÇ°£¬ÏÈÖ´ĞĞdisconnect£¬·ñÔò»áÓÉÓÚµ±Ç°Ë÷ÒıµÄ¸Ä±ä£¬´¥·¢currentIndexChanged£¬´Ó¶øµ¼ÖÂ±ÀÀ£
+			//æ¸…é™¤ä¸‹æ‹‰é€‰æ‹©æ¡†å‰ï¼Œå…ˆæ‰§è¡Œdisconnectï¼Œå¦åˆ™ä¼šç”±äºå½“å‰ç´¢å¼•çš„æ”¹å˜ï¼Œè§¦å‘currentIndexChangedï¼Œä»è€Œå¯¼è‡´å´©æºƒ
 			disconnect(m_orkWdg->toSelectDeleteComoBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotToSelectDeleteComoBox(int)));
 			m_orkWdg->toSelectDeleteComoBox->clear();
 			connect(m_orkWdg->toSelectDeleteComoBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotToSelectDeleteComoBox(int)));
@@ -227,7 +227,7 @@ namespace rviz_pickplace_commander
 
 		    //pickPlaceStatusTextEdit->append(QString::fromStdString(objSearch_srv.response.objName[1]));
 					
-			// »ñÈ¡ÒÑÑµÁ·ÎïÌå¸öÊı
+			// è·å–å·²è®­ç»ƒç‰©ä½“ä¸ªæ•°
 			int num_trained = objSearch_srv.response.objNum;
 					
 			if(!num_trained)
@@ -264,29 +264,29 @@ namespace rviz_pickplace_commander
 	{
         switch(index)
         {
-            case 0:  //ÉèÖÃ¼Ğ×¦¿ª¿Ú
+            case 0:  //è®¾ç½®å¤¹çˆªå¼€å£
             {
-                m_gripperWdg->openMaxLabel->setText("×î´ó¿ª¿Ú:");
-                m_gripperWdg->openMinLabel->setText("×îĞ¡¿ª¿Ú:");
+                m_gripperWdg->openMaxLabel->setText("æœ€å¤§å¼€å£:");
+                m_gripperWdg->openMinLabel->setText("æœ€å°å¼€å£:");
 
 				m_gripperWdg->openMinLabel->setVisible(true);
                 m_gripperWdg->openMinLineEdit->setVisible(true);
 				
                 m_gripperWdg->openMaxLineEdit->setValidator(new QIntValidator(0, 1000, this));
 				m_gripperWdg->openMinLineEdit->setValidator(new QIntValidator(0, 1000, this));
-				m_gripperWdg->openMaxLineEdit->setPlaceholderText(tr("ÊäÈë0-1000µÄÕûÊı"));
-		        m_gripperWdg->openMaxLineEdit->setToolTip(tr("ÊäÈë0-1000µÄÕûÊı£¬ÊıÖµÔ½´ó¿ª¿ÚÔ½´ó£¬\r\nÇÒ¸ÃÖµĞèÒª´óÓÚ¡¾¿ª¿Ú×îĞ¡Öµ¡¿"));
+				m_gripperWdg->openMaxLineEdit->setPlaceholderText(tr("è¾“å…¥0-1000çš„æ•´æ•°"));
+		        m_gripperWdg->openMaxLineEdit->setToolTip(tr("è¾“å…¥0-1000çš„æ•´æ•°ï¼Œæ•°å€¼è¶Šå¤§å¼€å£è¶Šå¤§ï¼Œ\r\nä¸”è¯¥å€¼éœ€è¦å¤§äºã€å¼€å£æœ€å°å€¼ã€‘"));
 				m_gripperWdg->openMaxLineEdit->setText(QString::number(openSizeMax));
 				m_gripperWdg->openMinLineEdit->setText(QString::number(openSizeMin));
 				
 			    break;
             }
-			case 1:  //ÉèÖÃ¼Ğ×¦ËÙ¶È
+			case 1:  //è®¾ç½®å¤¹çˆªé€Ÿåº¦
             {
-				m_gripperWdg->openMaxLabel->setText("´óĞ¡:");
+				m_gripperWdg->openMaxLabel->setText("å¤§å°:");
 				m_gripperWdg->openMaxLineEdit->setValidator(new QIntValidator(1, 1000, this));
-				m_gripperWdg->openMaxLineEdit->setPlaceholderText("ÊäÈë0-1000µÄÕûÊı");
-		        m_gripperWdg->openMaxLineEdit->setToolTip("ÊäÈë1-1000µÄÕûÊı£¬ÊıÖµÔ½´óËÙ¶ÈÔ½¿ì");
+				m_gripperWdg->openMaxLineEdit->setPlaceholderText("è¾“å…¥0-1000çš„æ•´æ•°");
+		        m_gripperWdg->openMaxLineEdit->setToolTip("è¾“å…¥1-1000çš„æ•´æ•°ï¼Œæ•°å€¼è¶Šå¤§é€Ÿåº¦è¶Šå¿«");
 				m_gripperWdg->openMaxLineEdit->setText(QString::number(gripperSpeed));
 
 				m_gripperWdg->openMinLabel->setVisible(false);
@@ -294,12 +294,12 @@ namespace rviz_pickplace_commander
 				
 				break;
 			}
-			case 2:  //ÉèÖÃ¼Ğ×¦Á¦¾Ø
+			case 2:  //è®¾ç½®å¤¹çˆªåŠ›çŸ©
 			{
-				m_gripperWdg->openMaxLabel->setText("´óĞ¡:");
+				m_gripperWdg->openMaxLabel->setText("å¤§å°:");
 				m_gripperWdg->openMaxLineEdit->setValidator(new QIntValidator(50, 1000, this));
-				m_gripperWdg->openMaxLineEdit->setPlaceholderText("ÊäÈë50-1000µÄÕûÊı");
-		        m_gripperWdg->openMaxLineEdit->setToolTip("ÊäÈë50-1000µÄÕûÊı£¬ÊıÖµÔ½´óÁ¦¾ØÔ½´ó");
+				m_gripperWdg->openMaxLineEdit->setPlaceholderText("è¾“å…¥50-1000çš„æ•´æ•°");
+		        m_gripperWdg->openMaxLineEdit->setToolTip("è¾“å…¥50-1000çš„æ•´æ•°ï¼Œæ•°å€¼è¶Šå¤§åŠ›çŸ©è¶Šå¤§");
 				m_gripperWdg->openMaxLineEdit->setText(QString::number(gripperForce));
 
 				m_gripperWdg->openMinLabel->setVisible(false);
@@ -316,7 +316,7 @@ namespace rviz_pickplace_commander
 	    int index = m_gripperWdg->gripperSetComoBox->currentIndex();
 	    switch(index)
 	    {
-	    	case 0:  //ÉèÖÃ¼Ğ×¦¿ª¿Ú
+	    	case 0:  //è®¾ç½®å¤¹çˆªå¼€å£
 	    	{
                 hsr_gripper_driver::open_size_srv gripperOpenSize_srv;
 
@@ -336,11 +336,11 @@ namespace rviz_pickplace_commander
 				
 			    break;
 	    	}
-			case 1:  //ÉèÖÃ¼Ğ×¦ËÙ¶È
+			case 1:  //è®¾ç½®å¤¹çˆªé€Ÿåº¦
 				gripperSpeed = m_gripperWdg->openMaxLineEdit->text().toInt();
 				
 				break;
-			case 2:  //ÉèÖÃ¼Ğ×¦Á¦¾Ø
+			case 2:  //è®¾ç½®å¤¹çˆªåŠ›çŸ©
                 gripperForce = m_gripperWdg->openMaxLineEdit->text().toInt();
 				
 				break;
@@ -353,7 +353,7 @@ namespace rviz_pickplace_commander
 	    //
 	    switch(m_gripperWdg->gripperActComoBox->currentIndex())
 	    {
-	    	case 0:     //¼Ğ×¦´ò¿ª
+	    	case 0:     //å¤¹çˆªæ‰“å¼€
 	    	{
                 hsr_gripper_driver::open_srv gripperOpen_srv;
 		        gripperOpen_srv.request.speed = gripperSpeed;
@@ -368,7 +368,7 @@ namespace rviz_pickplace_commander
 				
 				break;
 	    	}
-			case 1:    //¼Ğ×¦¹Ø±Õ
+			case 1:    //å¤¹çˆªå…³é—­
 			{
                 hsr_gripper_driver::close_srv gripperClose_srv;
 				
@@ -386,7 +386,7 @@ namespace rviz_pickplace_commander
 				}	
 				break;
 			}
-			case 2:    //¼Ğ×¦¼±Í£
+			case 2:    //å¤¹çˆªæ€¥åœ
 			{
 				hsr_gripper_driver::stop_srv gripperStop_srv;
 				
@@ -413,9 +413,9 @@ namespace rviz_pickplace_commander
 		//
 		switch(index)
 	    {
-	    	case 0:     //ÇĞ»»µ½ ĞÂÔöÄ£ĞÍ
+	    	case 0:     //åˆ‡æ¢åˆ° æ–°å¢æ¨¡å‹
 	    	{	
-				m_orkWdg->newAddOrDeleteOkBtn->setText("È·ÈÏÌí¼Ó");
+				m_orkWdg->newAddOrDeleteOkBtn->setText("ç¡®è®¤æ·»åŠ ");
 				
 				//m_orkWdg->toSelectDeleteComoBox->removeItem(0);
 				
@@ -432,9 +432,9 @@ namespace rviz_pickplace_commander
 				
 				break;
 	    	}
-			case 1:    //ÇĞ»»µ½ É¾³ıÄ£ĞÍ
+			case 1:    //åˆ‡æ¢åˆ° åˆ é™¤æ¨¡å‹
 			{
-				m_orkWdg->newAddOrDeleteOkBtn->setText("È·ÈÏÉ¾³ı");
+				m_orkWdg->newAddOrDeleteOkBtn->setText("ç¡®è®¤åˆ é™¤");
 				
 				m_orkWdg->newAddModelNameLineEdit->setVisible(false);
 				m_orkWdg->toSelectDeleteComoBox->setVisible(true);
@@ -442,7 +442,7 @@ namespace rviz_pickplace_commander
 				m_orkWdg->newAddModelDescripLineEdit->setText("");
 				
 				int index = m_orkWdg->toSelectDeleteComoBox->currentIndex();
-				/* µ±toSelectDeleteComoBoxÎª¿ÕÊ±£¬index = -1*/
+				/* å½“toSelectDeleteComoBoxä¸ºç©ºæ—¶ï¼Œindex = -1*/
 				if(index >= 0)
 				{
 		            m_orkWdg->newAddModelDescripLineEdit->setText(QString::fromStdString(m_trainingMdoel[index].description));
@@ -467,7 +467,7 @@ namespace rviz_pickplace_commander
 		//
 		switch(m_orkWdg->addOrDeleteComoBox->currentIndex())
 		{
-			case 0:  //È·ÈÏÌí¼Ó
+			case 0:  //ç¡®è®¤æ·»åŠ 
 			{
 				ork_interface::objAdd objAdd_srv;
 				objAdd_srv.request.name = m_orkWdg->newAddModelNameLineEdit->text().toStdString();
@@ -478,7 +478,7 @@ namespace rviz_pickplace_commander
 					newAddModel_ID = QString::fromStdString(objAdd_srv.response.id);
 					m_pickPlaceWdg->pickPlaceStatusTextEdit->append("new add a object sucessful!!!");
 					m_pickPlaceWdg->pickPlaceStatusTextEdit->append("*************************************");
-					m_pickPlaceWdg->pickPlaceStatusTextEdit->append("the new add object ID is£º");
+					m_pickPlaceWdg->pickPlaceStatusTextEdit->append("the new add object ID isï¼š");
 					m_pickPlaceWdg->pickPlaceStatusTextEdit->append(QString::fromStdString(objAdd_srv.response.id));
 					m_pickPlaceWdg->pickPlaceStatusTextEdit->append("*************************************");
 					
@@ -491,7 +491,7 @@ namespace rviz_pickplace_commander
 				
 				break;
 			}
-			case 1:  //È·ÈÏÉ¾³ı
+			case 1:  //ç¡®è®¤åˆ é™¤
 			{
                 ork_interface::objDelete objDelete_srv;
 				
@@ -505,7 +505,7 @@ namespace rviz_pickplace_commander
 				{
 					m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Delete a object sucessful!!!");
 					
-					//É¾³ıÄ³¸öÏÂÀ­Ñ¡Ôñ¿òÇ°£¬ÏÈÖ´ĞĞdisconnect£¬·ñÔò»áÓÉÓÚµ±Ç°Ë÷ÒıµÄ¸Ä±ä£¬´¥·¢currentIndexChanged£¬´Ó¶øµ¼ÖÂ±ÀÀ£
+					//åˆ é™¤æŸä¸ªä¸‹æ‹‰é€‰æ‹©æ¡†å‰ï¼Œå…ˆæ‰§è¡Œdisconnectï¼Œå¦åˆ™ä¼šç”±äºå½“å‰ç´¢å¼•çš„æ”¹å˜ï¼Œè§¦å‘currentIndexChangedï¼Œä»è€Œå¯¼è‡´å´©æºƒ
 				    disconnect(m_orkWdg->toSelectDeleteComoBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotToSelectDeleteComoBox(int)));
 				    m_orkWdg->toSelectDeleteComoBox->removeItem(index_delete);
 				    connect(m_orkWdg->toSelectDeleteComoBox, SIGNAL(currentIndexChanged(int)), this, SLOT(slotToSelectDeleteComoBox(int)));
@@ -564,7 +564,7 @@ namespace rviz_pickplace_commander
         {
             while(fgets(buf_ps, 1024, ptr)!=NULL)
             {
-                // ¿ÉÒÔÍ¨¹ıÕâĞĞÀ´»ñÈ¡shellÃüÁîĞĞÖĞµÄÃ¿Ò»ĞĞµÄÊä³ö
+                // å¯ä»¥é€šè¿‡è¿™è¡Œæ¥è·å–shellå‘½ä»¤è¡Œä¸­çš„æ¯ä¸€è¡Œçš„è¾“å‡º
                 // printf("%s", buf_ps);
                 strcat(result, buf_ps);
                 if(strlen(result)>1024)
@@ -584,13 +584,13 @@ namespace rviz_pickplace_commander
 		//
         ork_interface::training_srv training_srv;
 		
-		//µÈ¼ÛÓÚÖ´ĞĞ rosrun object_recognition_core training -c /home/eima/Work/catkin_ws/src/linemod/conf/training.ork
+		//ç­‰ä»·äºæ‰§è¡Œ rosrun object_recognition_core training -c /home/eima/Work/catkin_ws/src/linemod/conf/training.ork
 		const char *cmd = "rospack find object_recognition_linemod";
         char path_result[1024]={0};
 	
-        executeCMD(cmd,path_result);              /* Ö´ĞĞÃüÁî£¬Êä³ö½á¹û */
-		path_result[strlen(path_result)-1] = 0;   /* É¾³ıµôÄ©Î²µÄ\n */
-		std::string s_path_result = path_result;  /* ½«char[]×ªÎªstd::string */
+        executeCMD(cmd,path_result);              /* æ‰§è¡Œå‘½ä»¤ï¼Œè¾“å‡ºç»“æœ */
+		path_result[strlen(path_result)-1] = 0;   /* åˆ é™¤æ‰æœ«å°¾çš„\n */
+		std::string s_path_result = path_result;  /* å°†char[]è½¬ä¸ºstd::string */
 		
 		training_srv.request.cmd = "\'c\'"; 
 		training_srv.request.path = s_path_result + "/conf/training.ork";
@@ -610,13 +610,13 @@ namespace rviz_pickplace_commander
 	{	
 		ork_interface::detection_srv detection_srv;
 		
-		//µÈ¼ÛÓÚÖ´ĞĞ rosrun object_recognition_core detection -c  `rospack find object_recognition_linemod`/conf/detection.ros.ork
+		//ç­‰ä»·äºæ‰§è¡Œ rosrun object_recognition_core detection -c  `rospack find object_recognition_linemod`/conf/detection.ros.ork
 		const char *cmd = "rospack find object_recognition_linemod";
         char path_result[1024]={0};
 	
-        executeCMD(cmd,path_result);              /* Ö´ĞĞÃüÁî£¬Êä³ö½á¹û */
-		path_result[strlen(path_result)-1] = 0;   /* É¾³ıµôÄ©Î²µÄ\n */
-		std::string s_path_result = path_result;  /* ½«char[]×ªÎªstd::string */
+        executeCMD(cmd,path_result);              /* æ‰§è¡Œå‘½ä»¤ï¼Œè¾“å‡ºç»“æœ */
+		path_result[strlen(path_result)-1] = 0;   /* åˆ é™¤æ‰æœ«å°¾çš„\n */
+		std::string s_path_result = path_result;  /* å°†char[]è½¬ä¸ºstd::string */
 		
 		detection_srv.request.cmd = "\'c\'"; 
 		detection_srv.request.path = s_path_result + "/conf/detection.ros.ork";
@@ -651,7 +651,7 @@ namespace rviz_pickplace_commander
 		detection_srv.request.path = path_detect_config;
         detection_srv.request.isDetected = true;
         
-        /* Èç¹û¼ì²âµ½ÎïÌå£¬ÔòÍ£Ö¹ORK¼ì²â·şÎñ */
+        /* å¦‚æœæ£€æµ‹åˆ°ç‰©ä½“ï¼Œåˆ™åœæ­¢ORKæ£€æµ‹æœåŠ¡ */
         if(client_detection.call(detection_srv))
 		{
 			m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Detection stop sucessful!!!");
@@ -661,7 +661,7 @@ namespace rviz_pickplace_commander
 			m_pickPlaceWdg->pickPlaceStatusTextEdit->append("Detection stop failed!!!");
 		}
 		
-        /* ´´½¨ĞÂµÄ¶¯Ì¬Êı×éÇ°£¬ÏÈdelete */
+        /* åˆ›å»ºæ–°çš„åŠ¨æ€æ•°ç»„å‰ï¼Œå…ˆdelete */
         //delete[] detectPoseFromCamera;
         //delete[] base_detectPoseFromCamera;
         //delete[] m_poseFromCamera;
@@ -697,7 +697,7 @@ namespace rviz_pickplace_commander
 
                 if((base_detectPoseFromCamera[i].pose.position.x !=0.0 )&& (base_detectPoseFromCamera[i].pose.position.y !=0.0))
                      break;
-                /* Ñ­»·100´Î£¬Èô»¹Î´¶Áµ½×ø±êÔòÌø³ö */
+                /* å¾ªç¯100æ¬¡ï¼Œè‹¥è¿˜æœªè¯»åˆ°åæ ‡åˆ™è·³å‡º */
                 count++;
                 if(count >100)
                 {
@@ -728,7 +728,7 @@ namespace rviz_pickplace_commander
 		{ 
             if(base_detectPoseFromCamera[i].pose.position.z > 0.4)
                continue;
-			m_orkWdg->recognizedPoseComboBox->addItem("Ê¶±ğÄ¿±ê"+QString::number(i+1, 10));
+			m_orkWdg->recognizedPoseComboBox->addItem("è¯†åˆ«ç›®æ ‡"+QString::number(i+1, 10));
 			
 			m_poseFromCamera[i].X = base_detectPoseFromCamera[i].pose.position.x;
 		    m_poseFromCamera[i].Y = base_detectPoseFromCamera[i].pose.position.y;
@@ -743,7 +743,7 @@ namespace rviz_pickplace_commander
 		    m_poseFromCamera[i].eulerP = asin(2*(q0*q2-q1*q3));
 		    m_poseFromCamera[i].eulerY = atan2(2*(q0*q3+q1*q2),1-2*(q2*q2+q3*q3));
 
-            ROS_INFO("Ê¶±ğÄ¿±ê:%d,ÆäX×ø±êÎª%f",i,m_poseFromCamera[i].X);
+            ROS_INFO("è¯†åˆ«ç›®æ ‡:%d,å…¶Xåæ ‡ä¸º%f",i,m_poseFromCamera[i].X);
 				
 		}
         
@@ -774,7 +774,7 @@ namespace rviz_pickplace_commander
 	
 	void PickPlacePanel::slotToSelectDetectComoBox(int index)
 	{
-		m_orkWdg->ORKposeXlineEdit->setText(QString::number(m_poseFromCamera[index].X, 'f', 3));    /* X*1000 ½«µ¥Î»ÓÉm×ª³Émm */
+		m_orkWdg->ORKposeXlineEdit->setText(QString::number(m_poseFromCamera[index].X, 'f', 3));    /* X*1000 å°†å•ä½ç”±mè½¬æˆmm */
 		m_orkWdg->ORKposeYlineEdit->setText(QString::number(m_poseFromCamera[index].Y, 'f', 3));
 		m_orkWdg->ORKposeZlineEdit->setText(QString::number(m_poseFromCamera[index].Z, 'f', 3));
 		
@@ -856,7 +856,7 @@ namespace rviz_pickplace_commander
 
             if((base_detectPoseFrom3d[0].pose.position.x !=0.0 )&& (base_detectPoseFrom3d[0].pose.position.y !=0.0))
                  break;
-                /* Ñ­»·100´Î£¬Èô»¹Î´¶Áµ½×ø±êÔòÌø³ö */
+                /* å¾ªç¯100æ¬¡ï¼Œè‹¥è¿˜æœªè¯»åˆ°åæ ‡åˆ™è·³å‡º */
             count++;
             if(count >100)
             {
@@ -881,7 +881,7 @@ namespace rviz_pickplace_commander
 		
 		if(m_pickPlaceWdg->getPlacePoseMeans->currentIndex()==0)
 		{
-		    m_pickPlaceWdg->placeXlineEdit->setText(QString::number(X, 'f', 3));    /* X*1000 ½«µ¥Î»ÓÉm×ª³Émm */
+		    m_pickPlaceWdg->placeXlineEdit->setText(QString::number(X, 'f', 3));    /* X*1000 å°†å•ä½ç”±mè½¬æˆmm */
 		    m_pickPlaceWdg->placeYlineEdit->setText(QString::number(Y, 'f', 3));
 		    m_pickPlaceWdg->placeZlineEdit->setText(QString::number(Z, 'f', 3));
 		
@@ -897,7 +897,7 @@ namespace rviz_pickplace_commander
 		
 		if(m_pickPlaceWdg->getPickPoseMeans->currentIndex()==1)
 		{
-		    m_pickPlaceWdg->pickXlineEdit->setText(QString::number(X, 'f', 3));    /* X*1000 ½«µ¥Î»ÓÉm×ª³Émm */
+		    m_pickPlaceWdg->pickXlineEdit->setText(QString::number(X, 'f', 3));    /* X*1000 å°†å•ä½ç”±mè½¬æˆmm */
 		    m_pickPlaceWdg->pickYlineEdit->setText(QString::number(Y, 'f', 3));
 		    m_pickPlaceWdg->pickZlineEdit->setText(QString::number(Z, 'f', 3));
 		
@@ -918,12 +918,12 @@ namespace rviz_pickplace_commander
 	{
 		switch(index)
 		{
-			case 0:  //×Ô¶¯Ê¶±ğ
+			case 0:  //è‡ªåŠ¨è¯†åˆ«
 			{
-                //¶¨Ê±Æ÷Î´Æô¶¯Ê±£¬¿ªÆô¶¨Ê±Æ÷
+                //å®šæ—¶å™¨æœªå¯åŠ¨æ—¶ï¼Œå¼€å¯å®šæ—¶å™¨
 				if(getPickPoseFromORK_Timer->isActive() == false)
 				{
-				    getPickPoseFromORK_Timer->start(100);                      /* Æô¶¯¶¨Ê±Æ÷£¬´ÓORKÊ¶±ğÄ£¿é»ñÈ¡×¥È¡ÎïÎ»×Ë */
+				    getPickPoseFromORK_Timer->start(100);                      /* å¯åŠ¨å®šæ—¶å™¨ï¼Œä»ORKè¯†åˆ«æ¨¡å—è·å–æŠ“å–ç‰©ä½å§¿ */
 				}
 				
 				m_pickPlaceWdg->pickXlineEdit->setReadOnly(true);
@@ -940,9 +940,9 @@ namespace rviz_pickplace_commander
 				
 				break;
 			}
-			case 1:  //¿Õ¼ä¶ÁÈ¡
+			case 1:  //ç©ºé—´è¯»å–
 			{
-				getPickPoseFromORK_Timer->stop();                              /* ¹Ø±Õ¶¨Ê±Æ÷£¬²»´ÓORKÊ¶±ğÄ£¿é»ñÈ¡×¥È¡ÎïÎ»×Ë */
+				getPickPoseFromORK_Timer->stop();                              /* å…³é—­å®šæ—¶å™¨ï¼Œä¸ä»ORKè¯†åˆ«æ¨¡å—è·å–æŠ“å–ç‰©ä½å§¿ */
 				
 				sub_poseFrom3d = n_pickPlace.subscribe("/rviz_moveit_motion_planning_display/robot_interaction_interactive_marker_topic/feedback", 1000,\
                                                        &PickPlacePanel::poseFrom3d_callback, this);
@@ -961,9 +961,9 @@ namespace rviz_pickplace_commander
 				
 				break;
 			}
-		    case 2:  //ÊÖ¶¯ÉèÖÃ
+		    case 2:  //æ‰‹åŠ¨è®¾ç½®
 			{
-				getPickPoseFromORK_Timer->stop();                              /* ¹Ø±Õ¶¨Ê±Æ÷£¬²»´ÓORKÊ¶±ğÄ£¿é»ñÈ¡×¥È¡ÎïÎ»×Ë */
+				getPickPoseFromORK_Timer->stop();                              /* å…³é—­å®šæ—¶å™¨ï¼Œä¸ä»ORKè¯†åˆ«æ¨¡å—è·å–æŠ“å–ç‰©ä½å§¿ */
 				
 				m_pickPlaceWdg->pickXlineEdit->setReadOnly(false);
 				m_pickPlaceWdg->pickYlineEdit->setReadOnly(false);
@@ -989,7 +989,7 @@ namespace rviz_pickplace_commander
 		//
 		switch(index)
 		{
-			case 0:  //¿Õ¼ä¶ÁÈ¡
+			case 0:  //ç©ºé—´è¯»å–
 			{
 				sub_poseFrom3d = n_pickPlace.subscribe("/rviz_moveit_motion_planning_display/robot_interaction_interactive_marker_topic/feedback", 1000,\
                                                        &PickPlacePanel::poseFrom3d_callback, this);
@@ -1008,7 +1008,7 @@ namespace rviz_pickplace_commander
 				
 				break;
 			}
-		    case 1:  //ÊÖ¶¯ÉèÖÃ
+		    case 1:  //æ‰‹åŠ¨è®¾ç½®
 			{
 				m_pickPlaceWdg->placeXlineEdit->setReadOnly(false);
 		        m_pickPlaceWdg->placeYlineEdit->setReadOnly(false);
@@ -1069,7 +1069,7 @@ namespace rviz_pickplace_commander
 	}
 }
 
-/* ÉùÃ÷´ËÀàÊÇÒ»¸örvizµÄ²å¼ş */
+/* å£°æ˜æ­¤ç±»æ˜¯ä¸€ä¸ªrvizçš„æ’ä»¶ */
 #include <pluginlib/class_list_macros.h>
 PLUGINLIB_EXPORT_CLASS(rviz_pickplace_commander::PickPlacePanel,rviz::Panel )
 

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include 
+	file="$(find hsr_description)/launch/br606_with_kinect_on_hand.launch"/>
+
+  <include 
+	file="$(find hsr_gazebo)/launch/robot_gazebo.launch"/>
+
+  <include
+	file="$(find br606_gripper_moveit_config)/launch/hsr_br606_moveit_planning_execution.launch">
+	<arg name="sim" default="true"/>
+  </include>
+
+  <include 
+	file="$(find hsr_bringup)/launch/moveit_rviz.launch"/>
+
+</launch>
