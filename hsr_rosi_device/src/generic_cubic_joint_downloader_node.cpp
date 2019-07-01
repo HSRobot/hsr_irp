@@ -4,7 +4,7 @@
  * Copyright (c) 2019, Foshan Huashu Robotics Co.,Ltd
  * All rights reserved.
  * 
- * Author: CanJun Shen <1252773119@qq.com>
+ * Author: Kunlin Xu <1125290220@qq.com>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -31,39 +31,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <ros/ros.h>
-#include <rviz_pickplace_commander/voicePickCoke.h>
-#include <rviz_pickplace_commander/voicePickDiamond.h>
-#include <stdio.h>
-#include <string.h>
-#include <iostream>
+
+#include "joint_trajectory_cubic_downloader.h"
+
+using industrial_robot_client::joint_trajectory_downloader::JointTrajectoryCubicDownloader;
 
 int main(int argc, char** argv)
 {
-  if(argc < 2){
-     printf("请先输入参数");
-     return 0;}
-  char *agv = argv[1];
-  //printf("agv:%s",agv);
-  ros::init (argc, argv, "voice_pickplace");//initialize node 
-  ros::NodeHandle np;                       //node Handle
-  ros::ServiceClient client_voice_coke = np.serviceClient<rviz_pickplace_commander::voicePickCoke>("VoicePickCoke");
-  ros::ServiceClient client_voice_diamond = np.serviceClient<rviz_pickplace_commander::voicePickDiamond>("VoicePickDiamond");
-  rviz_pickplace_commander::voicePickCoke voice_pickcoke_srv;
-  rviz_pickplace_commander::voicePickDiamond voice_pickdiamond_srv;
- if (strcmp(agv,"pickcoke")==0)
- {
-  if(client_voice_coke.call(voice_pickcoke_srv))
-     ROS_ERROR("pick coke succeeful!!!");  
-  else
-     ROS_ERROR("pick coke faile!!!");  
-}
-else if(strcmp(agv,"pickdiamond")==0)
-{
-  if(client_voice_diamond.call(voice_pickdiamond_srv))
-      ROS_ERROR("pick diamond succeeful!!!");  
-  else
-     ROS_ERROR("pick diamond faile!!!");
-}
- return 0;
+  // initialize node
+  ros::init(argc, argv, "motion_interface");
+
+  // launch the default JointTrajectoryDownloader connection/handlers
+  JointTrajectoryCubicDownloader motionInterface;
+  motionInterface.init();
+  motionInterface.run();
+
+  return 0;
 }
