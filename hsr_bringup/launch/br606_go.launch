@@ -25,7 +25,7 @@
   </include>
 
   <include
-	file="$(find hsr_rosi_client)/launch/robot_full_interface_download.launch">
+	file="$(find hsr_rosi_device)/launch/robot_full_interface_download.launch">
 	<arg name="robot_ip" default="10.10.56.214"/>
   </include>
 
