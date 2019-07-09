@@ -27,18 +27,18 @@
     <group_state name="home" group="arm">
         <joint name="joint_1" value="0" />
         <joint name="joint_2" value="-1.57" />
-        <joint name="joint_3" value="0" />
+        <joint name="joint_3" value="3.14" />
         <joint name="joint_4" value="0" />
-        <joint name="joint_5" value="1.57" />
-        <joint name="joint_6" value="0" />
+        <joint name="joint_5" value="0" />
+        <joint name="joint_6" value="2.356194490192" /> <!--0.785398163397-->
     </group_state>
     <group_state name="pick" group="arm">
         <joint name="joint_1" value="0" />
         <joint name="joint_2" value="-1.57" />
-        <joint name="joint_3" value="0" />
+        <joint name="joint_3" value="3.14" />
         <joint name="joint_4" value="0" />
-        <joint name="joint_5" value="0" />
-        <joint name="joint_6" value="0" />
+        <joint name="joint_5" value="1.57" />
+        <joint name="joint_6" value="2.356194490192" />
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="end effector" parent_link="pick_gripper_link" group="gripper" parent_group="arm" />
@@ -99,6 +99,7 @@
     <disable_collisions link1="link1" link2="link6" reason="Never" />
     <disable_collisions link1="link2" link2="link3" reason="Adjacent" />
     <disable_collisions link1="link2" link2="link4" reason="Never" />
+    <disable_collisions link1="link2" link2="pick_gripper_link" reason="Never" />
     <disable_collisions link1="link3" link2="link4" reason="Adjacent" />
     <disable_collisions link1="link3" link2="link5" reason="Never" />
     <disable_collisions link1="link3" link2="link6" reason="Never" />

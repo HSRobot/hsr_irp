@@ -1,0 +1,22 @@
+<launch>
+    <arg name="namespace_prefix" default="hsr_kinect_handeyecalibration" />
+
+    <arg name="robot_ip" doc="The IP address of the UR5 robot" />
+
+    <arg name="marker_size" doc="Size of the ArUco marker used, in meters"  default="0.07" />
+    <arg name="marker_id" doc="The ID of the ArUco marker used" default="1" />
+    <arg name ="calibrate" doc="The IP address of the UR5 robot"/>
+    <arg name = "robot_name" default="br606"/>
+
+    <!-- start ArUco -->
+    <node name="aruco_tracker" pkg="aruco_ros" type="single">
+        <remap from="/camera_info" to="/kinect2/hd/camera_info" />
+        <remap from="/image" to="/kinect2/hd/image_color_rect" />
+        <param name="image_is_rectified" value="true"/>
+        <param name="marker_size"        value="$(arg marker_size)"/>
+        <param name="marker_id"          value="$(arg marker_id)"/>
+        <param name="reference_frame"    value="kinect2_rgb_optical_frame"/>
+        <param name="camera_frame"       value="kinect2_rgb_optical_frame"/>
+        <param name="marker_frame"       value="camera_marker" />
+    </node>
+</launch>

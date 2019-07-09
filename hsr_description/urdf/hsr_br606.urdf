@@ -212,18 +212,18 @@
     type="revolute">
     <origin
       xyz="0.725999999928 0 -0.1245"
-      rpy="-2.61618022719008E-33 -1.8705490199458E-25 -1.57079631299268" />
+      rpy="-2.61618022719008E-33 -1.8705490199458E-25 1.57079631299268" /> <!--rpy="-2.61618022719008E-33 -1.8705490199458E-25 -1.57079631299268" /-->
     <parent
       link="link2" />
     <child
       link="link3" />
     <axis
       xyz="0 0 1" />
-    <limit  lower="-0.63" upper="3.4" effort="28.0" velocity="3.2"/>
+    <limit  lower="2.3" upper="7" effort="28.0" velocity="3.2"/>
   <safety_controller k_position="100"
                      k_velocity="10"
-                     soft_lower_limit="-0.5585"
-                     soft_upper_limit="3.4" /> 
+                     soft_lower_limit="2.5"
+                     soft_upper_limit="6.8" /> 
   </joint>
   <link
     name="link4">

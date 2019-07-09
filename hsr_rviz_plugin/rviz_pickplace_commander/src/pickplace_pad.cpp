@@ -6,6 +6,7 @@ namespace rviz_pickplace_commander
     PickPlacePanel::PickPlacePanel(QWidget* parent) : rviz::Panel(parent),openSizeMax(1000),\
                                         openSizeMin(0),gripperSpeed(500),gripperForce(100)
     {	
+        std::cout<<"111111111"<<std::endl;
 		//QTextCodec::setCodecForTr(QTextCodec::codecForLocale());	/* 处理中文字符 */
 		QTextCodec::setCodecForCStrings(QTextCodec::codecForName("GB2312")); /* 处理中文字符 */
 	

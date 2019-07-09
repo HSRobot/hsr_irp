@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <launch>
 
-  <include 
-	file="$(find hsr_bringup)/launch/ork_interface.launch"/>
+  <!--include 
+	file="$(find hsr_bringup)/launch/ork_interface.launch"/-->
 
   <include 
 	file="$(find easy_handeye)/launch/publish.launch">

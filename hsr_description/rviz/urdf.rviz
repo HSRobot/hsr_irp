@@ -7,6 +7,8 @@ Panels:
         - /Global Options1
         - /Status1
         - /RobotModel1
+        - /RobotModel1/Links1
+        - /RobotModel1/Links1/camera_link1
       Splitter Ratio: 0.5
     Tree Height: 623
   - Class: rviz/Selection
@@ -62,6 +64,11 @@ Visualization Manager:
         base_link:
           Alpha: 1
           Show Axes: false
+          Show Trail: false
+          Value: true
+        camera_link:
+          Alpha: 1
+          Show Axes: true
           Show Trail: false
           Value: true
         gripper_base_link:
@@ -187,7 +194,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.24654
+      Distance: 3.95917
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -199,10 +206,10 @@ Visualization Manager:
         Z: 0
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.455398
+      Pitch: 0.265398
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.640399
+      Yaw: 0.180399
     Saved: ~
 Window Geometry:
   Displays:
@@ -220,5 +227,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1851
-  X: 55
-  Y: 14
+  X: 65
+  Y: 24

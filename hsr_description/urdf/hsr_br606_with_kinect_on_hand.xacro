@@ -7,7 +7,7 @@
   <joint name="gripper_robot_joint" type="fixed">
       <parent link="link6" />
       <child link="gripper_base_link" />
-      <origin xyz="0.0 0.0 0.0" rpy="0 0 3.14" />
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
   </joint> 
 
   <joint name="pick_gripper_joint" type="fixed">
@@ -17,8 +17,15 @@
      <child link="pick_gripper_link" />  
   </joint>
 
+<xacro:include filename="$(find hsr_description)/urdf/hsr_gripper.xacro.xml" />
 
-<xacro:include filename="$(find hsr_description)/urdf/eye_hand_gripper.xacro.xml" />
 <xacro:include filename="$(find hsr_description)/urdf/hsr_kinect.xacro.xml" />
+  <joint name="camera_joint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin xyz="0 0 -0.05" rpy="0 -1.57 0"/>
+    <parent link="pick_gripper_link"/>
+    <child link="camera_link"/>
+  </joint>
+
 
 </robot>

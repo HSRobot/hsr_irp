@@ -6,7 +6,7 @@
     <arg name="marker_size" doc="Size of the ArUco marker used, in meters"  default="0.1" />
     <arg name="marker_id" doc="The ID of the ArUco marker used" default="100" />
     <arg name ="calibrate" doc="The IP address of the UR5 robot"/>
-    <arg name = "robot_name" default=" "/>
+    <arg name = "robot_name" default="br606"/>
    
 
     <!-- start the Kinect -->

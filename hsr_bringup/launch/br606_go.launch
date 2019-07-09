@@ -4,6 +4,8 @@
   <arg name="sip" default="10.10.56.214" />
   <arg name="have_gripper" default="false" />
 
+  <!--param name="controller_joint_names" value="['joint_1', 'joint_2', 'joint_3', 'joint_4', 'joint_5', 'joint_6']"/-->
+
   <!-- no gripper -->
   <include 
 	file="$(find hsr_description)/launch/br606_upload.launch" unless="$(arg have_gripper)"/>
@@ -18,6 +20,7 @@
 	<arg name="sim" default="false"/>
   </include>
 
+
   <!-- if have gripper -->
   <include
 	file="$(find br606_gripper_moveit_config)/launch/hsr_br606_moveit_planning_execution.launch" if="$(arg have_gripper)">
@@ -28,6 +31,8 @@
 	file="$(find hsr_rosi_client)/launch/robot_full_interface_download.launch">
 	<arg name="robot_ip" default="10.10.56.214"/>
   </include>
+
+  <!--param name="controller_joint_names" value="['joint_1', 'joint_2', 'joint_3', 'joint_4', 'joint_5', 'joint_6']"/-->
 
   <include 
 	file="$(find br606_moveit_config)/launch/moveit_rviz.launch"/>
