@@ -13,6 +13,9 @@
   </include>
 
   <include 
+	file="$(find hsr_bringup)/launch/eye_hand_tf.launch"/>
+
+  <include 
 	file="$(find hsr_bringup)/launch/moveit_rviz.launch"/>
 
 </launch>
