@@ -46,7 +46,7 @@ set(SRC_FILES src/joint_trajectory_full_downloader.cpp
 			)
 
 add_library(hsr_rosi_device ${SRC_FILES})
-add_dependencies(hsr_rosi_device ${catkin_EXPORTED_TARGETS})
+add_dependencies(hsr_rosi_device ${catkin_EXPORTED_TARGETS} ${hsr_rosi_device_EXPORTED_TARGETS})
 target_link_libraries(hsr_rosi_device simple_message)
 
 #编译可执行程序

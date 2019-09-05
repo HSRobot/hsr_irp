@@ -1,20 +1,18 @@
 <robot
   name="hsr_co602a">
 
-
-<!--
   <link name="world"/>
 
   <joint name="fixed" type="fixed">
     <parent link="world"/>
-    <child link="robot_base_link"/>
+    <child link="base_link"/>
 	<origin
       xyz="0 0 1"
       rpy="0 0 0" />
   </joint> 
--->
+  
   <link
-    name="robot_base_link">
+    name="base_link">
     <inertial>
       <origin
         xyz="-0.0024614 3.992E-07 0.076752"
@@ -22,12 +20,12 @@
       <mass
         value="4.8818" />
       <inertia
-        ixx="0"
-        ixy="0"
-        ixz="0"
-        iyy="0"
-        iyz="0"
-        izz="0" />
+        ixx="0.093861"
+        ixy="-0.0058307"
+        ixz="-2.7963E-06"
+        iyy="0.080534"
+        iyz="4.4333E-09"
+        izz="0.12747" />
     </inertial>
     <visual>
       <origin
@@ -100,7 +98,7 @@
       xyz="0 0 0.352"
       rpy="3.1416 0 -3.4694E-18" />
     <parent
-      link="robot_base_link" />
+      link="base_link" />
     <child
       link="link1" />
     <axis

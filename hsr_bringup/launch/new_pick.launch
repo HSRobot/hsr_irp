@@ -11,12 +11,12 @@
   </include>
 
   <node
-    name="pick_server_1"
+    name="pick_server"
     pkg="hsr_pick"
     type="pick_and_place_server.py"/>
 
   <node
-    name="gripper_sever_1"
+    name="gripper_sever"
     pkg="hsr_gripper_driver"
     type="gripper_control_srv"/>
 
@@ -25,14 +25,4 @@
     pkg="hsr_gripper_driver"
     type="gripper_action.py"/>
 
- <!--node 
-    name = "vision_bridge"
-    pkg = "vision_bridge"
-    type = "vision_bridge"/-->
-
- <!--node 
-    name = "pickandplace_bridge_1"
-    pkg = "pick_place_bridge"
-    type = "pick_place_bridge"/-->
-	
 </launch>

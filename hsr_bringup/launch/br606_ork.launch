@@ -8,6 +8,6 @@
 	file="$(find hsr_gazebo)/launch/robot_with_gripper_gazebo.launch"/>
 
   <include 
-	file="$(find hsr_bringup)/launch/ork_base_tf.launch"/>
+	file="$(find hsr_bringup)/launch/sim_eye_base_tf.launch"/>
 
 </launch>
