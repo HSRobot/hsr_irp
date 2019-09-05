@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!--param name="controller_joint_names" value="['joint_1', 'joint_2', 'joint_3', 'joint_4', 'joint_5', 'joint_6']"/-->
+
+  <!-- no gripper -->
+  <include 
+	file="$(find hsr_description)/launch/co602a_with_eyeonhand_d435i_upload.launch"/>
+
+  <include
+	file="$(find co602a_eyeonhand_gripper_moveit_config)/launch/hsr_co602a_moveit_planning_execution.launch">
+	<arg name="sim" default="false"/>
+  </include>
+
+  <!--include
+	file="$(find hsr_rosi_device)/launch/robot_full_interface_download.launch">
+	<arg name="robot_ip" default="192.168.99.2"/>
+  </include-->
+
+  <include
+	file="$(find hsr_bringup)/launch/pick_gui.launch">
+  </include>
+
+  <include 
+	file="$(find co602a_eyeonhand_gripper_moveit_config)/launch/moveit_rviz.launch"/>
+
+
+</launch>

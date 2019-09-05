@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <param name="robot_description" command="$(find xacro)/xacro.py $(find hsr_description)/urdf/hsr_co602_with_eyeonhand_gripper_d435i.xacro" />
+
+  <param
+	name="robot_name"
+	value="hsr_co602a"
+	/>
+
+</launch>

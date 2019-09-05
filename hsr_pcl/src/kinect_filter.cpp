@@ -72,7 +72,7 @@ int loadPCD(std::string fileName){
 void pubPointCloud(){
     sensor_msgs::PointCloud2 ros_cloud;
     pcl::toROSMsg(*cloudOut, ros_cloud);
-    ros_cloud.header.frame_id = "kinect2_rgb_optical_frame";
+    ros_cloud.header.frame_id = "d435i_color_optical_frame";
     pub.publish(ros_cloud);
 }
 
@@ -154,7 +154,7 @@ int main(int argc, char** argv)
   ros::init (argc, argv, "kinect_filter");//initialize node name
   ros::NodeHandle nh;                       //node Handle
   pub = nh.advertise<sensor_msgs::PointCloud2> ("/filter_points", 1);
-  ros::Subscriber sub = nh.subscribe<sensor_msgs::PointCloud2>("/kinect2/qhd/points", 1, kinect_data_cb);
+  ros::Subscriber sub = nh.subscribe<sensor_msgs::PointCloud2>("/d435i/depth_registered/points", 1, kinect_data_cb);
   ros::Subscriber sub_table = nh.subscribe<sensor_msgs::PointCloud2>("/move_group/filtered_cloud",1,kinect_data_table);
   ros::ServiceServer saveSrv = nh.advertiseService("savePCD", saveSrvCb);
   ros::ServiceServer loadSrv = nh.advertiseService("loadPCD", loadSrvCb);

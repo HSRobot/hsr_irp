@@ -4,14 +4,14 @@
   <!--include 
 	file="$(find hsr_bringup)/launch/ork_interface.launch"/-->
 
-  <include 
+  <!--include 
 	file="$(find easy_handeye)/launch/publish.launch">
 	<arg name="eye_on_hand" value="false"/>
 	<arg name="namespace_prefix" value="hsr_kinect_handeyecalibration"/>
-  </include>
+  </include-->
 
- <include 
-	file="$(find kinect2_bridge)/launch/kinect2_bridge.launch"/>
+ <!--include 
+	file="$(find kinect2_bridge)/launch/kinect2_bridge.launch"/-->
 
   <node
     name="pick_server"
