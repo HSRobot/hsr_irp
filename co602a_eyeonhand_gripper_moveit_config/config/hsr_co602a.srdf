@@ -10,7 +10,7 @@
     <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
     <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
     <group name="arm">
-        <chain base_link="robot_base_link" tip_link="pick_gripper_link" />
+        <chain base_link="base_link" tip_link="pick_gripper_link" />
     </group>
     <group name="gripper">
         <link name="gripper_base_link" />
@@ -90,7 +90,7 @@
     <disable_collisions link1="link1" link2="link5" reason="Never" />
     <disable_collisions link1="link1" link2="link6" reason="Never" />
     <disable_collisions link1="link1" link2="pick_gripper_link" reason="Never" />
-    <disable_collisions link1="link1" link2="robot_base_link" reason="Adjacent" />
+    <disable_collisions link1="link1" link2="base_link" reason="Adjacent" />
     <disable_collisions link1="link2" link2="link3" reason="Adjacent" />
     <disable_collisions link1="link2" link2="link4" reason="Never" />
     <disable_collisions link1="link2" link2="link5" reason="Never" />
@@ -119,7 +119,7 @@
     <disable_collisions link1="link6" link2="right_finger_2_link" reason="Never" />
     <disable_collisions link1="link6" link2="right_finger_end_link" reason="Never" />
     <disable_collisions link1="pick_gripper_link" link2="right_finger_1_link" reason="Never" />
-    <disable_collisions link1="pick_gripper_link" link2="robot_base_link" reason="Never" />
+    <disable_collisions link1="pick_gripper_link" link2="base_link" reason="Never" />
     <disable_collisions link1="right_finger_1_link" link2="right_finger_2_link" reason="Adjacent" />
     <disable_collisions link1="right_finger_2_link" link2="right_finger_end_link" reason="Adjacent" />
 </robot>
