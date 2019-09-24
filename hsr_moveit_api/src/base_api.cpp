@@ -111,18 +111,18 @@ int main(int argc, char **argv){
 	while(ros::ok()){
 
 		// 保存Pose信息的变量
-		//geometry_msgs::PoseStamped now_pose;	
+		geometry_msgs::PoseStamped now_pose;	
 
 		// 获取当前笛卡尔坐标
-		//now_pose = group->getCurrentPose();
+		now_pose = group->getCurrentPose();
 
 		// 获取当前RPY
 		//rpy = group->getCurrentRPY();
 
 		// 发布当前笛卡尔坐标
-		//pose_pub.publish(now_pose);
-                 group->setRandomTarget();
-                 std::cout<< group->move()<<std::endl;
+		pose_pub.publish(now_pose);
+                 //group->setRandomTarget();
+                 //std::cout<< group->move()<<std::endl;
 
 		// 休眠
 		loop_rate.sleep();
