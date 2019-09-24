@@ -1,0 +1,171 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="hsr_co602a">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="arm">
+        <chain base_link="base_link" tip_link="pick_gripper_link" />
+    </group>
+    <group name="gripper">
+        <link name="gripper_base_link" />
+        <link name="grisper_boby_link" />
+        <link name="left_finger_1_link" />
+        <link name="left_finger_2_link" />
+        <link name="left_finger_end_link" />
+        <link name="right_finger_1_link" />
+        <link name="right_finger_2_link" />
+        <link name="right_finger_end_link" />
+        <link name="pick_gripper_link" />
+    </group>
+   <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+   <group_state name="home" group="arm">
+        <joint name="joint_1" value="0" />
+        <joint name="joint_2" value="-1.57" />
+        <joint name="joint_3" value="3.14" />
+        <joint name="joint_4" value="0" />
+        <joint name="joint_5" value="0" />
+        <joint name="joint_6" value="0" /> <!--0.785398163397-->
+    </group_state>
+    <group_state name="pick" group="arm">
+        <joint name="joint_1" value="0" />
+        <joint name="joint_2" value="-1.57" />
+        <joint name="joint_3" value="3.14" />
+        <joint name="joint_4" value="0" />
+        <joint name="joint_5" value="1.57" />
+        <joint name="joint_6" value="0" />
+    </group_state>
+    <group_state name="calibrate" group="arm">
+        <joint name="joint_1" value="0" />
+        <joint name="joint_2" value="-1.6580627" />
+        <joint name="joint_3" value="3.47320521" />
+        <joint name="joint_4" value="0" />
+        <joint name="joint_5" value="0.55850536" />
+        <joint name="joint_6" value="0" />
+    </group_state>
+
+     <group_state name="detection" group="arm">
+        <joint name="joint_1" value="0.0695691779255867" />
+        <joint name="joint_2" value="-1.9040862321853638" />
+        <joint name="joint_3" value="3.4564874172210693" />
+        <joint name="joint_4" value="-0.10435304045677185" />
+        <joint name="joint_5" value="0.5936349034309387" />
+        <joint name="joint_6" value="0.12423095107078552" />
+    </group_state>
+
+    <group_state name="detection_1" group="arm">
+        <joint name="joint_1" value="0.06932028383016586" />
+        <joint name="joint_2" value="-1.8989025354385376" />
+        <joint name="joint_3" value="3.3954410552978516" />
+        <joint name="joint_4" value="-0.054539572447538376" />
+        <joint name="joint_5" value="0.951460599899292" />
+        <joint name="joint_6" value="0.0849708542227745" />
+    </group_state>
+
+
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="end effector" parent_link="pick_gripper_link" group="gripper" parent_group="arm" />
+    <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->
+    <passive_joint name="left_wheel_joint" />
+    <passive_joint name="right_wheel_joint" />
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="base_link" link2="camera_base_link" reason="Never" />
+    <disable_collisions link1="base_link" link2="gripper_base_link" reason="Never" />
+    <disable_collisions link1="base_link" link2="grisper_boby_link" reason="Never" />
+    <disable_collisions link1="base_link" link2="left_finger_1_link" reason="Never" />
+    <disable_collisions link1="base_link" link2="left_finger_2_link" reason="Never" />
+    <disable_collisions link1="base_link" link2="left_finger_end_link" reason="Never" />
+    <disable_collisions link1="base_link" link2="link1" reason="Never" />
+    <disable_collisions link1="base_link" link2="link2" reason="Never" />
+    <disable_collisions link1="base_link" link2="link3" reason="Never" />
+    <disable_collisions link1="base_link" link2="link4" reason="Never" />
+    <disable_collisions link1="base_link" link2="link5" reason="Never" />
+    <disable_collisions link1="base_link" link2="link6" reason="Never" />
+    <disable_collisions link1="base_link" link2="pick_gripper_link" reason="Never" />
+    <disable_collisions link1="base_link" link2="right_finger_1_link" reason="Never" />
+    <disable_collisions link1="base_link" link2="right_finger_2_link" reason="Never" />
+    <disable_collisions link1="base_link" link2="right_finger_end_link" reason="Never" />
+    <disable_collisions link1="base_link" link2="robot_base_link" reason="Adjacent" />
+    <disable_collisions link1="camera_base_link" link2="gripper_base_link" reason="Default" />
+    <disable_collisions link1="camera_base_link" link2="grisper_boby_link" reason="Never" />
+    <disable_collisions link1="camera_base_link" link2="left_finger_1_link" reason="Never" />
+    <disable_collisions link1="camera_base_link" link2="left_finger_2_link" reason="Never" />
+    <disable_collisions link1="camera_base_link" link2="left_finger_end_link" reason="Never" />
+    <disable_collisions link1="camera_base_link" link2="link3" reason="Never" />
+    <disable_collisions link1="camera_base_link" link2="link4" reason="Never" />
+    <disable_collisions link1="camera_base_link" link2="link5" reason="Never" />
+    <disable_collisions link1="camera_base_link" link2="link6" reason="Adjacent" />
+    <disable_collisions link1="camera_base_link" link2="pick_gripper_link" reason="Never" />
+    <disable_collisions link1="camera_base_link" link2="right_finger_1_link" reason="Never" />
+    <disable_collisions link1="camera_base_link" link2="right_finger_2_link" reason="Never" />
+    <disable_collisions link1="camera_base_link" link2="right_finger_end_link" reason="Never" />
+    <disable_collisions link1="gripper_base_link" link2="grisper_boby_link" reason="Adjacent" />
+    <disable_collisions link1="gripper_base_link" link2="link3" reason="Never" />
+    <disable_collisions link1="gripper_base_link" link2="link4" reason="Never" />
+    <disable_collisions link1="gripper_base_link" link2="link5" reason="Never" />
+    <disable_collisions link1="gripper_base_link" link2="link6" reason="Adjacent" />
+    <disable_collisions link1="gripper_base_link" link2="pick_gripper_link" reason="Adjacent" />
+    <disable_collisions link1="grisper_boby_link" link2="left_finger_1_link" reason="Adjacent" />
+    <disable_collisions link1="grisper_boby_link" link2="link3" reason="Never" />
+    <disable_collisions link1="grisper_boby_link" link2="link4" reason="Never" />
+    <disable_collisions link1="grisper_boby_link" link2="link5" reason="Never" />
+    <disable_collisions link1="grisper_boby_link" link2="link6" reason="Never" />
+    <disable_collisions link1="grisper_boby_link" link2="pick_gripper_link" reason="Never" />
+    <disable_collisions link1="grisper_boby_link" link2="right_finger_1_link" reason="Adjacent" />
+    <disable_collisions link1="left_finger_1_link" link2="left_finger_2_link" reason="Adjacent" />
+    <disable_collisions link1="left_finger_1_link" link2="link3" reason="Never" />
+    <disable_collisions link1="left_finger_1_link" link2="link4" reason="Never" />
+    <disable_collisions link1="left_finger_1_link" link2="link5" reason="Never" />
+    <disable_collisions link1="left_finger_1_link" link2="link6" reason="Never" />
+    <disable_collisions link1="left_finger_2_link" link2="left_finger_end_link" reason="Adjacent" />
+    <disable_collisions link1="left_finger_2_link" link2="link3" reason="Never" />
+    <disable_collisions link1="left_finger_2_link" link2="link4" reason="Never" />
+    <disable_collisions link1="left_finger_2_link" link2="link5" reason="Never" />
+    <disable_collisions link1="left_finger_2_link" link2="link6" reason="Never" />
+    <disable_collisions link1="left_finger_end_link" link2="link3" reason="Never" />
+    <disable_collisions link1="left_finger_end_link" link2="link4" reason="Never" />
+    <disable_collisions link1="left_finger_end_link" link2="link5" reason="Never" />
+    <disable_collisions link1="left_finger_end_link" link2="link6" reason="Never" />
+    <disable_collisions link1="link1" link2="link2" reason="Adjacent" />
+    <disable_collisions link1="link1" link2="link3" reason="Never" />
+    <disable_collisions link1="link1" link2="link4" reason="Never" />
+    <disable_collisions link1="link1" link2="link5" reason="Never" />
+    <disable_collisions link1="link1" link2="pick_gripper_link" reason="Never" />
+    <disable_collisions link1="link1" link2="robot_base_link" reason="Adjacent" />
+    <disable_collisions link1="link2" link2="link3" reason="Adjacent" />
+    <disable_collisions link1="link2" link2="link4" reason="Never" />
+    <disable_collisions link1="link2" link2="link5" reason="Never" />
+    <disable_collisions link1="link2" link2="link6" reason="Never" />
+    <disable_collisions link1="link2" link2="pick_gripper_link" reason="Never" />
+    <disable_collisions link1="link3" link2="link4" reason="Adjacent" />
+    <disable_collisions link1="link3" link2="link5" reason="Never" />
+    <disable_collisions link1="link3" link2="link6" reason="Never" />
+    <disable_collisions link1="link3" link2="pick_gripper_link" reason="Never" />
+    <disable_collisions link1="link3" link2="right_finger_1_link" reason="Never" />
+    <disable_collisions link1="link3" link2="right_finger_2_link" reason="Never" />
+    <disable_collisions link1="link3" link2="right_finger_end_link" reason="Never" />
+    <disable_collisions link1="link4" link2="link5" reason="Adjacent" />
+    <disable_collisions link1="link4" link2="link6" reason="Never" />
+    <disable_collisions link1="link4" link2="pick_gripper_link" reason="Never" />
+    <disable_collisions link1="link4" link2="right_finger_1_link" reason="Never" />
+    <disable_collisions link1="link4" link2="right_finger_2_link" reason="Never" />
+    <disable_collisions link1="link4" link2="right_finger_end_link" reason="Never" />
+    <disable_collisions link1="link5" link2="link6" reason="Adjacent" />
+    <disable_collisions link1="link5" link2="pick_gripper_link" reason="Never" />
+    <disable_collisions link1="link5" link2="right_finger_1_link" reason="Never" />
+    <disable_collisions link1="link5" link2="right_finger_2_link" reason="Never" />
+    <disable_collisions link1="link5" link2="right_finger_end_link" reason="Never" />
+    <disable_collisions link1="link6" link2="pick_gripper_link" reason="Never" />
+    <disable_collisions link1="link6" link2="right_finger_1_link" reason="Never" />
+    <disable_collisions link1="link6" link2="right_finger_2_link" reason="Never" />
+    <disable_collisions link1="link6" link2="right_finger_end_link" reason="Never" />
+    <disable_collisions link1="pick_gripper_link" link2="right_finger_1_link" reason="Never" />
+    <disable_collisions link1="pick_gripper_link" link2="robot_base_link" reason="Never" />
+    <disable_collisions link1="right_finger_1_link" link2="right_finger_2_link" reason="Adjacent" />
+    <disable_collisions link1="right_finger_2_link" link2="right_finger_end_link" reason="Adjacent" />
+</robot>

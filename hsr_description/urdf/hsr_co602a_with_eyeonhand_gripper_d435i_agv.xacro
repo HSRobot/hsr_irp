@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<robot
+  name="hsr_co602a" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find hsr_description)/urdf/ir100_robot.xacro" />
+
+<xacro:include filename="$(find hsr_description)/urdf/hsr_co602a_with_eyeonhand_gripper.xacro" />
+
+<joint name="agv_to_base_joint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin xyz="0 0 0.30" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="robot_base_link"/>
+</joint>
+
+<xacro:include filename="$(find hsr_description)/urdf/hsr_d435i.xacro.xml" />
+  <joint name="d435i_camera_joint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin xyz="0.09 0 0.12" rpy="0 0 1.57"/>
+    <parent link="link6"/>
+    <child link="camera_base_link"/>
+  </joint>
+
+</robot>
