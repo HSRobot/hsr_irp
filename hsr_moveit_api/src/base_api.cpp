@@ -111,23 +111,30 @@ int main(int argc, char **argv){
 	while(ros::ok()){
 
 		// 保存Pose信息的变量
-		//geometry_msgs::PoseStamped now_pose;	
+		geometry_msgs::PoseStamped now_pose;	
 
 		// 获取当前笛卡尔坐标
-		//now_pose = group->getCurrentPose();
+		now_pose = group->getCurrentPose();
 
 		// 获取当前RPY
-		//rpy = group->getCurrentRPY();
+		rpy = group->getCurrentRPY();
 
 		// 发布当前笛卡尔坐标
 		//pose_pub.publish(now_pose);
-                 group->setRandomTarget();
-                 std::cout<< group->move()<<std::endl;
+                // group->setRandomTarget();
+                // std::cout<< group->move()<<std::endl;
 
 		// 休眠
 		loop_rate.sleep();
 		
-		//std::cout << "rpy = " << rpy[0] << " || " << rpy[1] << " || " << rpy[2] << std::endl; 
-	
+		std::cout << "rpy = " << rpy[0] << " || " << rpy[1] << " || " << rpy[2] << std::endl; 
+                std::cout <<"fram_id:"<< now_pose.header.frame_id << std::endl;
+                std::cout << "px = " << now_pose.pose.position.x << std::endl;
+                std::cout << "py = " << now_pose.pose.position.y << std::endl;
+                std::cout << "pz = " << now_pose.pose.position.z << std::endl;
+                std::cout << "ow = " << now_pose.pose.orientation.w << std::endl;
+                std::cout << "ox = " << now_pose.pose.orientation.x << std::endl;
+                std::cout << "oy = " << now_pose.pose.orientation.y << std::endl;
+                std::cout << "oz = " << now_pose.pose.orientation.z << std::endl;
 	}
 }

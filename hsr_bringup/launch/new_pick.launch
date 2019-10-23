@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-
+<!--
   <include 
 	file="$(find kinect2_bridge)/launch/kinect2_bridge.launch"/>
 
@@ -9,7 +9,7 @@
 	<arg name="eye_on_hand" value="false"/>
 	<arg name="namespace_prefix" value="hsr_kinect_handeyecalibration"/>
   </include>
-
+-->
   <node
     name="pick_server"
     pkg="hsr_pick"
