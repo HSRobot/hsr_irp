@@ -120,9 +120,6 @@ int main(int argc, char **argv){
 		rpy = group->getCurrentRPY();
 
 		// 发布当前笛卡尔坐标
-		//pose_pub.publish(now_pose);
-                // group->setRandomTarget();
-                // std::cout<< group->move()<<std::endl;
 
 		// 休眠
 		loop_rate.sleep();

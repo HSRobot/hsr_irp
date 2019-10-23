@@ -2,7 +2,7 @@
 <robot
   name="hsr_co602a" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<xacro:include filename="$(find hsr_description)/urdf/hsr_co602a.urdf" />
+<xacro:include filename="$(find hsr_description)/urdf/hsr_co602a_for_agv.urdf" />
 
   <joint name="gripper_robot_joint" type="fixed">
       <parent link="link6" />
@@ -11,7 +11,7 @@
   </joint> 
 
   <joint name="pick_gripper_joint" type="fixed">
-     <origin xyz="0 0.0 0.18" rpy="0 -1.5708 1.5708" />
+     <origin xyz="-0.0115 0.0 0.15" rpy="0 -1.5708 1.5708" />
      <axis xyz="0 0 1"/>
      <parent link="gripper_base_link" />
      <child link="pick_gripper_link" />  

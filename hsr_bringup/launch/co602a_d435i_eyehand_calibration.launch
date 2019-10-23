@@ -1,14 +1,12 @@
 <launch>
+
     <arg name="namespace_prefix" default="hsr_d435i_handeyecalibration" />
-
-    <arg name="robot_ip" doc="The IP address of the UR5 robot" />
-
+    <arg name="robot_ip" doc="The IP address of the UR5 robot" default="10.10.56.214"/>
     <arg name="marker_size" doc="Size of the ArUco marker used, in meters"  default="0.1" />
     <arg name="marker_id" doc="The ID of the ArUco marker used" default="100" />
     <arg name ="calibrate" doc="The IP address of the UR5 robot"/>
     <arg name = "robot_name" default=" "/>
    
-
     <!-- start the D435i -->
     <include file="$(find realsense2_camera)/launch/rs_rgbd.launch" >
     </include>
@@ -25,20 +23,36 @@
         <param name="marker_frame"       value="camera_marker" />
     </node>
 
+	<!-- ros-i need joint_names param, so we load it -->
+	<rosparam file="$(find hsr_bringup)/config/joint_names.yaml" command="load"/>
+
+	<!-- upload robot urdf -->
 	<include 
-		file="$(find hsr_description)/launch/br606_with_eye_hand_gripper_upload.launch"/>
+		file="$(find hsr_description)/launch/co602a_with_eyeonhand_d435i_upload.launch"/>
 
 	<!-- start the ros-i -->
 	<include
-		file="$(find hsr_rosi_client)/launch/robot_full_interface_download.launch">
-		<arg name="robot_ip" default="10.10.56.214"/>
-  	</include>
+		file="$(find hsr_rosi_device)/launch/robot_full_interface_download.launch">
+		<arg name="robot_ip" default="$(arg robot_ip)"/>
+	</include>
 
     <!-- start the robot -->
-	<include file="$(find br606_eyehand_moveit_config)/launch/hsr_br606_eyehand_moveit_planning_execution.launch">
-        <arg name="sim" default="false"/>
-    </include>
-    
+	<include
+		file="$(find co602a_eyeonhand_gripper_moveit_config)/launch/hsr_co602a_moveit_planning_execution.launch">
+		<arg name="sim" default="false"/>
+	</include>
+
+	<!-- publish fake gripper states and moveit action -->
+	<node
+		name="gripper_action"
+		pkg="hsr_gripper_driver"
+		type="gripper_action.py"/>
+
+	<!-- the gripper driver server, girpper action node need that -->
+	<node
+		name="gripper_server"
+		pkg="hsr_gripper_driver"
+		type="gripper_control_srv"/>
 
     <!-- start easy_handeye -->
     <include file="$(find easy_handeye)/launch/calibrate.launch" >

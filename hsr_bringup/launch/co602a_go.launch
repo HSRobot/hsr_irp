@@ -9,14 +9,35 @@
   <include 
 	file="$(find hsr_description)/launch/co602a_upload.launch" unless="$(arg have_gripper)"/>
 
+  <include 
+	file="$(find hsr_description)/launch/co602a_with_eyeonhand_d435i_upload.launch" if="$(arg have_gripper)"/>
+
   <include
 	file="$(find co602a_moveit_config)/launch/hsr_co602a_moveit_planning_execution.launch" unless="$(arg have_gripper)">
 	<arg name="sim" default="false"/>
   </include>
 
   <include
+	file="$(find co602a_eyeonhand_gripper_moveit_config)/launch/hsr_co602a_moveit_planning_execution.launch" if="$(arg have_gripper)">
+	<arg name="sim" default="false"/>
+  </include>
+
+
+  <group if="$(arg have_gripper)">
+    <node
+      name="gripper_sever"
+      pkg="hsr_gripper_driver"
+      type="gripper_control_srv"/>
+
+    <node
+      name="gripper_action"
+      pkg="hsr_gripper_driver"
+      type="gripper_action.py"/>
+  </group>
+
+  <include
 	file="$(find hsr_rosi_device)/launch/robot_full_interface_download.launch">
-	<arg name="robot_ip" default="${arg robot_ip}"/>
+	<arg name="robot_ip" default="$(arg robot_ip)"/>
   </include>
 
   <include 

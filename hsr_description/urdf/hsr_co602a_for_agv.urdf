@@ -6,14 +6,14 @@
 
   <joint name="fixed" type="fixed">
     <parent link="world"/>
-    <child link="link_base"/>
+    <child link="robot_base_link"/>
 	<origin
       xyz="0 0 1"
       rpy="0 0 0" />
   </joint> 
 -->
   <link
-    name="link_base">
+    name="robot_base_link">
     <inertial>
       <origin
         xyz="-0.0024614 3.992E-07 0.076752"
@@ -34,7 +34,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co602a/link_base.STL" />
+          filename="package://hsr_description/meshes/co602a/base_link.STL" />
       </geometry>
       <material
         name="">
@@ -48,7 +48,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co602a/link_base.STL" />
+          filename="package://hsr_description/meshes/co602a/base_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -99,7 +99,7 @@
       xyz="0 0 0.352"
       rpy="3.1416 0 -3.4694E-18" />
     <parent
-      link="link_base" />
+      link="robot_base_link" />
     <child
       link="link1" />
     <axis
@@ -294,13 +294,13 @@
     <axis
       xyz="0 0 1" />
     <limit
-      lower="-3.141592653589"
-      upper="3.141592653589"
+      lower="-3.0"
+      upper="3.0"
       effort="28"
       velocity="3.2" />
     <safety_controller
-      soft_upper_limit="3.132866007329"
-      soft_lower_limit="-3.132866007329"
+      soft_upper_limit="3.0"
+      soft_lower_limit="-3.0"
       k_position="100"
       k_velocity="10" />
   </joint>
@@ -420,13 +420,13 @@
     <axis
       xyz="0 0 1" />
     <limit
-      lower="-6.283185307179"
-      upper="6.283185307179"
+      lower="-5.1"
+      upper="5.1"
       effort="28"
       velocity="3.2" />
     <safety_controller
-      soft_upper_limit="6.274458660919"
-      soft_lower_limit="-6.274458660919"
+      soft_upper_limit="5.1"
+      soft_lower_limit="-5.1"
       k_position="100"
       k_velocity="10" />
   </joint>

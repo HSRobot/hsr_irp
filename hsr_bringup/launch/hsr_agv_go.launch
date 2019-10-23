@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+
+
+  <rosparam file="$(find hsr_bringup)/config/joint_names.yaml" command="load"/>
+
+  <include 
+	file="$(find hsr_bringup)/launch/gripper_go.launch" />
+ 
+  <include
+        file="$(find hsr_rosi_device)/launch/robot_full_interface_download.launch">
+  </include>
+
+  <include
+	file="$(find realsense2_camera)/launch/rs_rgbd.launch">
+	<arg name="color_width" default="1920" />
+	<arg name="color_height" default="1080" />
+  </include>
+
+</launch>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include 
+	file="$(find easy_handeye)/launch/publish.launch">
+	<arg name="eye_on_hand" value="true"/>
+	<arg name="namespace_prefix" value="hsr_d435i_handeyecalibration"/>
+  </include>
+
+  <!-- publish the camera link and color optical frame tf data -->
+  <node name="camera_robot_tf" pkg="tf" type="static_transform_publisher" 
+	args="0.0149268 0.000305902 0.000251373 0.502587 -0.500055 0.49936 0.497987 d435i_color_optical_frame_1 d435i_link 20" />
+
+</launch>

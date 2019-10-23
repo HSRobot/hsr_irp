@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+
+
+  <include
+	file="$(find vision_bridge)/launch/vision_bridge_yolo.launch">
+  </include>
+
+  <include 
+	file="$(find ir100_navigation)/launch/ir100_navigation.launch">
+	<arg name="map_file" value="/home/shansu/work/maps/fshs_yf_office.yaml"/>
+  </include>
+
+  <include 
+	file="$(find hsr_bringup)/launch/hsr_agv_go.launch"/>
+
+  <include 
+	file="$(find hsr_bringup)/launch/hsr_agv_moveit.launch"/>
+
+  <include 
+	file="$(find hsr_bringup)/launch/publish_d435i_calibration.launch"/>
+
+  <node name="pick_place_bridge" pkg="pick_place_bridge" type="pick_place_bridge" />
+
+  <!--node name="perception_bridge" pkg="perception_bridge" type="perception_bridge.py" output="screen" /-->
+
+</launch>

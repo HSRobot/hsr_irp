@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch> 
+ <!--node
+    name="pick_server"
+    pkg="hsr_pick"
+    type="pick_and_place_server.py"/-->
+
+  <node
+    name="gripper_sever"
+    pkg="hsr_gripper_driver"
+    type="gripper_control_srv"/>
+
+  <node
+    name="gripper_action"
+    pkg="hsr_gripper_driver"
+    type="gripper_action.py"/>
+</launch>

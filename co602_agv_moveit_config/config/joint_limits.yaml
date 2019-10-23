@@ -1,0 +1,72 @@
+# joint_limits.yaml allows the dynamics properties specified in the URDF to be overwritten or augmented as needed
+# Specific joint properties can be changed with the keys [max_position, min_position, max_velocity, max_acceleration]
+# Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
+joint_limits:
+  joint_1:
+    has_velocity_limits: true
+    max_velocity: 1.37
+    has_acceleration_limits: true
+    max_acceleration: 1.37
+    has_position_limits: true
+    max_position: 3.473205211468
+    min_position: -3.473205211468
+  joint_2:
+    has_velocity_limits: true
+    max_velocity: 1.37
+    has_acceleration_limits: true
+    max_acceleration: 1.37
+    has_position_limits: true
+    max_position: 0
+    min_position: -3.124139361069
+  joint_3:
+    has_velocity_limits: true
+    max_velocity: 1.37
+    has_acceleration_limits: true
+    max_acceleration: 1.37
+    has_position_limits: true
+    max_position: 3.595378259108
+    min_position: 0
+  joint_4:
+    has_velocity_limits: true
+    max_velocity: 1.37
+    has_acceleration_limits: true
+    max_acceleration: 1.37
+    has_position_limits: true
+    max_position: 3.124139361069
+    min_position: -3.124139361069
+  joint_5:
+    has_velocity_limits: true
+    max_velocity: 1.37
+    has_acceleration_limits: ture
+    max_acceleration: 1.37
+    has_position_limits: true
+    max_position: 2.251474735072
+    min_position: -2.251474735072
+  joint_6:
+    has_velocity_limits: true
+    max_velocity: 1.37
+    has_acceleration_limits: true
+    max_acceleration: 1.37
+    has_position_limits: true
+    max_position: 6.1
+    min_position: -6.1
+  left_finger_1_joint:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  left_finger_2_joint:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  right_finger_1_joint:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  right_finger_2_joint:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
