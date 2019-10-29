@@ -2,7 +2,7 @@
 <launch>
 
 
-  <arg name="robot_ip" default="10.10.56.214" />
+  <arg name="robot_ip" default="192.168.99.2" />
 
   <rosparam file="$(find hsr_bringup)/config/joint_names.yaml" command="load"/>
 
@@ -15,9 +15,7 @@
   </include>
 
   <include
-	file="$(find realsense2_camera)/launch/rs_rgbd.launch">
-	<arg name="color_width" default="1920" />
-	<arg name="color_height" default="1080" />
+	file="$(find hsr_bringup)/launch/hsr_agv_moveit.launch">
   </include>
 
 </launch>
