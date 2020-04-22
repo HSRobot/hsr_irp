@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="robot_ip" default="10.10.56.214" />
+  <arg name="robot_ip1" default="10.10.57.213" />v
+  <!---       -->
+  <include 
+	file="$(find hsr_description)/launch/co602a_two_upload.launch"/>
+
+  <include
+	file="$(find co602a_two__merge)/launch/co602a_two__merge_planning_execution.launch">
+	<arg name="sim" default="false"/>
+  </include>
+
+  <include
+	file="$(find hsr_rosi_device)/launch/robot_full_interface_download.launch">
+	<arg name="robot_ip" default="$(arg robot_ip)"/>
+  </include>
+  <!---       -->
+  <include 
+	file="$(find co602a_two__merge)/launch/moveit_rviz.launch"/>
+
+</launch>

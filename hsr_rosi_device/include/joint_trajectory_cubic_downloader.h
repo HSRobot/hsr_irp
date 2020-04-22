@@ -52,7 +52,9 @@ using industrial::smpl_msg_connection::SmplMsgConnection;
 using industrial::shared_types::shared_real;
 namespace StandardSocketPorts = industrial::simple_socket::StandardSocketPorts;
 
-
+/**
+ * @brief The JointTrajectoryCubicDownloader class 华数机器人的五次多项式插补 关于ROS
+ */
 class JointTrajectoryCubicDownloader : public JointTrajectoryFullInterface{
 
 public:

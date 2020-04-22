@@ -1,0 +1,14 @@
+<!-- If using real robot, initialise connection to the real robot -->
+<launch>
+<group ns="Robot_Group">
+    <group ns="UR51">
+      <!-- Load UR5 URDF file - robot description file -->
+	  <include file="$(find co602_moveit_with_one)/launch/demo.launch"/>  
+    </group>
+
+    <group ns="UR52">
+      <!-- Load UR5 URDF file - robot description file -->
+      <include file="$(find co602_moveit_with_two)/launch/demo.launch"/>
+    </group>
+</group>
+</launch>

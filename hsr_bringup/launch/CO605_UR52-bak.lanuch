@@ -1,0 +1,12 @@
+<!-- If using real robot, initialise connection to the real robot -->
+<launch>
+
+    <group ns="UR52">
+      <!-- Load UR5 URDF file - robot description file -->
+	  <include file="$(find hsr_bringup)/launch/co605_two_go.launch">  
+               <arg name="robot_ip" default="10.10.56.214"/>
+               <!--arg name="have_robot_state" default="false" /-->
+          </include>
+    </group>
+
+</launch>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+  Universal robot ur5 launch.  Loads ur5 robot description (see ur_common.launch
+  for more info)
+
+  Usage:
+    ur5_bringup.launch robot_ip:=<value>
+-->
+<launch>
+ <group ns="UR51">	
+  <include
+    file="$(find ur_modern_driver)/launch/ur5_bringup.launch"/>
+  <include 
+    file="$(find ur5_moveit_config)/launch/ur5_moveit_planning_execution.launch"/>
+
+  <include 
+    file="$(find ur5_moveit_config)/launch/moveit_rviz.launch">
+    <arg name="config" value="true" />
+   </include>
+  </group>	
+</launch>

@@ -42,6 +42,9 @@ namespace joint_trajectory_downloader{
 using industrial_robot_client::joint_trajectory_interface::JointTrajectoryFullInterface;
 using industrial::joint_traj_pt_full_message::JointTrajPtFullMessage;
 
+/**
+ * @brief The JointTrajectoryFullDownloader class 华数机器人的Ros轨迹点下发的继承 JointTrajectoryInterface 代理类
+ */
 class JointTrajectoryFullDownloader : public JointTrajectoryFullInterface{
 
 public:

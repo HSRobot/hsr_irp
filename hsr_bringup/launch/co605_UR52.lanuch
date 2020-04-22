@@ -1,0 +1,9 @@
+<!-- If using real robot, initialise connection to the real robot -->
+<launch>
+
+    <group ns="UR52">
+      <!-- Load UR5 URDF file - robot description file -->
+	  <include file="$(find hsr_bringup)/launch/co605_two_go.launch"/>  
+    </group>
+
+</launch>

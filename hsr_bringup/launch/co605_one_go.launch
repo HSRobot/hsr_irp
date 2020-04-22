@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="have_gripper" default="false" />
+  <arg name="robot_ip" default="10.10.56.214" />
+
+  <rosparam file="$(find hsr_bringup)/config/joint_names.yaml" command="load"/>
+
+  <include 
+	file="$(find hsr_description)/launch/co605_one_upload.launch" unless="$(arg have_gripper)"/>
+
+  <include
+	file="$(find co602_moveit_with_one)/launch/hsr_co605_moveit_planning_execution.launch" unless="$(arg have_gripper)">
+	<arg name="sim" default="false"/>
+  </include>
+
+
+  <include
+	file="$(find hsr_rosi_device)/launch/robot_full_interface_download.launch">
+	<arg name="robot_ip" default="$(arg robot_ip)"/>
+  </include>
+
+  <include 
+	file="$(find hsr_bringup)/launch/moveit_rviz.launch"/>
+
+</launch>

@@ -16,14 +16,14 @@
   -->
 
   <!-- robot_ip: IP-address of the robot's socket-messaging server -->
-  <arg name="robot_ip" doc=" please input address"/>
+  <arg name="robot_ip" default="10.10.56.213"/>
   
   <!-- copy the specified IP address to the Parameter Server, for use by nodes below -->
   <param name="/robot_ip_address" type="str" value="$(arg robot_ip)"/>
   
   <!-- robot_state: publishes joint positions and robot-state data
                    (from socket connection to robot) -->
-  <node pkg="industrial_robot_client" type="robot_state" name="robot_state" />
+  <node pkg="industrial_robot_client" type="robot_state" name="robot_state"/>
   
   <!-- motion_download_interface: sends robot motion commands by DOWNLOADING path to robot
                                   (using socket connection to robot) -->

@@ -58,7 +58,9 @@ namespace joint_trajectory_interface
 	using industrial_robot_client::joint_trajectory_interface::JointTrajectoryInterface;
 	namespace StandardSocketPorts = industrial::simple_socket::StandardSocketPorts;
 
-
+ /**
+ * @brief The JointTrajectoryFullInterface class 华数机器人的Ros轨迹点下发的功能类
+ */
 class JointTrajectoryFullInterface : public JointTrajectoryInterface{
 
 public:

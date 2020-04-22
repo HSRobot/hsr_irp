@@ -1,0 +1,12 @@
+<launch>
+  <arg name="sim" default="false" />
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="true" output="screen" />  
+  <!-- Remap follow_joint_trajectory -->
+  <remap if="$(arg sim)" from="/joint_trajectory_action" to="/arm_trajectory_controller/follow_joint_trajectory"/>
+  
+  <!-- Launch moveit -->
+  <include file="$(find co602a_two__merge)/launch/move_group.launch">
+  </include>
+</launch>
+

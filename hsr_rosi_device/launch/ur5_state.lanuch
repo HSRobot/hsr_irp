@@ -1,0 +1,11 @@
+<launch>
+
+
+ <param name="robot_status" type="str" value="/UR51/robot_status"/>
+ <param name="feedback_states" type="str" value="/UR51/feedback_states"/>
+ <param name="joint_states" type="str"  value="/UR51/joint_states"/>
+ <param name="robot_ip_address" type="str" value="192.168.100.2"/>
+ <node pkg="industrial_robot_client" type="robot_state" name="robot_state"/>
+
+
+</launch>

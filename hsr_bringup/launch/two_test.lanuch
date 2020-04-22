@@ -1,0 +1,10 @@
+<!-- If using real robot, initialise connection to the real robot -->
+<launch>
+
+      <!-- Load UR5 URDF file - robot description file -->
+    <include file="$(find hsr_bringup)/launch/co605_UR52.launch"/>  
+
+      <!-- Load UR5 URDF file - robot description file -->
+    <!--include file="$(find ur_modern_driver)/launch/ur5_bringup_run.launch"/-->
+
+</launch>
