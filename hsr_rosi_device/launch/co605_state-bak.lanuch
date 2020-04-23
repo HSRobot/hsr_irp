@@ -1,0 +1,37 @@
+<launch>
+
+ <group ns="UR52">
+ <param name="robot_status" type="str" value="/UR52/robot_status"/>
+ <param name="feedback_states" type="str" value="/UR52/feedback_states"/>
+ <param name="joint_states" type="str"  value="/UR52/joint_states"/>
+ <param name="robot_ip_address" type="str" value="10.10.56.214"/>
+
+ <node pkg="industrial_robot_client" type="robot_state" name="robot_state"/>
+
+  <param name="joint_path_command_name" type="str" value="/UR52/joint_path_command"/>
+  <param name="joint_states_name" type="str" value="/UR52/joint_states"/>
+  <node pkg="hsr_rosi_device" type="motion_rosi_download_full_interface" name="motion_download_full_interface"/>
+  
+  <!-- joint_trajectory_action: provides actionlib interface for high-level robot control -->
+  <node pkg="industrial_robot_client" type="joint_trajectory_action" name="joint_trajectory_action"/>
+
+ </group>
+
+ <group ns="UR51">
+ <param name="robot_status" type="str" value="/UR51/robot_status"/>
+ <param name="feedback_states" type="str" value="/UR51/feedback_states"/>
+ <param name="joint_states" type="str"  value="/UR51/joint_states"/>
+ <!--param name="robot_ip_address" type="str" value="10.10.56.214"/-->
+
+ <node pkg="industrial_robot_client" type="robot_state" name="robot_state"/>
+
+  <param name="joint_path_command_name" type="str" value="/UR51/joint_path_command"/>
+  <param name="joint_states_name" type="str" value="/UR51/joint_states"/>
+  <node pkg="hsr_rosi_device" type="motion_rosi_download_full_interface" name="motion_download_full_interface"/>
+  
+  <!-- joint_trajectory_action: provides actionlib interface for high-level robot control -->
+  <node pkg="industrial_robot_client" type="joint_trajectory_action" name="joint_trajectory_action"/>
+
+ </group>
+
+</launch>
