@@ -1,7 +1,8 @@
 <launch>
  <!--node pkg="industrial_robot_client" type="joint_trajectory_action" name="joint_trajectory_action_with" /-->
-  <!--param name="joint_path_command_name" type="str" value="joint_path_command"/ -->
- <!---param name="joint_states_name" type="str" value="joint_states"/-->
+ <rosparam command="load" file="$(find hsr_bringup)/config/dual_with_grasp_joint_names.yaml"/>
+ <node pkg="industrial_robot_client" type="robot_state" name="robot_state"/>
+
  <group ns="UR52">
  <param name="robot_ip_address" type="str" value="10.10.56.214"/>
   <node pkg="industrial_robot_client" type="robot_state" name="robot_state"/>
@@ -19,6 +20,7 @@
   <!-- include file="$(find co605_merge_config)/launch/$(arg moveit_controller_manager)_moveit_controller_manager.launch.xml" / -->
  <!--param name="robot_ip_address" type="str" value="10.10.56.214"/-->
  <param name="robot_ip_address" type="str" value="192.168.98.2"/>
+ <!--param name="controller_joint_names" type="str" value="joint_1, joint_2, joint_3,joint_4, joint_5, joint_6"/-->
  <node pkg="industrial_robot_client" type="robot_state" name="robot_state"/>
   <node pkg="hsr_rosi_device" type="motion_rosi_download_full_interface" name="motion_download_full_interface"/>
   

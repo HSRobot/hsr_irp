@@ -1,0 +1,14 @@
+<launch>
+
+  <!-- This file makes it easy to include the settings for trajectory execution  -->
+
+  <!-- Flag indicating whether MoveIt! is allowed to load/unload  or switch controllers -->
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find co605_merge_config)/config/fake_controllers.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen"  args="fake_arm1_controller fake_arm2_controller"/>
+
+</launch>

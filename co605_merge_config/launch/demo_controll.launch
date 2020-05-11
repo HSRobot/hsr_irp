@@ -1,0 +1,10 @@
+<launch>  
+<arg name="fake_execution" default="true" />
+<!--<launch>-->
+<include ns="move_group" file="$(find co605_merge_config)/launch/trajectory_execution.launch.xml" >
+    <arg name="moveit_manage_controllers" value="true" />
+    <arg name="moveit_controller_manager" value="hsr_co605" unless="$(arg fake_execution)"/>
+    <arg name="moveit_controller_manager" value="fake" if="$(arg fake_execution)"/>
+  </include>
+
+</launch>
