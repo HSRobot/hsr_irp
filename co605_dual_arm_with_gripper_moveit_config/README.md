@@ -1,1 +1,0 @@
-# co605_dual_arm_with_gripper_moveit_config
