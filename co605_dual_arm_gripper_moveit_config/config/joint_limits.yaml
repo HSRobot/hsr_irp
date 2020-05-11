@@ -1,0 +1,104 @@
+# joint_limits.yaml allows the dynamics properties specified in the URDF to be overwritten or augmented as needed
+# Specific joint properties can be changed with the keys [max_position, min_position, max_velocity, max_acceleration]
+# Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
+joint_limits:
+  R_joint_1:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  R_joint_2:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  R_joint_3:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  R_joint_4:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  R_joint_5:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  R_joint_6:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  joint_1:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  joint_2:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  joint_3:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  joint_4:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  joint_5:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  joint_6:
+    has_velocity_limits: true
+    max_velocity: 3.2
+    has_acceleration_limits: false
+    max_acceleration: 0
+  left_finger_1_joint_0:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  left_finger_1_joint_1:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  left_finger_2_joint_0:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  left_finger_2_joint_1:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  right_finger_1_joint_0:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  right_finger_1_joint_1:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  right_finger_2_joint_0:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0
+  right_finger_2_joint_1:
+    has_velocity_limits: false
+    max_velocity: 0
+    has_acceleration_limits: false
+    max_acceleration: 0

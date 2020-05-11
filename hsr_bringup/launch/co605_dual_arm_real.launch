@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!--arg name="robot_ip" default="10.10.56.214" /-->
+  <!--arg name="robot_ip1" default="10.10.57.213" /-->
+  <!---       -->
+  <include 
+	file="$(find hsr_description)/launch/hsr_co605_dual_arm_with_gripper_upload.launch"/>
+
+  <include
+	file="$(find co605_dual_arm_gripper_moveit_config)/launch/hsr_planning_execution.launch">
+	<arg name="sim" default="false"/>
+  </include>
+
+  <include
+	file="$(find hsr_rosi_device)/launch/co605_industrial_real_merge.lanuch">
+  </include>
+  <!---       -->
+  <include 
+	file="$(find co605_dual_arm_gripper_moveit_config)/launch/moveit_rviz.launch"/>
+
+  <node name="joint_state_dual_server" pkg="hsr_rosi_device" type="two_robot_action_with_grasp.py"/>
+
+</launch>
