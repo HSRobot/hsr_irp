@@ -16,7 +16,7 @@
   -->
 
   <!-- robot_ip: IP-address of the robot's socket-messaging server -->
-  <arg name="robot_ip" />
+  <arg name="robot_ip"  doc=" please input address" />
   
   <!-- copy the specified IP address to the Parameter Server, for use by nodes below -->
   <param name="/robot_ip_address" type="str" value="$(arg robot_ip)"/>
@@ -27,7 +27,7 @@
   
   <!-- motion_download_interface: sends robot motion commands by DOWNLOADING path to robot
                                   (using socket connection to robot) -->
-  <node pkg="hsr_rosi_client" type="motion_download_cubic_interface" name="motion_download_cubic_interface"/>
+  <node pkg="hsr_rosi_device" type="motion_rosi_download_full_Imp_interface" name="motion_rosi_download_full_Imp_interface"/>
   
   <!-- joint_trajectory_action: provides actionlib interface for high-level robot control -->
   <node pkg="industrial_robot_client" type="joint_trajectory_action" name="joint_trajectory_action"/>

@@ -45,7 +45,9 @@ namespace SpecialSeqValues = industrial::joint_traj_pt::SpecialSeqValues;
 bool JointTrajectoryCubicDownloader::init(std::string default_ip, int default_port){
 
     //  调用父类的init函数
-    JointTrajectoryInterface::init(default_ip, default_port);
+    std::string ip_0 = "10.10.56.214";
+//    int port = 23234;
+    JointTrajectoryInterface::init(ip_0, default_port);
 
     impedanceErr.resize(6);
     for(int i = 0; i < 6; i++)
@@ -62,6 +64,7 @@ bool JointTrajectoryCubicDownloader::init(std::string default_ip, int default_po
 
 void JointTrajectoryCubicDownloader::impedanceCB(const sensor_msgs::JointState::ConstPtr &msg){
 
+    ROS_ERROR("impedanceCB .......");
     for(int i = 0; i < 6; i++)
         impedanceErr[i] =  msg->position[i];
 
@@ -69,6 +72,7 @@ void JointTrajectoryCubicDownloader::impedanceCB(const sensor_msgs::JointState::
 
 bool JointTrajectoryCubicDownloader::send_to_robot(const std::vector<JointTrajPtFullMessage>& messages){
 
+    ROS_ERROR(" JointTrajectoryCubicDownloader enter ...... ");
     bool rslt=true;
     std::vector<JointTrajPtFullMessage> points(messages);
     SimpleMessage msg;
@@ -90,11 +94,11 @@ bool JointTrajectoryCubicDownloader::send_to_robot(const std::vector<JointTrajPt
 
     if (!this->connection_->isConnected())
     {
-        ROS_WARN("Attempting robot reconnection");
+        ROS_ERROR("Attempting robot reconnection");
         this->connection_->makeConnect();
     }
 
-    ROS_INFO("Sending trajectory points, size: %d", (int)points.size());
+    ROS_ERROR("Sending trajectory points, size: %d", (int)points.size());
 
     int t = 0;
     int seq = 1;
@@ -123,17 +127,19 @@ bool JointTrajectoryCubicDownloader::send_to_robot(const std::vector<JointTrajPt
 
         // 发送插补点
         targetPoint.toTopic(msg);
+        ROS_ERROR(" connection_ sendMsg ...... ");
         bool ptRslt = this->connection_->sendMsg(msg);
         if (ptRslt)
-            ROS_DEBUG("Point[%d] sent to controller",seq);
+            ROS_ERROR("Point[%d] sent to controller",seq);
         else
-            ROS_WARN("Failed sent joint point, skipping point");
+            ROS_ERROR("Failed sent joint point, skipping point");
         rslt &= ptRslt;
 
         // 休眠100ms，此处会导致轨迹运行比预先的慢100ms
         cubicRate.sleep();
     }
 
+    ROS_ERROR(" JointTrajectoryCubicDownloader exit ...... ");
     return rslt;
 }
 
@@ -243,7 +249,7 @@ JointTrajPtFullMessage JointTrajectoryCubicDownloader::quintic_inter(JointTrajPt
         acc_middle.setJoint(i,acceleration_middle[i]);
     }
 
-    ROS_INFO("position_middle =  %f || %f || %f || %f || %f || %f",\
+    ROS_ERROR("position_middle =  %f || %f || %f || %f || %f || %f",\
              position_middle[0],position_middle[1],position_middle[2],position_middle[3],position_middle[4],position_middle[5] );
 
     middle.init(1,1,1,time,pos_middle,vel_middle,acc_middle);

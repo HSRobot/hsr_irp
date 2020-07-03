@@ -41,7 +41,7 @@ namespace joint_trajectory_downloader{
 
 using industrial_robot_client::joint_trajectory_interface::JointTrajectoryFullInterface;
 using industrial::joint_traj_pt_full_message::JointTrajPtFullMessage;
-
+using industrial::joint_traj_pt_message::JointTrajPtMessage;
 /**
  * @brief The JointTrajectoryFullDownloader class 华数机器人的Ros轨迹点下发的继承 JointTrajectoryInterface 代理类
  */
@@ -50,6 +50,43 @@ class JointTrajectoryFullDownloader : public JointTrajectoryFullInterface{
 public:
 
   bool send_to_robot(const std::vector<JointTrajPtFullMessage>& messages);
+  virtual bool send_to_robot(const std::vector<JointTrajPtMessage>& messages){}
+
+};
+
+
+/**
+ * @brief 带有有动态插补的类
+ */
+class JointTrajectoryDownloaderWithPt :public  JointTrajectoryFullDownloader{
+public:
+    virtual bool send_to_robot(const JointTrajPtMessage& messages);
+    bool init(ros::NodeHandle &n, std::string default_ip= "", int default_port = joint_trajectory_interface::StandardSocketPorts::MOTION);
+
+    void impedanceCB(const sensor_msgs::JointState::ConstPtr& msg) {
+        ROS_ERROR_STREAM("impedanceCB ....... "<<msg->position.size());
+		if(mode != ONCE_PT){
+			ROS_ERROR_STREAM("mode error ,please switch the motion mode ");
+			return ;
+		}
+        for(int i = 0; i < 6; i++)
+            impedanceErr[i] =  msg->position[i];
+
+        JointTrajPtMessage ptm;
+        if(msg->position.size() == 7){
+            ptm = create_message(impedanceErr, -1);
+            ROS_ERROR("servo start pos message ok .......");
+        }
+        else
+            ptm = create_message(impedanceErr, -3);
+        ROS_ERROR("create_message ok .......");
+        send_to_robot(ptm);
+    }
+
+private:
+    // 回调函数队列 nodehandle
+    // 偏移值回调函数队列
+    ros::CallbackQueue *impeQueue;
 
 };
 

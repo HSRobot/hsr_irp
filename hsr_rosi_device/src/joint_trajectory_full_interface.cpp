@@ -38,31 +38,45 @@
 #include "industrial_utils/param_utils.h"
 
 
+
 namespace industrial_robot_client
 {
 namespace joint_trajectory_interface
 {
+    JointTrajectoryFullInterface::JointTrajectoryFullInterface() : mode(FULL_PT) {}
 
-
-void JointTrajectoryFullInterface::jointTrajectoryCB(const trajectory_msgs::JointTrajectoryConstPtr &msg){
-	ROS_INFO("Receiving joint trajectory message");
-
+    void JointTrajectoryFullInterface::jointTrajectoryCB(const trajectory_msgs::JointTrajectoryConstPtr &msg){
+    ROS_ERROR("Receiving joint trajectory message");
+	ROS_ERROR_STREAM("msg->points size "<<msg->points.size());
 	// check for STOP command
+	//<param name="execution_duration_monitoring" value="false"/>
+
+
+	//首先注释了这段停止操作
 	if (msg->points.empty())
 	{
-		ROS_INFO("Empty trajectory received, canceling current trajectory");
-		//trajectoryStop();
+        ROS_ERROR("Empty trajectory received, canceling current trajectory");
+        trajectoryStop();
 		return;
   	}
 
+	if(mode != FULL_PT){
+           ROS_ERROR("jointTrajectoryCB set Mode Error, Please switch the continue mode ....");
+           return;
+	}
+
+
 	// convert trajectory into robot-format
 	std::vector<JointTrajPtFullMessage> robot_msgs;
-	if (!trajectory_to_msgs(msg, &robot_msgs))
+	if (!trajectory_to_msgs(msg, &robot_msgs)){
+		ROS_ERROR("trajectory_to_msgs ERROR ");
     	return;
+	}
 
 	// send command messages to robot
 	send_to_robot(robot_msgs);
 }
+
 
 bool JointTrajectoryFullInterface::trajectory_to_msgs(const trajectory_msgs::JointTrajectoryConstPtr& traj, std::vector<JointTrajPtFullMessage>* msgs){
 
@@ -99,8 +113,6 @@ JointTrajPtFullMessage JointTrajectoryFullInterface::create_message(int robot_id
   	ROS_ASSERT(joint_pos.size() <= (unsigned int)pos.getMaxNumJoints());
 
 
-
-
   	for (size_t i=0; i<joint_pos.size(); ++i){
     	pos.setJoint(i, joint_pos[i]);
 		vel.setJoint(i, velocity[i]);
@@ -118,10 +130,26 @@ JointTrajPtFullMessage JointTrajectoryFullInterface::create_message(int robot_id
   	return msg;
 }
 
-bool JointTrajectoryFullInterface::send_to_robot(const std::vector<JointTrajPtMessage>& messages){
-
+JointTrajPtMessage JointTrajectoryFullInterface::create_message( const std::vector<double> &joint_pos,int seq) {
+    JointTrajPtMessage ptMessage;
+    industrial::joint_traj_pt::JointTrajPt pt;
+    industrial::joint_data::JointData pos;
+    for(int i = 0; i < 6; i++){
+        pos.setJoint(i, joint_pos.at(i));
+    }
+    ROS_ERROR_STREAM("Pos: "<<joint_pos.at(0)<<" "<<joint_pos.at(1)<<" "<<joint_pos.at(2)<<" "
+                                    <<joint_pos.at(3)<<" "<<joint_pos.at(4) <<" "<<joint_pos.at(5));
+    industrial::shared_types::shared_real vel,acc ;
+    pt.init(seq,pos, vel, acc);
+    ptMessage.init(pt);
+    return ptMessage;
 }
 
+
+bool JointTrajectoryFullInterface::send_to_robot(const std::vector<JointTrajPtMessage>& messages)
+{
+    return false;
+}
 
 bool JointTrajectoryFullInterface::send_to_robot(int messg_type)
 {
@@ -166,14 +194,40 @@ bool JointTrajectoryFullInterface::clearRobotFaultCB(hsr_rosi_device::ClearFault
     return res.finsh;
 }
 
-bool JointTrajectoryFullInterface::service_start(ros::NodeHandle n)
+bool JointTrajectoryFullInterface::service_start(ros::NodeHandle &n)
 {
     n_rosi = n;
     set_enable_srv = n_rosi.advertiseService("set_robot_enable",&JointTrajectoryFullInterface::setRobotEnableCB,this);
     stop_move_srv = n_rosi.advertiseService("stop_robot_moving",&JointTrajectoryFullInterface::stopRobotMovingCB,this);
     clear_fault_srv = n_rosi.advertiseService("clear_robot_fault",&JointTrajectoryFullInterface::clearRobotFaultCB,this);
-    ros::spinOnce();
+    set_mode_srv = n_rosi.advertiseService("set_mode_srv",&JointTrajectoryFullInterface::setRobotModelCB,this);
+    get_mode_srv = n_rosi.advertiseService("get_mode_srv",&JointTrajectoryFullInterface::getRobotModelCB,this);
 }
+
+/**
+* @brief impedanceCB 力矩控制反馈
+* @param msg
+*/
+void JointTrajectoryFullInterface::impedanceCB(const sensor_msgs::JointState::ConstPtr &msg) {
+//        send_to_robot(ptm);
+}
+
+
+bool JointTrajectoryFullInterface::setRobotModelCB(hsr_rosi_device::setModeSrv::Request &req,
+                                                   hsr_rosi_device::setModeSrv::Response &res) {
+    mode = req.mode;
+    res.finsh = true;
+    return true;
+}
+
+bool JointTrajectoryFullInterface::getRobotModelCB(hsr_rosi_device::getModeSrv::Request &req,
+                                                   hsr_rosi_device::getModeSrv::Response &res) {
+
+    res.mode = mode;
+    return true;
+}
+
+
 
 }
 }

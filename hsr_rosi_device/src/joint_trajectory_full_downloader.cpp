@@ -4,7 +4,6 @@
  * Copyright (c) 2019, Foshan Huashu Robotics Co.,Ltd
  * All rights reserved.
  * 
- * Author: Kunlin Xu <1125290220@qq.com>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -32,6 +31,8 @@
  */
 
 #include "joint_trajectory_full_downloader.h"
+#include <ros/callback_queue.h>
+#include <ros/callback_queue_interface.h>
 
 namespace industrial_robot_client
 {
@@ -84,6 +85,56 @@ bool JointTrajectoryFullDownloader::send_to_robot(const std::vector<JointTrajPtF
   return rslt;
 
 }
+
+// < ---------------------------------------------->
+bool JointTrajectoryDownloaderWithPt::send_to_robot(const JointTrajPtMessage &messages) {
+    bool ret = false;
+    JointTrajPtMessage points(messages);
+    SimpleMessage msg;
+
+    if (!this->connection_->isConnected())
+    {
+        ROS_WARN("Attempting robot reconnection");
+        this->connection_->makeConnect();
+    }
+
+    ROS_INFO("Sending trajectory points, size: 1");
+
+    points.toTopic(msg);
+    bool ptRslt = this->connection_->sendMsg(msg);
+    if (ptRslt)
+        ROS_ERROR("Point  sent to controller");
+    else
+        ROS_ERROR("Failed sent joint point, skipping point");
+
+
+    return ret;
+
+}
+
+bool JointTrajectoryDownloaderWithPt::init(ros::NodeHandle &n, std::string default_ip, int default_port) {
+
+    ROS_ERROR("JointTrajectoryDownloaderWithPt...");
+    n_rosi = n;
+    //  调用父类的init函数
+    std::string ip_0 = "10.10.56.214";
+    JointTrajectoryInterface::init(ip_0, default_port);
+
+    impedanceErr.resize(6);
+    for(int i = 0; i < 6; i++)
+        impedanceErr[i] = 0.0;
+
+    ROS_ERROR_STREAM("impedanceInterface subscribe ...");
+    imperrSub = n_rosi.subscribe("impedance_err", 1, &JointTrajectoryDownloaderWithPt::impedanceCB, this);
+
+    ROS_INFO_STREAM("JointTrajectoryCubicDownloader initing");
+
+
+
+}
+
+
+
 
 }	// namespace industrial_robot_client
 }	// namespace joint_trajectory_downloader

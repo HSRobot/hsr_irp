@@ -42,17 +42,22 @@
 
 #include <industrial_robot_client/joint_trajectory_interface.h>
 #include "simple_message/messages/joint_traj_pt_full_message.h"
-
+#include "simple_message/messages/joint_traj_pt_message.h"
 #include "robot_sys_message.h"
 #include "hsr_rosi_device/SetEnableSrv.h"
 #include "hsr_rosi_device/ClearFaultSrv.h"
 #include "hsr_rosi_device/StopMoveSrv.h"
+#include "hsr_rosi_device/setModeSrv.h"
+#include "hsr_rosi_device/getModeSrv.h"
+#define  FULL_PT 0
+#define  ONCE_PT 1
 
 namespace industrial_robot_client
 {
 namespace joint_trajectory_interface
 {
 	using industrial::joint_traj_pt_full_message::JointTrajPtFullMessage;
+    using industrial::joint_traj_pt_message::JointTrajPtMessage;
     using industrial::robot_sys_message::RobotSysMessage;
     using industrial::simple_message::SimpleMessage;
 	using industrial_robot_client::joint_trajectory_interface::JointTrajectoryInterface;
@@ -64,29 +69,45 @@ namespace joint_trajectory_interface
 class JointTrajectoryFullInterface : public JointTrajectoryInterface{
 
 public:
-	void jointTrajectoryCB(const trajectory_msgs::JointTrajectoryConstPtr &msg);	// 重写接收函数
-	bool send_to_robot(const std::vector<JointTrajPtMessage>& messages);			// 纯虚函数实现
+    JointTrajectoryFullInterface();
+
+    void jointTrajectoryCB(const trajectory_msgs::JointTrajectoryConstPtr &msg);	// 重写接收函数
+    virtual bool send_to_robot(const std::vector<JointTrajPtMessage>& messages);			// 纯虚函数实现
 	virtual bool send_to_robot(const std::vector<JointTrajPtFullMessage>& messages) = 0;		// c虚函数实现
 	
 
-    bool service_start(ros::NodeHandle n);
+    bool service_start(ros::NodeHandle& n);
 
     bool send_to_robot(int messg_type);
     bool setRobotEnableCB(hsr_rosi_device::SetEnableSrv::Request &req,hsr_rosi_device::SetEnableSrv::Response &res);
     bool clearRobotFaultCB(hsr_rosi_device::ClearFaultSrv::Request &req,hsr_rosi_device::ClearFaultSrv::Response &res);
+    bool setRobotModelCB(hsr_rosi_device::setModeSrv::Request &req,hsr_rosi_device::setModeSrv::Response &res);
     bool stopRobotMovingCB(hsr_rosi_device::StopMoveSrv::Request &req, hsr_rosi_device::StopMoveSrv::Response &res);
+    bool getRobotModelCB(hsr_rosi_device::getModeSrv::Request &req, hsr_rosi_device::getModeSrv::Response &res);
+
+    void impedanceCB(const sensor_msgs::JointState::ConstPtr &msg);
 
 private:
 	static JointTrajPtFullMessage create_message(int robot_id, int seq, int valid_fields, float time, std::vector<double> joint_pos, \
 		std::vector<double> velocity, std::vector<double> accelerations);
 
+protected:
+    static JointTrajPtMessage create_message(const std::vector<double>& joint_pos,int seq);
+
 	bool trajectory_to_msgs(const trajectory_msgs::JointTrajectoryConstPtr& traj, std::vector<JointTrajPtFullMessage>* msgs);
 
 private:
-    ros::NodeHandle n_rosi;
     ros::ServiceServer set_enable_srv;
     ros::ServiceServer stop_move_srv;
     ros::ServiceServer clear_fault_srv;
+    ros::ServiceServer set_mode_srv,get_mode_srv;
+protected:
+    ros::NodeHandle n_rosi;
+    ros::Subscriber imperrSub;
+
+    int mode ; // 0 点位全下发 1 逐一下发随动
+    // 插补偏移值
+    std::vector<double> impedanceErr;
 };
 
 }

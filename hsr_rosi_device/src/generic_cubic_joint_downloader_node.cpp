@@ -40,10 +40,11 @@ int main(int argc, char** argv)
 {
   // initialize node
   ros::init(argc, argv, "motion_interface");
-
+  ros::NodeHandle n;
   // launch the default JointTrajectoryDownloader connection/handlers
   JointTrajectoryCubicDownloader motionInterface;
   motionInterface.init();
+  motionInterface.service_start(n);
   motionInterface.run();
 
   return 0;

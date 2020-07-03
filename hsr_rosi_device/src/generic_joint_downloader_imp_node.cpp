@@ -31,24 +31,22 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+
 #include "joint_trajectory_full_downloader.h"
 
-using industrial_robot_client::joint_trajectory_downloader::JointTrajectoryFullDownloader;
+using industrial_robot_client::joint_trajectory_downloader::JointTrajectoryDownloaderWithPt;
 
 int main(int argc, char** argv)
 {
   // initialize node
   ros::init(argc, argv, "motion_interface");
   ros::NodeHandle n;
-//  ros::AsyncSpinner s(3);
-//   launch the default JointTrajectoryDownloader connection/handlers
-  JointTrajectoryFullDownloader motionInterface;
+  // launch the default JointTrajectoryDownloader connection/handlers
+  JointTrajectoryDownloaderWithPt motionInterface;
+  motionInterface.init(n);
 
-  motionInterface.init();
   motionInterface.service_start(n);
-//  s.start();
-
-  motionInterface.run();
+    motionInterface.run();
 
   return 0;
 }
