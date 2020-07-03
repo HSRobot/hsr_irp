@@ -1,0 +1,1 @@
+rosrun moveit_kinematics create_ikfast_moveit_plugin.py co605_dual_arm_gripper arm0 co605_dual_arm_gripper_ikfast_arm0_plugin /home/maizitian/catkin_ws/src/co605_dual_arm_gripper_ikfast_arm0_plugin/src/co605_dual_arm_gripper_arm0_ikfast_solver.cpp

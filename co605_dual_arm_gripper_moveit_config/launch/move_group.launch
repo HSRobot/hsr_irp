@@ -46,13 +46,13 @@
   <!-- Trajectory Execution Functionality -->
   <include ns="move_group" file="$(find co605_dual_arm_gripper_moveit_config)/launch/trajectory_execution.launch.xml" if="$(arg allow_trajectory_execution)">
     <arg name="moveit_manage_controllers" value="true" />
-    <arg name="moveit_controller_manager" value="hsr_co605_double_arm_with_gripper" unless="$(arg fake_execution)"/>
+    <arg name="moveit_controller_manager" value="co605_dual_arm_with_gripper" unless="$(arg fake_execution)"/>
     <arg name="moveit_controller_manager" value="fake" if="$(arg fake_execution)"/>
   </include>
 
   <!-- Sensors Functionality -->
   <include ns="move_group" file="$(find co605_dual_arm_gripper_moveit_config)/launch/sensor_manager.launch.xml" if="$(arg allow_trajectory_execution)">
-    <arg name="moveit_sensor_manager" value="hsr_co605_double_arm_with_gripper" />
+    <arg name="moveit_sensor_manager" value="co605_dual_arm_with_gripper" />
   </include>
 
   <!-- Start the actual move_group node/action server -->

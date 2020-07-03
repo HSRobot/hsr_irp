@@ -1,0 +1,475 @@
+<?xml version="1.0"?>
+
+<robot name="eye_hand_gripper" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:macro name="eye_on_hand_gripper" params="number" >
+
+
+  <link
+    name="gripper_base_link_${number}">
+    <inertial>
+      <origin
+        xyz="0.000131706391042187 -0.0390683856464977 0.081199520192839"
+        rpy="0 0 0" />
+      <mass
+        value="0.145677232438391" />
+      <inertia
+        ixx="8.40495062422861E-05"
+        ixy="-6.82136717259575E-07"
+        ixz="9.08788702310012E-07"
+        iyy="4.96036917958725E-05"
+        iyz="3.95062698042515E-05"
+        izz="3.44803015215572E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.4 0.4 0.35 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link
+    name="grisper_boby_link_${number}">
+    <inertial>
+      <origin
+        xyz="2.84228059294067E-05 -0.000875529500481004 -0.00997402814116276"
+        rpy="0 0 0" />
+      <mass
+        value="0.0387962759306602" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/grisper_boby_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.4 0.55 0.35 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/grisper_boby_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="grisper_boby_joint_${number}"
+    type="fixed">
+    <origin
+      xyz="0 -0.01 0.064"
+      rpy="1.5708 1.3479E-15 1.3852E-15" />
+    <parent
+      link="gripper_base_link_${number}" />
+    <child
+      link="grisper_boby_link_${number}" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="right_finger_1_link_${number}">
+    <inertial>
+      <origin
+        xyz="-2.92388038200531E-06 0.0168231601122346 0.0089790044607883"
+        rpy="0 0 0" />
+      <mass
+        value="0.00235032514171626" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/right_finger_1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.4 0.55 0.35 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/right_finger_1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_finger_1_joint_${number}"
+    type="continuous">
+    <origin
+      xyz="0.04 0.036 -0.019"
+      rpy="0 0 -0.501740656078991" />
+    <parent
+      link="grisper_boby_link_${number}" />
+    <child
+      link="right_finger_1_link_${number}" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="right_finger_2_link_${number}">
+    <inertial>
+      <origin
+        xyz="-0.0085798133911776 0.00661394976740351 0.00600000756322747"
+        rpy="0 0 0" />
+      <mass
+        value="0.00200167864656235" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/right_finger_2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.4 0.55 0.35 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/right_finger_2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_finger_2_joint_${number}"
+    type="continuous">
+    <origin
+      xyz="0 0.042 0.00300000000000001"
+      rpy="0 0 0.501740656078991" />
+    <parent
+      link="right_finger_1_link_${number}" />
+    <child
+      link="right_finger_2_link_${number}" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="right_finger_end_link_${number}">
+    <inertial>
+      <origin
+        xyz="-0.0181096606742553 0.00899999232533871 0.000419374358405108"
+        rpy="0 0 0" />
+      <mass
+        value="0.00169081070175499" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/right_finger_end_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.4 0.55 0.35 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/right_finger_end_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="right_finger_end_joint_${number}"
+    type="fixed">
+    <origin
+      xyz="-0.0145 -0.0035 -0.00300000000000001"
+      rpy="1.5707963267949 0 -1.5707963267949" />
+    <parent
+      link="right_finger_2_link_${number}" />
+    <child
+      link="right_finger_end_link_${number}" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="left_finger_1_link_${number}">
+    <inertial>
+      <origin
+        xyz="-2.92395601426965E-06 0.0168231599777492 0.00897900452955606"
+        rpy="0 0 0" />
+      <mass
+        value="0.0023503251697047" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/left_finger_1_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.4 0.55 0.35 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/left_finger_1_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_finger_1_joint_${number}"
+    type="continuous">
+    <origin
+      xyz="-0.04 0.036 -0.019"
+      rpy="0 0 0.501740656078991" />
+    <parent
+      link="grisper_boby_link_${number}" />
+    <child
+      link="left_finger_1_link_${number}" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="left_finger_2_link_${number}">
+    <inertial>
+      <origin
+        xyz="-0.00857981339117761 0.00661394976740348 0.00600000756322748"
+        rpy="0 0 0" />
+      <mass
+        value="0.00200167864656235" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/left_finger_2_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.4 0.55 0.35 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/left_finger_2_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_finger_2_joint_${number}"
+    type="continuous">
+    <origin
+      xyz="0 0.0419999999999999 0.0149999999999995"
+      rpy="3.14159265358979 0 2.6398519975108" />
+    <parent
+      link="left_finger_1_link_${number}" />
+    <child
+      link="left_finger_2_link_${number}" />
+    <axis
+      xyz="0 0 1" />
+  </joint>
+  <link
+    name="left_finger_end_link_${number}">
+    <inertial>
+      <origin
+        xyz="-0.0181096606742553 0.00899999232533872 0.000419374358405097"
+        rpy="0 0 0" />
+      <mass
+        value="0.00169081070175499" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/left_finger_end_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.4 0.55 0.35 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hsr_description/meshes/eye_hand_gripper/left_finger_end_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="left_finger_end_joint_${number}"
+    type="fixed">
+    <origin
+      xyz="-0.0144999999999999 -0.0035 -0.00299999999999996"
+      rpy="1.5707963267949 8.67361737988403E-17 -1.5707963267949" />
+    <parent
+      link="left_finger_2_link_${number}" />
+    <child
+      link="left_finger_end_link_${number}" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  
+  <link name="pick_gripper_link_${number}">
+     <visual>
+       <origin xyz="0 0 0" rpy="0 0 0" />
+       <geometry>
+          <box size="0.001 0.0005 0.0005"/>
+       </geometry>
+     </visual>
+  </link>
+
+  <transmission name="tran1_${number}">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_finger_1_joint_${number}">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_finger_1_motor_${number}">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran2_${number}">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="right_finger_2_joint_${number}">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_finger_2_motor_${number}">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran3_${number}">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_finger_1_joint_${number}">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_finger_1_motor_${number}">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran4_${number}">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="left_finger_2_joint_${number}">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_finger_2_motor_${number}">
+      <hardwareInterface>PositionJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+</xacro:macro>
+</robot>

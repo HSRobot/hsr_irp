@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+
+ <!--node pkg="industrial_robot_client" type="joint_trajectory_action" name="joint_trajectory_action_with" /-->
+ <rosparam command="load" file="$(find hsr_bringup)/config/joint_names.yaml"/>
+ <!-- <node pkg="industrial_robot_client" type="robot_state" name="robot_state"/> -->
+
+  <arg name="robot_ip" default="10.10.56.214" />
+
+  <include 
+	file="$(find hsr_description)/launch/co605_upload.launch"/>
+
+  <include
+	file="$(find co605_moveit_config)/launch/hsr_co605_moveit_planning_execution.launch">
+	<arg name="sim" default="false"/>
+  </include>
+
+  <!-- <include
+	file="$(find hsr_rosi_device)/launch/robot_full_interface_download.launch">
+	<arg name="robot_ip" default="$(arg robot_ip)"/>
+  </include> -->
+
+  <param name="robot_ip_address" type="str" value="10.10.56.214"/>
+  <node pkg="industrial_robot_client" type="robot_state" name="robot_state"/>
+
+  <node pkg="hsr_rosi_device" type="motion_rosi_download_full_interface" name="motion_download_full_interface"/>
+  
+  <!-- joint_trajectory_action: provides actionlib interface for high-level robot control -->
+  <node pkg="industrial_robot_client" type="joint_trajectory_action" name="joint_trajectory_action"/>
+
+
+  <include 
+	file="$(find co605_moveit_config)/launch/moveit_rviz.launch"/>
+
+</launch>

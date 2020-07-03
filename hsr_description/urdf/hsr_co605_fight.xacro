@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<robot name="hsr_co602_fight" xmlns:xacro="http://ros.org/wiki/xacro">
+
+<xacro:include filename="$(find hsr_description)/urdf/hsr_co602a.urdf" />
+<xacro:include filename="$(find hsr_description)/urdf/hsr_kinect.xacro.xml" />
+<xacro:include filename="$(find five_fight_right)/urdf/five_fight.xacro" />
+<xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+
+<!-- <xacro:include filename="$(find hsr_description)/urdf/hsr_d435i.xacro.xml" /> -->
+
+
+    <hsr_co602a/>
+
+    <joint name="gripper_robot_joint" type="fixed">
+        <parent link="link6" />
+        <child link="palm_base_link" />
+        <origin xyz="0.0 0.0 0.0" rpy="3.14 3.14 0" />
+    </joint> 
+
+    <joint name="kinect_base_link_joint" type="fixed">
+        <origin xyz="-0.7 0 1.5" rpy=" 0 0 0" />
+        <parent link="base_link" />
+        <child link="camera_link" />
+    </joint>
+
+    <link name="pick_point">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+            <box size="0.001 0.0005 0.0005"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <joint name="pick_point_joint" type="fixed">
+        <origin xyz="0.080765 -0.0437547 0.034505" rpy="3.152 -0.086645 -0.11971" />
+        <parent link="Right_Link111" />
+        <child link="pick_point" />
+    </joint>
+
+    <xacro:sensor_d435 parent="palm_base_link" >
+        <origin xyz="0 0.033 0.071" rpy="3.14 -1.57 1.57" />
+    </xacro:sensor_d435>
+
+
+
+</robot>

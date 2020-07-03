@@ -2,7 +2,7 @@
 <launch>
   <param
     name="robot_description"
-    textfile="$(find hsr_description)/urdf/hsr_co605_double_arm_with_gripper.urdf" />
+    textfile="$(find hsr_description)/urdf/co605_dual_arm_with_gripper.urdf" />
 
   <param
 	name="robot_name"

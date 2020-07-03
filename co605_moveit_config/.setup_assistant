@@ -6,6 +6,6 @@ moveit_setup_assistant_config:
   SRDF:
     relative_path: config/hsr_co605.srdf
   CONFIG:
-    author_name: xkl
-    author_email: 1125290220@qq.com
-    generated_timestamp: 1572353072
+    author_name: st
+    author_email: st@st.com
+    generated_timestamp: 1593421183

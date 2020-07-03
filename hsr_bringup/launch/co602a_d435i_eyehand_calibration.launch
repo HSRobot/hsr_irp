@@ -1,6 +1,6 @@
 <launch>
 
-    <arg name="namespace_prefix" default="hsr_d435i_handeyecalibration" />
+    <arg name="namespace_prefix" default="hsr_co605_left_d435i_handeyecalibration" />
     <arg name="robot_ip" doc="The IP address of the UR5 robot" default="10.10.56.214"/>
     <arg name="marker_size" doc="Size of the ArUco marker used, in meters"  default="0.1" />
     <arg name="marker_id" doc="The ID of the ArUco marker used" default="100" />
@@ -8,13 +8,13 @@
     <arg name = "robot_name" default=" "/>
    
     <!-- start the D435i -->
-    <include file="$(find realsense2_camera)/launch/rs_rgbd.launch" >
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch" >
     </include>
 
     <!-- start ArUco -->
     <node name="aruco_tracker" pkg="aruco_ros" type="single">
-        <remap from="/camera_info" to="/camera/color/camera_info" />
-        <remap from="/image" to="/camera/color/image_rect_color" />
+        <remap from="/camera_info" to="/camera_base/color/camera_info" />
+        <remap from="/image" to="/camera_base/color/image_raw" />
         <param name="image_is_rectified" value="true"/>
         <param name="marker_size"        value="$(arg marker_size)"/>
         <param name="marker_id"          value="$(arg marker_id)"/>
@@ -24,11 +24,11 @@
     </node>
 
 	<!-- ros-i need joint_names param, so we load it -->
-	<rosparam file="$(find hsr_bringup)/config/joint_names.yaml" command="load"/>
+	<rosparam file="$(find hsr_bringup)/config/dual_with_grasp_joint_names.yaml" command="load"/>
 
 	<!-- upload robot urdf -->
 	<include 
-		file="$(find hsr_description)/launch/co602a_with_eyeonhand_d435i_upload.launch"/>
+		file="$(find hsr_description)/launch/hsr_co605_dual_arm_with_gripper_upload.launch"/>
 
 	<!-- start the ros-i -->
 	<include
@@ -36,9 +36,11 @@
 		<arg name="robot_ip" default="$(arg robot_ip)"/>
 	</include>
 
+
+
     <!-- start the robot -->
 	<include
-		file="$(find co602a_eyeonhand_gripper_moveit_config)/launch/hsr_co602a_moveit_planning_execution.launch">
+		file="$(find co605_dual_arm_gripper_moveit_config)/launch/hsr_planning_execution.launch">
 		<arg name="sim" default="false"/>
 	</include>
 
@@ -56,6 +58,7 @@
 
     <!-- start easy_handeye -->
     <include file="$(find easy_handeye)/launch/calibrate.launch" >
+        <arg name="move_group" default="arm0" doc="the name of move_group for the automatic robot motion with MoveIt!" />
         <arg name="namespace_prefix" value="$(arg namespace_prefix)" />
         <arg name="eye_on_hand" value="true" />
 

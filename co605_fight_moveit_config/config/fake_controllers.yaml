@@ -1,0 +1,26 @@
+controller_list:
+  - name: fake_arm_controller
+    joints:
+      - joint_1
+      - joint_2
+      - joint_3
+      - joint_4
+      - joint_5
+      - joint_6
+  - name: fake_fight_controller
+    joints:
+      - Right_Joint1
+      - Right_Joint11
+      - Right_Joint2
+      - Right_Joint22
+      - Right_Joint3
+      - Right_Joint33
+      - Right_Joint4
+      - Right_Joint44
+      - Right_Joint5
+      - Right_Joint51
+      - Right_Joint52
+      - Right_Joint53
+initial:
+  - group: arm
+    pose: home

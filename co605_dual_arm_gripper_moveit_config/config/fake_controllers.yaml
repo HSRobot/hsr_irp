@@ -27,3 +27,9 @@ controller_list:
       - left_finger_2_joint_1
       - right_finger_1_joint_1
       - right_finger_2_joint_1
+
+initial:
+  - group: arm0
+    pose:  home0
+  - group: arm1
+    pose:  home1

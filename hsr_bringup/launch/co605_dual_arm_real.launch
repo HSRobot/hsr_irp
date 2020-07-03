@@ -13,7 +13,7 @@
   </include>
 
   <include
-	file="$(find hsr_rosi_device)/launch/co605_industrial_real_merge.lanuch">
+	file="$(find hsr_rosi_device)/launch/co605_industrial_real_merge.launch">
   </include>
   <!---       -->
   <include 

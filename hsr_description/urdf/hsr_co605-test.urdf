@@ -9,12 +9,12 @@
       xyz="0 0 1"
       rpy="0 0 0" />
   </joint> 
-
+ 
   <joint name="fixed2" type="fixed">
     <parent link="world"/>
     <child link="base_link2"/>
 	<origin
-      xyz="0 1 1"
+      xyz="0.025 1 1"
       rpy="0 0 0" />
   </joint> 
 
@@ -66,17 +66,17 @@
     name="base_link2">
     <inertial>
       <origin
-        xyz="-0.021912 3.5206E-07 0.072666"
+        xyz="-0.0024613 5.2375E-07 0.076752"
         rpy="0 0 0" />
       <mass
-        value="3.5836" />
+        value="4.8818" />
       <inertia
-        ixx="2.9136E-05"
-        ixy="-2.1811E-09"
-        ixz="-0.00010967"
-        iyy="0.00060536"
-        iyz="-4.5389E-10"
-        izz="0.000578" />
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
     </inertial>
     <visual>
       <origin
@@ -84,12 +84,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co605/base_link.STL" />
+          filename="package://hsr_co602a_gaihou/meshes/base_link.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.4 0.5 0.6 1" />
+          rgba="1 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -98,7 +98,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co605/base_link.STL" />
+          filename="package://hsr_co602a_gaihou/meshes/base_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -486,21 +486,21 @@
 
   
 <!--    -->
-  <link
+   <link
     name="R_link1">
     <inertial>
       <origin
-        xyz="6.6053E-07 -0.041864 0.057461"
+        xyz="-3.5083E-06 -0.029409 0.065583"
         rpy="0 0 0" />
       <mass
-        value="2.2858" />
+        value="4.9043" />
       <inertia
-        ixx="0.0028736"
-        ixy="-1.2977E-08"
-        ixz="-1.1421E-08"
-        iyy="0.0012558"
-        iyz="-0.0014242"
-        izz="0.001619" />
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
     </inertial>
     <visual>
       <origin
@@ -508,12 +508,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co605/link1.STL" />
+          filename="package://hsr_co602a_gaihou/meshes/Link1.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.6 0.5 0.4 1" />
+          rgba="1 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -522,7 +522,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co605/link1.STL" />
+          filename="package://hsr_co602a_gaihou/meshes/Link1.STL" />
       </geometry>
     </collision>
   </link>
@@ -530,8 +530,8 @@
     name="R_joint_1"
     type="revolute">
     <origin
-      xyz="0 0 0.3215"
-      rpy="-3.1416 5.9903E-29 -1.4937E-16" />
+      xyz="0 0 0.3517"
+      rpy="3.1416 0 -8.3267E-17" />
     <parent
       link="base_link2" />
     <child
@@ -553,17 +553,17 @@
     name="R_link2">
     <inertial>
       <origin
-        xyz="1.0568E-05 -0.1934 0.0072764"
+        xyz="4.8764E-06 -0.17949 -0.038569"
         rpy="0 0 0" />
       <mass
-        value="3.9796" />
+        value="6.5305" />
       <inertia
-        ixx="0.024928"
-        ixy="-9.3143E-07"
-        ixz="4.2908E-07"
-        iyy="0.0049988"
-        iyz="0.0099684"
-        izz="0.019932" />
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
     </inertial>
     <visual>
       <origin
@@ -571,12 +571,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co605/link2.STL" />
+          filename="package://hsr_co602a_gaihou/meshes/Link2.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.4 0.5 0.6 1" />
+          rgba="1 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -585,7 +585,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co605/link2.STL" />
+          filename="package://hsr_co602a_gaihou/meshes/Link2.STL" />
       </geometry>
     </collision>
   </link>
@@ -616,17 +616,17 @@
     name="R_link3">
     <inertial>
       <origin
-        xyz="-4.1646E-06 -0.084864 -0.023661"
+        xyz="-4.0966E-05 -0.085254 -0.035956"
         rpy="0 0 0" />
       <mass
-        value="2.3017" />
+        value="2.3223" />
       <inertia
-        ixx="0.0050619"
-        ixy="1.9871E-07"
-        ixz="-9.377E-08"
-        iyy="0.00080339"
-        iyz="0.0014584"
-        izz="0.0043189" />
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
     </inertial>
     <visual>
       <origin
@@ -634,13 +634,13 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co605/link3.STL" />
+          filename="package://hsr_co602a_gaihou/meshes/Link3.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.6 0.5 0.4 1" />
-      </material>
+          rgba="1 1 1 1" />
+      </material> 
     </visual>
     <collision>
       <origin
@@ -648,7 +648,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co605/link3.STL" />
+          filename="package://hsr_co602a_gaihou/meshes/Link3.STL" />
       </geometry>
     </collision>
   </link>
@@ -656,8 +656,8 @@
     name="R_joint_3"
     type="revolute">
     <origin
-      xyz="0 -0.4 0"
-      rpy="-7.0321E-15 1.0327E-14 -1.5708" />
+      xyz="0 -0.40061 0"
+      rpy="-3.688E-17 1.4367E-17 -1.5708" />
     <parent
       link="R_link2" />
     <child
@@ -679,17 +679,17 @@
     name="R_link4">
     <inertial>
       <origin
-        xyz="0.058545 -4.4729E-06 0.33207"
+        xyz="0.049764 2.8231E-06 0.32133"
         rpy="0 0 0" />
       <mass
-        value="1.1696" />
+        value="1.2629" />
       <inertia
-        ixx="0.00052342"
-        ixy="-2.9755E-08"
-        ixz="-0.0004967"
-        iyy="0.00099547"
-        iyz="-3.1299E-08"
-        izz="0.00047263" />
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
     </inertial>
     <visual>
       <origin
@@ -697,12 +697,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co605/link4.STL" />
+          filename="package://hsr_co602a_gaihou/meshes/Link4.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.4 0.5 0.6 1" />
+          rgba="1 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -711,7 +711,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co605/link4.STL" />
+          filename="package://hsr_co602a_gaihou/meshes/Link4.STL" />
       </geometry>
     </collision>
   </link>
@@ -719,8 +719,8 @@
     name="R_joint_4"
     type="revolute">
     <origin
-      xyz="0 0 0"
-      rpy="1.5708 1.5708 0" />
+      xyz="0 -0.0023254 0"
+      rpy="1.2216 1.5708 -0.34916" />
     <parent
       link="R_link3" />
     <child
@@ -728,7 +728,7 @@
     <axis
       xyz="0 0 1" />
     <limit
-      lower="-3.0"
+      lower="-1.0"
       upper="3.0"
       effort="28"
       velocity="3.2" />
@@ -742,17 +742,17 @@
     name="R_link5">
     <inertial>
       <origin
-        xyz="-1.4755E-07 -0.034466 0.0044663"
+        xyz="1.3212E-06 -0.042021 0.0022165"
         rpy="0 0 0" />
       <mass
-        value="1.4115" />
+        value="1.1452" />
       <inertia
-        ixx="0.0015897"
-        ixy="-6.782E-09"
-        ixz="-1.3146E-08"
-        iyy="0.0006121"
-        iyz="-0.00040625"
-        izz="0.00097818" />
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
     </inertial>
     <visual>
       <origin
@@ -760,12 +760,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co605/link5.STL" />
+          filename="package://hsr_co602a_gaihou/meshes/Link5.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.6 0.5 0.4 1" />
+          rgba="1 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -774,7 +774,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co605/link5.STL" />
+          filename="package://hsr_co602a_gaihou/meshes/Link5.STL" />
       </geometry>
     </collision>
   </link>
@@ -782,8 +782,8 @@
     name="R_joint_5"
     type="revolute">
     <origin
-      xyz="0 0 0.4"
-      rpy="-1.5708 -3.2281E-16 1.5708" />
+      xyz="0 0 0.39859"
+      rpy="-1.5708 -1.4529E-17 1.5708" />
     <parent
       link="R_link4" />
     <child
@@ -805,17 +805,17 @@
     name="R_link6">
     <inertial>
       <origin
-        xyz="-9.6295E-05 0.00016669 -0.035518"
+        xyz="3.5784E-05 -3.8806E-05 -0.025197"
         rpy="0 0 0" />
       <mass
-        value="0.30888" />
+        value="0.20458" />
       <inertia
-        ixx="8.8278E-05"
-        ixy="-1.1971E-06"
-        ixz="3.4899E-07"
-        iyy="8.9661E-05"
-        iyz="-6.0395E-07"
-        izz="5.5013E-06" />
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="0"
+        iyz="0"
+        izz="0" />
     </inertial>
     <visual>
       <origin
@@ -823,12 +823,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co605/link6.STL" />
+          filename="package://hsr_co602a_gaihou/meshes/Link6.STL" />
       </geometry>
       <material
         name="">
         <color
-          rgba="0.4 0.5 0.6 1" />
+          rgba="1 1 1 1" />
       </material>
     </visual>
     <collision>
@@ -837,7 +837,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hsr_description/meshes/co605/link6.STL" />
+          filename="package://hsr_co602a_gaihou/meshes/Link6.STL" />
       </geometry>
     </collision>
   </link>
@@ -845,8 +845,8 @@
     name="R_joint_6"
     type="revolute">
     <origin
-      xyz="0 -0.205 0"
-      rpy="-1.5708 2.7756E-17 -3.1416" />
+      xyz="0 -0.20056 0"
+      rpy="-1.5708 2.4478E-17 -3.1416" />
     <parent
       link="R_link5" />
     <child

@@ -16,7 +16,7 @@
   <param name="trajectory_execution/execution_duration_monitoring" value="false"/> <!-- default false -->
 
   <!-- Load the robot specific controller manager; this sets the moveit_controller_manager ROS parameter -->
-  <arg name="moveit_controller_manager" default="hsr_co605_double_arm_with_gripper" />
+  <arg name="moveit_controller_manager" default="co605_dual_arm_with_gripper" />
   <include file="$(find co605_dual_arm_gripper_moveit_config)/launch/$(arg moveit_controller_manager)_moveit_controller_manager.launch.xml" />
 
 </launch>
